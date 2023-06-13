@@ -1,9 +1,9 @@
 const express = require('express');
-const apiRouter = express.Router();
+const tripsRouter = express.Router();
 const {query} = require('./db');
 
 // Get all trips-
-apiRouter.get ('/trips', (req, res, next) => {
+tripsRouter.get ('/trips', (req, res, next) => {
     query('select * from trips', (error, results) => {
         if (error) {
             return res.status(500);
@@ -14,4 +14,4 @@ apiRouter.get ('/trips', (req, res, next) => {
 
 
 
-module.exports = apiRouter;
+module.exports = tripsRouter;

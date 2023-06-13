@@ -18,8 +18,11 @@ app.use(bodyParser.json());
 
 
 // Start your existing apiRouter below at the '/api' path.
-const apiRouter = require('./server/api');
-app.use('/api', apiRouter);
+const tripsRouter = require('./server/trips-api');
+app.use('/', tripsRouter);
+
+const authRouter = require('./server/auth-api');
+app.use('/', authRouter);
 
 
 // This conditional is here for testing purposes:
