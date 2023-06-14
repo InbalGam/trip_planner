@@ -22,6 +22,10 @@ authRouter.post("/register",  (req, res, next) => {
         return res.status(400).json({ msg: 'All fields should be specified' });
     };
 
+    if (password.length < 8) {
+        return res.status(400).json({ msg: 'Password needs to be at least 8 characters' });
+    }
+
     query('select * from users where username = $1 or nickname = $2;', [username, nickname],
     async (error, results) => {
             if (error) {
