@@ -4,7 +4,7 @@
   "description": "an app to plan trips",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env PORT=8000 mocha --watch"
   },
   "author": "Inbal Gamliel",
   "license": "ISC",
