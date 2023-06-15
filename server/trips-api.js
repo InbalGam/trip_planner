@@ -153,6 +153,10 @@ tripsRouter.get('/trips/:trip_id/activities', (req, res, next) => {
 tripsRouter.post('/trips/:trip_id/activities', (req, res, next) => {
     const { date, activity_name, address, url, start_time, end_time, user_notes } = req.body;
 
+    if (date === undefined || activity_name === undefined || start_time === undefined || end_time === undefined) {
+        return res.status(400).json({ msg: 'Date, activity_name, start_time and end_time must be specified' });
+    };
+
     if(!validateHhMm(start_time) || !validateHhMm(end_time)) {
         return res.status(400).json({ msg: 'The start time and end time must be in the correct format' });
     }
@@ -192,6 +196,10 @@ tripsRouter.get('/trips/:trip_id/activities/:activity_id', (req, res, next) => {
 // Update a specific activity
 tripsRouter.put('/trips/:trip_id/activities/:activity_id', (req, res, next) => {
     const { date, activity_name, address, url, start_time, end_time, user_notes } = req.body;
+
+    if (date === undefined || activity_name === undefined || start_time === undefined || end_time === undefined) {
+        return res.status(400).json({ msg: 'Date, activity_name, start_time and end_time must be specified' });
+    };
 
     if(!validateHhMm(start_time) || !validateHhMm(end_time)) {
         return res.status(400).json({ msg: 'The start time and end time must be in the correct format' });
