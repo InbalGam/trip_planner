@@ -590,6 +590,200 @@ describe('/activities routes', function () {
 });
 
 
+// Comment
+describe('/comments routes', function () {
+    //let fakeDb = require('../server/db.js');
+    it('GET /trips/:trip_id/activities/:activity_id/comments should NOT return an array of trip activities comments - wrong activity_id', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .get('/trips/1/activities/30/comments')
+            .expect(400)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Please choose a different activity, this one does not have comments yet'});
+            });
+        })
+    });
+    
+    it('GET /trips/:trip_id/activities/:activity_id/comments returns an array of trip activities comments', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .get('/trips/1/activities/1/comments')  
+        })
+        .then((response) => {
+            expect(response.body).to.be.an.instanceOf(Array);
+        })
+    });
+
+    it('GET /trips/:trip_id/activities/:activity_id/comments returns an array of trip activities comments', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .get('/trips/1/activities/1/comments')
+            .expect(200)
+            .then((response) => {
+                // let length = fakeDb.query('select * from trips').length;
+                // expect(response.body.length).to.be.equal(length);
+                response.body.forEach((comment) => {
+                    expect(comment).to.have.ownProperty('id');
+                    expect(comment).to.have.ownProperty('activity_id');
+                    expect(comment).to.have.ownProperty('user_id');
+                    expect(comment).to.have.ownProperty('comment');
+                    expect(comment).to.have.ownProperty('timestamp');
+                });
+            });
+        })
+    });
+
+    it('POST /trips/:trip_id/activities/:activity_id/comments should NOT post a new comment- needs comment specified', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .post('/trips/1/activities/1/comments')
+            .send({comment: undefined})
+            .expect(400)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Needs comment text to publish'});
+            });
+        })
+    });
+
+    it('POST /trips/:trip_id/activities/:activity_id/comments should NOT post a new comment- wrong id', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .post('/trips/110/activities/1/comments')
+            .send({comment: 'checky check'})
+            .expect(400)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Please choose a different activity or trip'});
+            });
+        })
+    });
+
+    // it('POST /trips/:trip_id/activities/:activity_id/comments should insert a new comment', function () {   // works- inserting a new activity
+    //     const agent = request.agent(app);
+    //     return agent
+    //     .post('/login')
+    //     .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+    //     .redirects(1)
+    //     .then(() => {
+    //         return agent
+    //         .post('/trips/2/activities/2/comments')
+    //         .send({comment: 'checky check'})
+    //         .expect(200)
+    //         .then((response) => {
+    //             expect(response.body).to.be.deep.equal({msg: 'Added comment'});
+    //         });
+    //     })
+    // });
+
+    it('PUT /trips/:trip_id/activities/:activity_id/comments/:comment_id should NOT post a new comment- needs comment specified', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .put('/trips/2/activities/2/comments/5')
+            .send({comment: undefined})
+            .expect(400)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Needs comment text to publish'});
+            });
+        })
+    });
+
+    it('PUT /trips/:trip_id/activities/:activity_id/comments/:comment_id should NOT post a new comment- wrong id', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .put('/trips/12/activities/2/comments/5')
+            .send({comment: 'checky check'})
+            .expect(400)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Please choose a different activity or trip'});
+            });
+        })
+    });
+
+    it('PUT /trips/:trip_id/activities/:activity_id/comments/:comment_id should insert a new comment', function () {   // works- inserting a new activity
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .put('/trips/2/activities/2/comments/5')
+            .send({comment: 'checky check 5555'})
+            .expect(200)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Updated comment'});
+            });
+        })
+    });
+
+    it('DELETE /trips/:trip_id/activities/:activity_id/comments/:comment_id should NOT delete a specific activity- wrong id', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .delete('/trips/12/activities/2/comments/5')
+            .expect(400)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Please choose a different activity or trip'});
+            });
+        })
+    });
+
+    it('DELETE /trips/:trip_id/activities/:activity_id/comments/:comment_id should delete a specific trip', function () {  // works- deleting activity
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .delete('/trips/2/activities/2/comments/5')
+            .expect(200)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Deleted comment'});
+            });
+        })
+    });
+});
+
+
 
 // Routes tests - without login
 describe('/trips routes', function () {

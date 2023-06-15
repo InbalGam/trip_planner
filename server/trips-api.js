@@ -278,6 +278,10 @@ tripsRouter.get('/trips/:trip_id/activities/:activity_id/comments', (req, res, n
 tripsRouter.post('/trips/:trip_id/activities/:activity_id/comments', (req, res, next) => {
     const { comment } = req.body;
 
+    if (comment === undefined) {
+        return res.status(400).json({ msg: 'Needs comment text to publish' });
+    };
+
     query('select * from activities where id = $1 and trip_id = $2;', [req.params.activity_id, req.params.trip_id], (error, results) => {
         if (error) {
             return res.status(500);
@@ -304,6 +308,10 @@ tripsRouter.post('/trips/:trip_id/activities/:activity_id/comments', (req, res, 
 // Update a specific comment
 tripsRouter.put('/trips/:trip_id/activities/:activity_id/comments/:comment_id', (req, res, next) => {
     const { comment } = req.body;
+
+    if (comment === undefined) {
+        return res.status(400).json({ msg: 'Needs comment text to publish' });
+    };
 
     query('select * from activities where id = $1 and trip_id = $2;', [req.params.activity_id, req.params.trip_id], (error, results) => {
         if (error) {
