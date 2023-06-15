@@ -57,7 +57,7 @@ describe('Register Authorization tests', function() {
             });
     });
 
-    // it('should pass- insert new user', function() {
+    // it('should pass- insert new user', function() {    // works- inserting to db users
     //     const agent = request.agent(app);
     //     return agent
     //         .post('/register')
@@ -161,7 +161,24 @@ describe('/trips routes', function () {
         })
     });
 
-    it('POST /trips should insert a new trip', function () {
+    // it('POST /trips should insert a new trip', function () {    // works- inserting to db trips
+    //     const agent = request.agent(app);
+    //     return agent
+    //     .post('/login')
+    //     .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+    //     .redirects(1)
+    //     .then(() => {
+    //         return agent
+    //         .post('/trips')
+    //         .send({country: 'ItalCheck', city: 'Romecheck', start_date: '2023-05-01', end_date: '2023-05-09'})
+    //         .expect(200)
+    //         .then((response) => {
+    //             expect(response.body).to.be.deep.equal({msg: 'Added trip'});
+    //         });
+    //     })
+    //});
+
+    it('GET /trips/:trip_id should NOT return a specific trip - id not created', function () {
         const agent = request.agent(app);
         return agent
         .post('/login')
@@ -169,11 +186,130 @@ describe('/trips routes', function () {
         .redirects(1)
         .then(() => {
             return agent
-            .post('/trips')
-            .send({country: 'ItalCheck', city: 'Romecheck', start_date: '2023-05-01', end_date: '2023-05-09'})
+            .get('/trips/19')
+            .expect(400)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Please choose a different trip, this one is not in the system'});
+            });
+        })
+    });
+
+    it('GET /trips/:trip_id should return a specific trip', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .get('/trips/1')
             .expect(200)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Added trip'});
+                expect(response.body).to.have.ownProperty('id');
+                expect(response.body).to.have.ownProperty('country');
+                expect(response.body).to.have.ownProperty('city');
+                expect(response.body).to.have.ownProperty('start_date');
+                expect(response.body).to.have.ownProperty('end_date');
+            });
+        })
+    });
+
+    it('PUT /trips/:trip_id should NOT update a specific trip - all fields needs specification', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .put('/trips/6')
+            .send({country: undefined, city: 'Romecheck', start_date: '2023-05-01', end_date: '2023-05-09'})
+            .expect(400)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'All fields should be specified'});
+            });
+        })
+    });
+
+    it('PUT /trips/:trip_id should NOT update a specific trip - dates not in correct format', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .put('/trips/6')
+            .send({country: 'Italcheck', city: 'Romecheck', start_date: '2023-35-01', end_date: '2023-05-09'})
+            .expect(400)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'The start date and end date must be in the correct format'});
+            });
+        })
+    });
+
+    it('PUT /trips/:trip_id should NOT update a specific trip - trip not created yet- wrong id', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .put('/trips/19')
+            .send({country: 'Italcheck', city: 'Romecheck', start_date: '2023-05-01', end_date: '2023-05-09'})
+            .expect(400)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Please choose a different trip, this one is not in the system'});
+            });
+        })
+    });
+
+    it('PUT /trips/:trip_id should update a specific trip', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .put('/trips/9')
+            .send({country: 'Italcheck', city: 'Romecheck', start_date: '2023-05-01', end_date: '2023-05-09'})
+            .expect(200)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Updated trip'});
+            });
+        })
+    });
+
+    it('DELETE /trips/:trip_id should NOT delete a specific trip- wrong id', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .delete('/trips/19')
+            .expect(400)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Please choose a different trip, this one is not in the system'});
+            });
+        })
+    });
+
+    it('DELETE /trips/:trip_id should delete a specific trip', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .delete('/trips/14')
+            .expect(200)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Deleted trip'});
             });
         })
     });
