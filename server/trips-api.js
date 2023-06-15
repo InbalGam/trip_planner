@@ -1,6 +1,6 @@
 const express = require('express');
 const tripsRouter = express.Router();
-const {query} = require('./db');
+const {query, pool} = require('./db');
 
 
 tripsRouter.use((req, res, next) => {
@@ -25,14 +25,22 @@ function validateHhMm(inputField) {
 // Trips
 
 // Get all trips-
-tripsRouter.get('/trips', (req, res, next) => {
-    query('select * from trips', (error, results) => {
-        if (error) {
-            return res.status(500);
-        }
-        res.status(200).json(results.rows);
-      });
+tripsRouter.get('/trips', async (req, res, next) => { // I found I can query using async/await instead of callback, so this is an example for it. Below is the original.
+    try {
+        const result = await pool.query('select * from trips');
+        res.status(200).json(result.rows);
+    } catch (e) {
+        res.status(500);
+    }
 });
+// tripsRouter.get('/trips', (req, res, next) => {
+//     query('select * from trips', (error, results) => {
+//         if (error) {
+//             return res.status(500);
+//         }
+//         res.status(200).json(results.rows);
+//       });
+// });
 
 
 // Post a new trip
@@ -75,7 +83,7 @@ tripsRouter.get('/trips/:trip_id', (req, res, next) => {
 
 
 // Update a specific trip
-tripsRouter.put('/trips/:trip_id', (req, res, next) => {
+tripsRouter.put('/trips/:trip_id', async (req, res, next) => { // I found I can query using async/await instead of callback, so this is an example for it. Below is the original.
     const { country, city, start_date, end_date } = req.body;
 
     if (country === undefined || city === undefined || start_date === undefined || end_date === undefined) {
@@ -86,26 +94,48 @@ tripsRouter.put('/trips/:trip_id', (req, res, next) => {
         return res.status(400).json({ msg: 'The start date and end date must be in the correct format' });
     }
 
-    query('select * from trips where id = $1', [req.params.trip_id], (error, results) => {
-        if (error) {
-            return res.status(500);
-        }
-
-        if (results.rows.length === 0) {
+    try {
+        const check = await pool.query('select * from trips where id = $1', [req.params.trip_id]);
+        if (check.rows.length === 0) {
             return res.status(400).json({ msg: 'Please choose a different trip, this one is not in the system' });
         }
-
-        query('update trips set country = $2, city = $3, start_date = $4, end_date = $5 where id = $1;', [req.params.trip_id, country, city, start_date, end_date],
-            (error, results) => {
-                if (error) {
-                    return res.status(500);
-                }
-                res.status(200).json({ msg: 'Updated trip' });
-            }
-        );
+        await pool.query('update trips set country = $2, city = $3, start_date = $4, end_date = $5 where id = $1;', [req.params.trip_id, country, city, start_date, end_date]);
+        res.status(200).json({ msg: 'Updated trip' });
+    } catch(e) {
+        res.status(500);
     }
-    );
 });
+// tripsRouter.put('/trips/:trip_id', (req, res, next) => {
+//     const { country, city, start_date, end_date } = req.body;
+
+//     if (country === undefined || city === undefined || start_date === undefined || end_date === undefined) {
+//         return res.status(400).json({ msg: 'All fields should be specified' });
+//     };
+
+//     if (!isValidDate(start_date) || !isValidDate(end_date)) {
+//         return res.status(400).json({ msg: 'The start date and end date must be in the correct format' });
+//     }
+
+//     query('select * from trips where id = $1', [req.params.trip_id], (error, results) => {
+//         if (error) {
+//             return res.status(500);
+//         }
+
+//         if (results.rows.length === 0) {
+//             return res.status(400).json({ msg: 'Please choose a different trip, this one is not in the system' });
+//         }
+
+//         query('update trips set country = $2, city = $3, start_date = $4, end_date = $5 where id = $1;', [req.params.trip_id, country, city, start_date, end_date],
+//             (error, results) => {
+//                 if (error) {
+//                     return res.status(500);
+//                 }
+//                 res.status(200).json({ msg: 'Updated trip' });
+//             }
+//         );
+//     }
+//     );
+// });
 
 
 // Delete a specific trip
