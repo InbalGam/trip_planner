@@ -1,7 +1,5 @@
 const expect = require('chai').expect;
 const request = require('supertest');
-const {query, pool} = require('../server/db');
-const { exec } = require("child_process");
 
 const app = require('../server');
 const PORT = process.env.PORT || 4001;
@@ -59,16 +57,16 @@ describe('Register Authorization tests', function() {
             });
     });
 
-    // it('should pass- insert new user', function() {    // works- inserting to db users
-    //     const agent = request.agent(app);
-    //     return agent
-    //         .post('/register')
-    //         .send({username: 'userCHECK1', password: 'passwordCHECK', nickname: 'userNickname1'}) // currently no mock DB so needs changing for username & nickname
-    //         .expect(201)
-    //         .then((response) => {
-    //             expect(response.body).to.be.deep.equal({msg: 'Success creating user'});
-    //         });
-    // });
+    it('should pass- insert new user', function() {    // works- inserting to db users
+        const agent = request.agent(app);
+        return agent
+            .post('/register')
+            .send({username: 'userCHECK1235', password: 'passwordCHECK', nickname: 'userNickname123424'}) // currently no mock DB so needs changing for username & nickname
+            .expect(201)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Success creating user'});
+            });
+    });
 });
 
 
@@ -162,22 +160,22 @@ describe('/trips routes', function () {
         })
     });
 
-    // it('POST /trips should insert a new trip', function () {    // works- inserting to db trips
-    //     const agent = request.agent(app);
-    //     return agent
-    //     .post('/login')
-    //     .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
-    //     .redirects(1)
-    //     .then(() => {
-    //         return agent
-    //         .post('/trips')
-    //         .send({country: 'ItalCheck', city: 'Romecheck', start_date: '2023-05-01', end_date: '2023-05-09'})
-    //         .expect(200)
-    //         .then((response) => {
-    //             expect(response.body).to.be.deep.equal({msg: 'Added trip'});
-    //         });
-    //     })
-    //});
+    it('POST /trips should insert a new trip', function () {    // works- inserting to db trips
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .post('/trips')
+            .send({country: 'ItalCheck', city: 'Romecheck', start_date: '2023-05-01', end_date: '2023-05-09'})
+            .expect(200)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Added trip'});
+            });
+        })
+    });
 
     it('GET /trips/:trip_id should NOT return a specific trip - id not created', function () {
         const agent = request.agent(app);
@@ -299,21 +297,21 @@ describe('/trips routes', function () {
         })
     });
 
-    // it('DELETE /trips/:trip_id should delete a specific trip', function () { // works- deleting trips from db
-    //     const agent = request.agent(app);
-    //     return agent
-    //     .post('/login')
-    //     .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
-    //     .redirects(1)
-    //     .then(() => {
-    //         return agent
-    //         .delete('/trips/13')
-    //         .expect(200)
-    //         .then((response) => {
-    //             expect(response.body).to.be.deep.equal({msg: 'Deleted trip'});
-    //         });
-    //     })
-    // });
+    it('DELETE /trips/:trip_id should delete a specific trip', function () { // works- deleting trips from db
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .delete('/trips/12')
+            .expect(200)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Deleted trip'});
+            });
+        })
+    });
 });
 
 
@@ -430,22 +428,22 @@ describe('/activities routes', function () {
         })
     });
 
-    // it('POST /trips/:trip_id/activities should insert a new activity', function () {   // works- inserting a new activity
-    //     const agent = request.agent(app);
-    //     return agent
-    //     .post('/login')
-    //     .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
-    //     .redirects(1)
-    //     .then(() => {
-    //         return agent
-    //         .post('/trips/3/activities')
-    //         .send({date: '2023-06-09', activity_name: 'just check', address: 'nowhere', url: 'www', start_time: '11:00', end_time: '12:00', user_notes: undefined})
-    //         .expect(200)
-    //         .then((response) => {
-    //             expect(response.body).to.be.deep.equal({msg: 'Added activity'});
-    //         });
-    //     })
-    // });
+    it('POST /trips/:trip_id/activities should insert a new activity', function () {   // works- inserting a new activity
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .post('/trips/3/activities')
+            .send({date: '2023-06-09', activity_name: 'just check', address: 'nowhere', url: 'www', start_time: '11:00', end_time: '12:00', user_notes: undefined})
+            .expect(200)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Added activity'});
+            });
+        })
+    });
 
     it('GET /trips/:trip_id/activities/:activity_id should NOT return a specific activity for a specific trip - id not created', function () {
         const agent = request.agent(app);
@@ -571,21 +569,21 @@ describe('/activities routes', function () {
         })
     });
 
-    // it('DELETE /trips/:trip_id/activities/:activity_id should delete a specific trip', function () {  // works- deleting activity
-    //     const agent = request.agent(app);
-    //     return agent
-    //     .post('/login')
-    //     .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
-    //     .redirects(1)
-    //     .then(() => {
-    //         return agent
-    //         .delete('/trips/2/activities/3')
-    //         .expect(200)
-    //         .then((response) => {
-    //             expect(response.body).to.be.deep.equal({msg: 'Deleted activity'});
-    //         });
-    //     })
-    // });
+    it('DELETE /trips/:trip_id/activities/:activity_id should delete a specific trip', function () {  // works- deleting activity
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .delete('/trips/3/activities/7')
+            .expect(200)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Deleted activity'});
+            });
+        })
+    });
 });
 
 
@@ -680,22 +678,22 @@ describe('/comments routes', function () {
         })
     });
 
-    // it('POST /trips/:trip_id/activities/:activity_id/comments should insert a new comment', function () {   // works- inserting a new activity
-    //     const agent = request.agent(app);
-    //     return agent
-    //     .post('/login')
-    //     .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
-    //     .redirects(1)
-    //     .then(() => {
-    //         return agent
-    //         .post('/trips/2/activities/2/comments')
-    //         .send({comment: 'checky check'})
-    //         .expect(200)
-    //         .then((response) => {
-    //             expect(response.body).to.be.deep.equal({msg: 'Added comment'});
-    //         });
-    //     })
-    // });
+    it('POST /trips/:trip_id/activities/:activity_id/comments should insert a new comment', function () {   // works- inserting a new activity
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .post('/trips/2/activities/2/comments')
+            .send({comment: 'checky check'})
+            .expect(200)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Added comment'});
+            });
+        })
+    });
 
     it('PUT /trips/:trip_id/activities/:activity_id/comments/:comment_id should NOT post a new comment- needs comment specified', function () {
         const agent = request.agent(app);

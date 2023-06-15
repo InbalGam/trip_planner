@@ -1,6 +1,6 @@
 const express = require('express');
 const authRouter = express.Router();
-const {query} = require('./db');
+const {pool} = require('./db');
 const passport = require("passport");
 const bcrypt = require("bcrypt");
 
@@ -16,7 +16,7 @@ const passwordHash = async (password, saltRounds) => {
 };
 
 
-authRouter.post("/register",  (req, res, next) => {
+authRouter.post("/register", async (req, res, next) => {
     const { username, password, nickname } = req.body;
     if (username === undefined || password === undefined || nickname === undefined) {
         return res.status(400).json({ msg: 'All fields should be specified' });
@@ -26,26 +26,19 @@ authRouter.post("/register",  (req, res, next) => {
         return res.status(400).json({ msg: 'Password needs to be at least 8 characters' });
     }
 
-    query('select * from users where username = $1 or nickname = $2;', [username, nickname],
-    async (error, results) => {
-            if (error) {
-                return res.status(500).json({ msg: 'Could not create user' });
-            }
-            if (results.rows.length > 0) {
-                return res.status(400).json({ msg: 'Username or Nickname already exist, choose differently' });
-            }
-
-            const hashedPassword = await passwordHash(password, 10);
-            query('insert into users (username, password, nickname) values ($1, $2, $3);', [username, hashedPassword, nickname],
-                (error, results) => {
-                    if (error) {
-                        return res.status(500).json({ msg: 'Could not create user' });
-                    }
-                    res.status(201).json({
-                        msg: "Success creating user"
-                    });
-                });
-        });
+    try {
+        const check = await pool.query('select * from users where username = $1 or nickname = $2;', [username, nickname]);
+        if (check.rows.length > 0) {
+            return res.status(400).json({ msg: 'Username or Nickname already exist, choose differently' });
+        }
+        const hashedPassword = await passwordHash(password, 10);
+        await pool.query('insert into users (username, password, nickname) values ($1, $2, $3);', [username, hashedPassword, nickname]);
+        res.status(201).json({
+            msg: "Success creating user"
+        })
+    } catch (e) {
+        res.status(500).json({ msg: 'Could not create user' });
+    }
 });
 
 
