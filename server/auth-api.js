@@ -26,6 +26,14 @@ authRouter.post("/register", async (req, res, next) => {
         return res.status(400).json({ msg: 'Password needs to be at least 8 characters' });
     }
 
+    if (username.length < 3) {
+        return res.status(400).json({ msg: 'Username needs to be at least 3 characters' });
+    }
+
+    if (nickname.length < 3) {
+        return res.status(400).json({ msg: 'Nickname needs to be at least 3 characters' });
+    }
+
     try {
         const check = await pool.query('select * from users where username = $1 or nickname = $2;', [username, nickname]);
         if (check.rows.length > 0) {

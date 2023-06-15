@@ -1,5 +1,6 @@
 const expect = require('chai').expect;
 const request = require('supertest');
+const {pool} = require('../server/db');
 
 const app = require('../server');
 const PORT = process.env.PORT || 4001;
@@ -44,6 +45,26 @@ describe('Register Authorization tests', function() {
             .send({username: 'userCHECK', password: 'p23f', nickname: 'userNickname'})
             .then((response) => {
                 expect(response.body).to.be.deep.equal({msg: 'Password needs to be at least 8 characters'});
+            });
+    });
+
+    it('should NOT pass- username length limitation', function() {
+        const agent = request.agent(app);
+        return agent
+            .post('/register')
+            .send({username: 'us', password: 'passwordCHECK', nickname: 'userNickname'})
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Username needs to be at least 3 characters'});
+            });
+    });
+
+    it('should NOT pass- nickname length limitation', function() {
+        const agent = request.agent(app);
+        return agent
+            .post('/register')
+            .send({username: 'userCHECK', password: 'passwordCHECK', nickname: 'us'})
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Nickname needs to be at least 3 characters'});
             });
     });
 
@@ -112,9 +133,9 @@ describe('/trips routes', function () {
             return agent
             .get('/trips')
             .expect(200)
-            .then((response) => {
-                // let length = fakeDb.query('select * from trips').length;
-                // expect(response.body.length).to.be.equal(length);
+            .then(async (response) => {
+                const results = await pool.query('select * from trips');
+                expect(response.body.length).to.be.equal(results.rows.length);
                 response.body.forEach((trip) => {
                     expect(trip).to.have.ownProperty('id');
                     expect(trip).to.have.ownProperty('country');
@@ -348,7 +369,7 @@ describe('/activities routes', function () {
         })
     });
 
-    it('GET /trips/:trip_id/activities returns an array of all trips', function () {
+    it('GET /trips/:trip_id/activities returns an array of all trips activities', function () {
         const agent = request.agent(app);
         return agent
         .post('/login')
@@ -358,9 +379,9 @@ describe('/activities routes', function () {
             return agent
             .get('/trips/2/activities')
             .expect(200)
-            .then((response) => {
-                // let length = fakeDb.query('select * from trips').length;
-                // expect(response.body.length).to.be.equal(length);
+            .then(async (response) => {
+                const results = await pool.query('select * from activities where trip_id =2');
+                expect(response.body.length).to.be.equal(results.rows.length);
                 response.body.forEach((activity) => {
                     expect(activity).to.have.ownProperty('id');
                     expect(activity).to.have.ownProperty('date');
@@ -630,9 +651,9 @@ describe('/comments routes', function () {
             return agent
             .get('/trips/1/activities/1/comments')
             .expect(200)
-            .then((response) => {
-                // let length = fakeDb.query('select * from trips').length;
-                // expect(response.body.length).to.be.equal(length);
+            .then(async (response) => {
+                const results = await pool.query('select * from activity_comments where activity_id = 1');
+                expect(response.body.length).to.be.equal(results.rows.length);
                 response.body.forEach((comment) => {
                     expect(comment).to.have.ownProperty('id');
                     expect(comment).to.have.ownProperty('activity_id');
