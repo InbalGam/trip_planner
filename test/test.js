@@ -86,7 +86,7 @@ describe('Logout Authorization tests', function() {
 
 // Routes tests - with login
 describe('/trips routes', function () {
-    let fakeDb = require('../server/db.js');
+    //let fakeDb = require('../server/db.js');
 
     it('GET /trips returns an array of trips', function () {
         const agent = request.agent(app);
@@ -103,23 +103,82 @@ describe('/trips routes', function () {
         })
     });
 
-    // it('returns an array of all trips', function() {
-    //     return request(app)
-    //         .get('/trips')
-    //         .expect(200)
-    //         .then((response) => {
-    //             let length = fakeDb.query('select * from trips').length;
-    //             expect(response.body.length).to.be.equal(length);
-    //             response.body.forEach((trip) => {
-    //                 expect(trip).to.have.ownProperty('id');
-    //                 expect(trip).to.have.ownProperty('country');
-    //                 expect(trip).to.have.ownProperty('city');
-    //                 expect(trip).to.have.ownProperty('start_date');
-    //                 expect(trip).to.have.ownProperty('end_date');
-    //             });
-    //         });
-    // });
+    it('GET /trips returns an array of all trips', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .get('/trips')
+            .expect(200)
+            .then((response) => {
+                // let length = fakeDb.query('select * from trips').length;
+                // expect(response.body.length).to.be.equal(length);
+                response.body.forEach((trip) => {
+                    expect(trip).to.have.ownProperty('id');
+                    expect(trip).to.have.ownProperty('country');
+                    expect(trip).to.have.ownProperty('city');
+                    expect(trip).to.have.ownProperty('start_date');
+                    expect(trip).to.have.ownProperty('end_date');
+                });
+            });
+        })
+    });
+
+    it('POST /trips should NOT post a new trip- needs all fields specified', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .post('/trips')
+            .send({country: undefined, city: 'Romecheck', start_date: '2023-05-01', end_date: '2023-05-09'})
+            .expect(400)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'All fields should be specified'});
+            });
+        })
+    });
+
+    it('POST /trips should NOT post a new trip- dates not in correct format', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .post('/trips')
+            .send({country: 'ItalCheck', city: 'Romecheck', start_date: '2023-15-01', end_date: '2023-05-09'})
+            .expect(400)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'The start date and end date must be in the correct format'});
+            });
+        })
+    });
+
+    it('POST /trips should insert a new trip', function () {
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'Srasda34', password: 'blufddddadadala23'}) // User exist
+        .redirects(1)
+        .then(() => {
+            return agent
+            .post('/trips')
+            .send({country: 'ItalCheck', city: 'Romecheck', start_date: '2023-05-01', end_date: '2023-05-09'})
+            .expect(200)
+            .then((response) => {
+                expect(response.body).to.be.deep.equal({msg: 'Added trip'});
+            });
+        })
+    });
 });
+
 
 
 // Routes tests - without login

@@ -39,6 +39,10 @@ tripsRouter.get('/trips', (req, res, next) => {
 tripsRouter.post('/trips', (req, res, next) => {
     const { country, city, start_date, end_date } = req.body;
 
+    if (country === undefined || city === undefined || start_date === undefined || end_date === undefined) {
+        return res.status(400).json({ msg: 'All fields should be specified' });
+    };
+
     if (!isValidDate(start_date) || !isValidDate(end_date)) {
         return res.status(400).json({msg: 'The start date and end date must be in the correct format'});
     }
