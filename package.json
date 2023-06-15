@@ -4,7 +4,7 @@
   "description": "an app to plan trips",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env PORT=8000 mocha --watch"
+    "test": "cross-env PORT=8000 DB=trip_planner_tests mocha --watch"
   },
   "author": "Inbal Gamliel",
   "license": "ISC",

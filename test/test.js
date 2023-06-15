@@ -1,5 +1,7 @@
 const expect = require('chai').expect;
 const request = require('supertest');
+const {query, pool} = require('../server/db');
+const { exec } = require("child_process");
 
 const app = require('../server');
 const PORT = process.env.PORT || 4001;
@@ -87,8 +89,6 @@ describe('Logout Authorization tests', function() {
 // Routes tests - with login
 // Trip
 describe('/trips routes', function () {
-    //let fakeDb = require('../server/db.js');
-
     it('GET /trips returns an array of trips', function () {
         const agent = request.agent(app);
         return agent
@@ -319,7 +319,6 @@ describe('/trips routes', function () {
 
 // Activity
 describe('/activities routes', function () {
-    //let fakeDb = require('../server/db.js');
     it('GET /trips/:trip_id/activities should NOT return an array of trip activities - wrong trip_id', function () {
         const agent = request.agent(app);
         return agent
@@ -592,7 +591,6 @@ describe('/activities routes', function () {
 
 // Comment
 describe('/comments routes', function () {
-    //let fakeDb = require('../server/db.js');
     it('GET /trips/:trip_id/activities/:activity_id/comments should NOT return an array of trip activities comments - wrong activity_id', function () {
         const agent = request.agent(app);
         return agent
