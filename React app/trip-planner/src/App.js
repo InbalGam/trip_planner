@@ -1,5 +1,6 @@
 import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 import Navigation from './Components/Navigation';
+import TripsList from './Components/TripsList';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
       </header>
       <body className="App_body" >
         <RouterProvider router={ router } />
+        <TripsList />
       </body>
     </div>
   );
