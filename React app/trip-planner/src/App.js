@@ -1,10 +1,10 @@
-import './App.css';
 import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
+import Navigation from './Components/Navigation';
 
 function App() {
 
   const router = createBrowserRouter(createRoutesFromElements(
-    <Route path='/' /> //element={ } />
+    <Route path='/' element={ <Navigation /> } />
   ));
 
   return (
