@@ -5,6 +5,7 @@ const {pool} = require('../server/db');
 const app = require('../server');
 const PORT = process.env.PORT || 4001;
 
+
 // Authorization tests
 describe('Login Authorization tests', function() {
     it('should pass auth check for log in', function() {
