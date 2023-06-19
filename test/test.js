@@ -177,7 +177,7 @@ describe('/trips routes', function () {
             .send({country: 'ItalCheck', city: 'Romecheck', start_date: '2023-15-01', end_date: '2023-05-09'})
             .expect(400)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'The start date and end date must be in the correct format'});
+                expect(response.body).to.be.deep.equal({msg: 'invalid date format'});
             });
         })
     });
@@ -194,7 +194,11 @@ describe('/trips routes', function () {
             .send({country: 'ItalCheck', city: 'Romecheck', start_date: '2023-05-01', end_date: '2023-05-09'})
             .expect(200)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Added trip'});
+                expect(response.body).to.have.ownProperty('id');
+                expect(response.body).to.have.ownProperty('country');
+                expect(response.body).to.have.ownProperty('city');
+                expect(response.body).to.have.ownProperty('start_date');
+                expect(response.body).to.have.ownProperty('end_date');
             });
         })
     });
@@ -210,7 +214,7 @@ describe('/trips routes', function () {
             .get('/trips/19')
             .expect(400)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Please choose a different trip, this one is not in the system'});
+                expect(response.body).to.be.deep.equal({msg: 'invalid trip id'});
             });
         })
     });
@@ -264,7 +268,7 @@ describe('/trips routes', function () {
             .send({country: 'Italcheck', city: 'Romecheck', start_date: '2023-35-01', end_date: '2023-05-09'})
             .expect(400)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'The start date and end date must be in the correct format'});
+                expect(response.body).to.be.deep.equal({msg: 'invalid date format'});
             });
         })
     });
@@ -281,7 +285,7 @@ describe('/trips routes', function () {
             .send({country: 'Italcheck', city: 'Romecheck', start_date: '2023-05-01', end_date: '2023-05-09'})
             .expect(400)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Please choose a different trip, this one is not in the system'});
+                expect(response.body).to.be.deep.equal({msg: 'invalid trip id'});
             });
         })
     });
@@ -294,11 +298,15 @@ describe('/trips routes', function () {
         .redirects(1)
         .then(() => {
             return agent
-            .put('/trips/9')
+            .put('/trips/4')
             .send({country: 'Italcheck', city: 'Romecheck', start_date: '2023-05-01', end_date: '2023-05-09'})
             .expect(200)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Updated trip'});
+                expect(response.body).to.have.ownProperty('id');
+                expect(response.body).to.have.ownProperty('country');
+                expect(response.body).to.have.ownProperty('city');
+                expect(response.body).to.have.ownProperty('start_date');
+                expect(response.body).to.have.ownProperty('end_date');
             });
         })
     });
@@ -314,7 +322,7 @@ describe('/trips routes', function () {
             .delete('/trips/19')
             .expect(400)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Please choose a different trip, this one is not in the system'});
+                expect(response.body).to.be.deep.equal({msg: 'invalid trip id'});
             });
         })
     });
@@ -350,7 +358,7 @@ describe('/activities routes', function () {
             .get('/trips/12/activities')
             .expect(400)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Please choose a different trip, this one does not have activities yet'});
+                expect(response.body).to.be.deep.equal({msg: 'invalid trip id'});
             });
         })
     });
@@ -458,11 +466,20 @@ describe('/activities routes', function () {
         .redirects(1)
         .then(() => {
             return agent
-            .post('/trips/3/activities')
-            .send({date: '2023-06-09', activity_name: 'just check', address: 'nowhere', url: 'www', start_time: '11:00', end_time: '12:00', user_notes: undefined})
+            .post('/trips/1/activities')
+            .send({date: '2023-06-09', activity_name: 'just check', address: 'nowhere', url: 'www', start_time: '11:00', end_time: '12:00', user_notes: 'check'})
             .expect(200)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Added activity'});
+                expect(response.body).to.have.ownProperty('id');
+                expect(response.body).to.have.ownProperty('date');
+                expect(response.body).to.have.ownProperty('trip_id');
+                expect(response.body).to.have.ownProperty('activity_name');
+                expect(response.body).to.have.ownProperty('address');
+                expect(response.body).to.have.ownProperty('url');
+                expect(response.body).to.have.ownProperty('start_time');
+                expect(response.body).to.have.ownProperty('end_time');
+                expect(response.body).to.have.ownProperty('user_id');
+                expect(response.body).to.have.ownProperty('user_notes');
             });
         })
     });
@@ -478,7 +495,7 @@ describe('/activities routes', function () {
             .get('/trips/20/activities/3')
             .expect(400)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Please choose a different activity, this one is not in the system'});
+                expect(response.body).to.be.deep.equal({msg: 'invalid trip id'});
             });
         })
     });
@@ -567,10 +584,19 @@ describe('/activities routes', function () {
         .then(() => {
             return agent
             .put('/trips/2/activities/2')
-            .send({date: '2023-06-09', activity_name: 'just check', address: 'nowhere', url: 'www', start_time: '11:00', end_time: '12:00', user_notes: undefined})
+            .send({date: '2023-06-09', activity_name: 'just check', address: 'nowhere', url: 'www', start_time: '11:00', end_time: '12:00', user_notes: 'check'})
             .expect(200)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Updated activity'});
+                expect(response.body).to.have.ownProperty('id');
+                expect(response.body).to.have.ownProperty('date');
+                expect(response.body).to.have.ownProperty('trip_id');
+                expect(response.body).to.have.ownProperty('activity_name');
+                expect(response.body).to.have.ownProperty('address');
+                expect(response.body).to.have.ownProperty('url');
+                expect(response.body).to.have.ownProperty('start_time');
+                expect(response.body).to.have.ownProperty('end_time');
+                expect(response.body).to.have.ownProperty('user_id');
+                expect(response.body).to.have.ownProperty('user_notes');
             });
         })
     });
@@ -586,7 +612,7 @@ describe('/activities routes', function () {
             .delete('/trips/19/activities/1')
             .expect(400)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Please choose a different activity, this one is not in the system'});
+                expect(response.body).to.be.deep.equal({msg: 'invalid trip id'});
             });
         })
     });
@@ -622,7 +648,7 @@ describe('/comments routes', function () {
             .get('/trips/1/activities/30/comments')
             .expect(400)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Please choose a different activity, this one does not have comments yet'});
+                expect(response.body).to.be.deep.equal({msg: 'invalid id'});
             });
         })
     });
@@ -695,7 +721,7 @@ describe('/comments routes', function () {
             .send({comment: 'checky check'})
             .expect(400)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Please choose a different activity or trip'});
+                expect(response.body).to.be.deep.equal({msg: 'invalid trip id'});
             });
         })
     });
@@ -708,16 +734,20 @@ describe('/comments routes', function () {
         .redirects(1)
         .then(() => {
             return agent
-            .post('/trips/2/activities/2/comments')
+            .post('/trips/1/activities/1/comments')
             .send({comment: 'checky check'})
             .expect(200)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Added comment'});
+                expect(response.body).to.have.ownProperty('id');
+                expect(response.body).to.have.ownProperty('activity_id');
+                expect(response.body).to.have.ownProperty('user_id');
+                expect(response.body).to.have.ownProperty('comment');
+                expect(response.body).to.have.ownProperty('timestamp');
             });
         })
     });
 
-    it('PUT /trips/:trip_id/activities/:activity_id/comments/:comment_id should NOT post a new comment- needs comment specified', function () {
+    it('PUT /trips/:trip_id/activities/:activity_id/comments/:comment_id should NOT update a new comment- needs comment specified', function () {
         const agent = request.agent(app);
         return agent
         .post('/login')
@@ -725,7 +755,7 @@ describe('/comments routes', function () {
         .redirects(1)
         .then(() => {
             return agent
-            .put('/trips/2/activities/2/comments/5')
+            .put('/trips/1/activities/1/comments/3')
             .send({comment: undefined})
             .expect(400)
             .then((response) => {
@@ -734,7 +764,7 @@ describe('/comments routes', function () {
         })
     });
 
-    it('PUT /trips/:trip_id/activities/:activity_id/comments/:comment_id should NOT post a new comment- wrong id', function () {
+    it('PUT /trips/:trip_id/activities/:activity_id/comments/:comment_id should NOT update a new comment- wrong id', function () {
         const agent = request.agent(app);
         return agent
         .post('/login')
@@ -746,12 +776,12 @@ describe('/comments routes', function () {
             .send({comment: 'checky check'})
             .expect(400)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Please choose a different activity or trip'});
+                expect(response.body).to.be.deep.equal({msg: 'invalid trip id'});
             });
         })
     });
 
-    it('PUT /trips/:trip_id/activities/:activity_id/comments/:comment_id should insert a new comment', function () {   // works- inserting a new activity
+    it('PUT /trips/:trip_id/activities/:activity_id/comments/:comment_id should update a new comment', function () {   // works- inserting a new activity
         const agent = request.agent(app);
         return agent
         .post('/login')
@@ -759,16 +789,20 @@ describe('/comments routes', function () {
         .redirects(1)
         .then(() => {
             return agent
-            .put('/trips/2/activities/2/comments/5')
+            .put('/trips/1/activities/1/comments/1')
             .send({comment: 'checky check 5555'})
             .expect(200)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Updated comment'});
+                expect(response.body).to.have.ownProperty('id');
+                expect(response.body).to.have.ownProperty('activity_id');
+                expect(response.body).to.have.ownProperty('user_id');
+                expect(response.body).to.have.ownProperty('comment');
+                expect(response.body).to.have.ownProperty('timestamp');
             });
         })
     });
 
-    it('DELETE /trips/:trip_id/activities/:activity_id/comments/:comment_id should NOT delete a specific activity- wrong id', function () {
+    it('DELETE /trips/:trip_id/activities/:activity_id/comments/:comment_id should NOT delete a specific comment- wrong id', function () {
         const agent = request.agent(app);
         return agent
         .post('/login')
@@ -779,12 +813,12 @@ describe('/comments routes', function () {
             .delete('/trips/12/activities/2/comments/5')
             .expect(400)
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Please choose a different activity or trip'});
+                expect(response.body).to.be.deep.equal({msg: 'invalid trip id'});
             });
         })
     });
 
-    it('DELETE /trips/:trip_id/activities/:activity_id/comments/:comment_id should delete a specific trip', function () {  // works- deleting activity
+    it('DELETE /trips/:trip_id/activities/:activity_id/comments/:comment_id should delete a specific comment', function () {  // works- deleting activity
         const agent = request.agent(app);
         return agent
         .post('/login')
@@ -792,7 +826,7 @@ describe('/comments routes', function () {
         .redirects(1)
         .then(() => {
             return agent
-            .delete('/trips/2/activities/2/comments/5')
+            .delete('/trips/1/activities/1/comments/4')
             .expect(200)
             .then((response) => {
                 expect(response.body).to.be.deep.equal({msg: 'Deleted comment'});

@@ -2,23 +2,12 @@ const express = require('express');
 const authRouter = express.Router();
 const {pool} = require('./db');
 const passport = require("passport");
-const bcrypt = require("bcrypt");
+const {passwordHash} = require('../hash');
 
 // Registering a user
-const passwordHash = async (password, saltRounds) => {
-    try {
-      const salt = await bcrypt.genSalt(saltRounds);
-      return await bcrypt.hash(password, salt);
-    } catch (err) {
-      console.log(err);
-    }
-    return null;
-};
-
-
-authRouter.post("/register", async (req, res, next) => {
+authRouter.post("/register", async (req, res) => {
     const { username, password, nickname } = req.body;
-    if (username === undefined || password === undefined || nickname === undefined) {
+    if (!username || !password || !nickname ) {
         return res.status(400).json({ msg: 'All fields should be specified' });
     };
 
@@ -68,7 +57,6 @@ authRouter.post("/login",
 authRouter.get('/logout', function(req, res, next){
     req.logout(function(err) {
       if (err) { return next(err); }
-      //res.redirect('/');
       res.status(200).json({msg: 'Successfully logged out'})
     });
 });
