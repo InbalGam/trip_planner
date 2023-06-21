@@ -120,7 +120,7 @@ async function sharingTrip(req, emails, tripId) {
 tripsRouter.post('/trips', async (req, res, next) => {
     const { country, city, start_date, end_date, emails } = req.body;
 
-    if (!country || !city || !start_date || !end_date) {
+    if (!country || !city || !start_date || !end_date || !emails) {
         return res.status(400).json({ msg: 'All fields should be specified' });
     };
 
@@ -167,7 +167,7 @@ const checkedTripAuth = async (req, res, next) => {
 tripsRouter.put('/trips/:trip_id', checkedTripAuth, async (req, res, next) => { 
     const { country, city, start_date, end_date, emails } = req.body;
 
-    if (!country || !city || !start_date || !end_date) {
+    if (!country || !city || !start_date || !end_date || !emails) {
         return res.status(400).json({ msg: 'All fields should be specified' });
     };
 
@@ -188,10 +188,11 @@ tripsRouter.put('/trips/:trip_id', checkedTripAuth, async (req, res, next) => {
 // Delete a specific trip
 tripsRouter.delete('/trips/:trip_id', checkedTripAuth, async (req, res, next) => {
     try {
-        const check = await pool.query('select * from trips where id = $1', [req.params.trip_id])
+        //const check = await pool.query('select * from trips where id = $1', [req.params.trip_id]);
         await pool.query('delete from trips where id = $1;', [req.params.trip_id]);
         res.status(200).json({ msg: 'Deleted trip' });
     } catch (e) {
+        console.log(e);
         res.status(500).json({msg: 'Server error'});
     }
 });
