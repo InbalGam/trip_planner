@@ -81,9 +81,6 @@ tripsRouter.use('/trips/:trip_id/activities/:activity_id/comments/:comment_id', 
 tripsRouter.get('/trips', async (req, res, next) => { 
     try {
         const result = await pool.query('select * from trips t join trips_shared ts on t.id = ts.trip_id where ts.user_id = $1', [req.user.id]);
-        if (result.rows.length === 0) {
-            return res.status(404).json({msg: 'No trips'})
-        }
         res.status(200).json(result.rows);
     } catch (e) {
         res.status(500).json({msg: 'Server error'});
