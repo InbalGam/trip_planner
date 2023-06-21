@@ -55,7 +55,7 @@ describe('Register Authorization tests', function() {
             .post('/register')
             .send({username: 'us', password: 'passwordCHECK', nickname: 'userNickname'})
             .then((response) => {
-                expect(response.body).to.be.deep.equal({msg: 'Username needs to be at least 3 characters'});
+                expect(response.body).to.be.deep.equal({msg: 'Username needs to be a valid email'});
             });
     });
 

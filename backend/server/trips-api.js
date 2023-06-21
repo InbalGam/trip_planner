@@ -1,7 +1,7 @@
 const express = require('express');
 const tripsRouter = express.Router();
 const {pool} = require('./db');
-const {isValidDate, validateHhMm} = require('./date_time_validation');
+const {isValidDate, validateHhMm} = require('./utils');
 
 
 // Middlewares
