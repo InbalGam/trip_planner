@@ -80,7 +80,10 @@ tripsRouter.use('/trips/:trip_id/activities/:activity_id/comments/:comment_id', 
 // Get all trips-
 tripsRouter.get('/trips', async (req, res, next) => { 
     try {
-        const result = await pool.query('select * from trips');
+        const result = await pool.query('select * from trips t join trips_shared ts on t.id = ts.trip_id where ts.user_id = $1', [req.user.id]);
+        if (result.rows.length === 0) {
+            return res.status(404).json({msg: 'No trips'})
+        }
         res.status(200).json(result.rows);
     } catch (e) {
         res.status(500).json({msg: 'Server error'});
@@ -103,7 +106,8 @@ tripsRouter.post('/trips', async (req, res, next) => {
     try {
         const result = await pool.query('insert into trips (country, city, start_date, end_date, created_by) values ($1, $2, $3, $4, $5) returning *;', [country, city, start_date, end_date, req.user.id]);
         if (emails) {
-            const userIds = await pool.query('select id from users where username in $1', [emails]);
+            let userIds = [req.user.id];
+            userIds.push(await pool.query('select id from users where username in $1', [emails]));
             await pool.query('insert into trips_shared (trip_id, user_id) values($1, unnest($2));',[result.rows[0].id, userIds]);
         }
         res.status(200).json(result.rows[0]);
@@ -148,7 +152,8 @@ tripsRouter.put('/trips/:trip_id', async (req, res, next) => {
     try {
         const result = await pool.query('update trips set country = $2, city = $3, start_date = $4, end_date = $5 where id = $1 returning *;', [req.params.trip_id, country, city, start_date, end_date]);
         if (emails) {
-            const userIds = await pool.query('select id from users where username in $1', [emails]);
+            let userIds = [req.user.id];
+            userIds.push(await pool.query('select id from users where username in $1', [emails]));
             await pool.query('insert into trips_shared (trip_id, user_id) values($1, unnest($2));',[result.rows[0].id, userIds]);
         }
         res.status(200).json(result.rows[0]);
