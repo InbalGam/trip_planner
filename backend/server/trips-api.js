@@ -26,6 +26,19 @@ tripsRouter.use('/trips/:trip_id', async (req, res, next) => {
 });
 
 
+tripsRouter.use('/trips/:trip_id', async (req, res, next) => {
+    try {
+        const check = await pool.query('select * from trips_shared where trip_id = $1 and user_id = $2', [req.params.trip_id, req.user.id]);
+        if (check.rows.length === 0) {
+            return res.status(400).json({ msg: 'Unauthorized' });
+        }
+        next();
+    } catch(e) {
+        res.status(500).json({msg: 'Server error'});
+    }
+});
+
+
 tripsRouter.use('/trips/:trip_id/activities', async (req, res, next) => {
     try {
         const check = await pool.query('select * from activities where trip_id = $1', [req.params.trip_id]);
@@ -130,7 +143,7 @@ tripsRouter.put('/trips/:trip_id', async (req, res, next) => {
     try {
         const userId = await pool.query('select created_by from trips where id = $1 returning *;', [req.params.trip_id]);
         if (req.user.id !== userId) {
-            return res.status(401).json({msg: 'Only the user created the trip can update it'});
+            return res.status(401).json({msg: 'Unauthorized'});
         }
     } catch (e) {
         res.status(500).json({msg: 'Server error'});
@@ -165,7 +178,7 @@ tripsRouter.delete('/trips/:trip_id', async (req, res, next) => {
     try {
         const userId = await pool.query('select created_by from trips where id = $1 returning *;', [req.params.trip_id]);
         if (req.user.id !== userId) {
-            return res.status(401).json({msg: 'Only the user created the trip can update it'});
+            return res.status(401).json({msg: 'Unauthorized'});
         }
     } catch (e) {
         res.status(500).json({msg: 'Server error'});
