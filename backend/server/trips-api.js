@@ -90,7 +90,7 @@ tripsRouter.get('/trips', async (req, res, next) => {
 
 // Post a new trip
 tripsRouter.post('/trips', async (req, res, next) => {
-    const { country, city, start_date, end_date } = req.body;
+    const { country, city, start_date, end_date, emails } = req.body;
 
     if (!country || !city || !start_date || !end_date) {
         return res.status(400).json({ msg: 'All fields should be specified' });
@@ -102,6 +102,10 @@ tripsRouter.post('/trips', async (req, res, next) => {
 
     try {
         const result = await pool.query('insert into trips (country, city, start_date, end_date, created_by) values ($1, $2, $3, $4, $5) returning *;', [country, city, start_date, end_date, req.user.id]);
+        if (emails) {
+            const userIds = await pool.query('select id from users where username in $1', [emails]);
+            await pool.query('insert into trips_shared (trip_id, user_id) values($1, unnest($2));',[result.rows[0].id, userIds]);
+        }
         res.status(200).json(result.rows[0]);
     } catch (e) {
         res.status(500).json({msg: 'Server error'});
@@ -131,7 +135,7 @@ tripsRouter.put('/trips/:trip_id', async (req, res, next) => {
         res.status(500).json({msg: 'Server error'});
     }
 
-    const { country, city, start_date, end_date } = req.body;
+    const { country, city, start_date, end_date, emails } = req.body;
 
     if (!country || !city || !start_date || !end_date) {
         return res.status(400).json({ msg: 'All fields should be specified' });
@@ -143,6 +147,10 @@ tripsRouter.put('/trips/:trip_id', async (req, res, next) => {
 
     try {
         const result = await pool.query('update trips set country = $2, city = $3, start_date = $4, end_date = $5 where id = $1 returning *;', [req.params.trip_id, country, city, start_date, end_date]);
+        if (emails) {
+            const userIds = await pool.query('select id from users where username in $1', [emails]);
+            await pool.query('insert into trips_shared (trip_id, user_id) values($1, unnest($2));',[result.rows[0].id, userIds]);
+        }
         res.status(200).json(result.rows[0]);
     } catch(e) {
         res.status(500).json({msg: 'Server error'});
@@ -160,7 +168,7 @@ tripsRouter.delete('/trips/:trip_id', async (req, res, next) => {
     } catch (e) {
         res.status(500).json({msg: 'Server error'});
     }
-    
+
     try {
         const check = await pool.query('select * from trips where id = $1', [req.params.trip_id])
         await pool.query('delete from trips where id = $1;', [req.params.trip_id]);
