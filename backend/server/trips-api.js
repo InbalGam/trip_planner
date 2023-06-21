@@ -2,6 +2,7 @@ const express = require('express');
 const tripsRouter = express.Router();
 const {pool} = require('./db');
 const {isValidDate, validateHhMm} = require('./utils');
+const format = require('pg-format');
 
 
 // Middlewares
@@ -93,13 +94,27 @@ tripsRouter.use('/trips/:trip_id/activities/:activity_id/comments/:comment_id', 
 // Get all trips-
 tripsRouter.get('/trips', async (req, res, next) => { 
     try {
-        const result = await pool.query('select * from trips t join trips_shared ts on t.id = ts.trip_id where ts.user_id = $1', [req.user.id]);
+        const result = await pool.query('select t.* from trips t join trips_shared ts on t.id = ts.trip_id where ts.user_id = $1', [req.user.id]);
         res.status(200).json(result.rows);
     } catch (e) {
         res.status(500).json({msg: 'Server error'});
     }
 });
 
+async function sharingTrip(req, emails, tripId) {
+    let userIds;
+    if (req.method === 'POST') {
+        userIds = [[tripId, req.user.id]];
+    } else {
+        userIds = [];
+    }
+    if (emails.length > 0) {
+        const ids = await pool.query('select id from users where username in ($1)', [emails.join(',')]);
+        const idsTrip = ids.rows.map(i => [tripId, i.id]);
+        userIds.push(idsTrip);
+    }
+    await pool.query(format('insert into trips_shared (trip_id, user_id) values %L;', userIds));
+};
 
 // Post a new trip
 tripsRouter.post('/trips', async (req, res, next) => {
@@ -115,11 +130,7 @@ tripsRouter.post('/trips', async (req, res, next) => {
 
     try {
         const result = await pool.query('insert into trips (country, city, start_date, end_date, created_by) values ($1, $2, $3, $4, $5) returning *;', [country, city, start_date, end_date, req.user.id]);
-        if (emails) {
-            let userIds = [req.user.id];
-            userIds.push(await pool.query('select id from users where username in $1', [emails]));
-            await pool.query('insert into trips_shared (trip_id, user_id) values($1, unnest($2));',[result.rows[0].id, userIds]);
-        }
+        await sharingTrip(req, emails, result.rows[0].id);
         res.status(200).json(result.rows[0]);
     } catch (e) {
         res.status(500).json({msg: 'Server error'});
@@ -138,17 +149,22 @@ tripsRouter.get('/trips/:trip_id', async (req, res, next) => {
 });
 
 
-// Update a specific trip
-tripsRouter.put('/trips/:trip_id', async (req, res, next) => { 
+const checkedTripAuth = async (req, res, next) => {
     try {
-        const userId = await pool.query('select created_by from trips where id = $1 returning *;', [req.params.trip_id]);
-        if (req.user.id !== userId) {
+        const userId = await pool.query('select created_by from trips where id = $1;', [req.params.trip_id]);
+        if (req.user.id !== userId.rows[0].created_by) {
             return res.status(401).json({msg: 'Unauthorized'});
         }
+        next();
     } catch (e) {
-        res.status(500).json({msg: 'Server error'});
+        console.log(e);
+        return res.status(500).json({msg: 'Server error'});
     }
+};
 
+
+// Update a specific trip
+tripsRouter.put('/trips/:trip_id', checkedTripAuth, async (req, res, next) => { 
     const { country, city, start_date, end_date, emails } = req.body;
 
     if (!country || !city || !start_date || !end_date) {
@@ -161,11 +177,7 @@ tripsRouter.put('/trips/:trip_id', async (req, res, next) => {
 
     try {
         const result = await pool.query('update trips set country = $2, city = $3, start_date = $4, end_date = $5 where id = $1 returning *;', [req.params.trip_id, country, city, start_date, end_date]);
-        if (emails) {
-            let userIds = [req.user.id];
-            userIds.push(await pool.query('select id from users where username in $1', [emails]));
-            await pool.query('insert into trips_shared (trip_id, user_id) values($1, unnest($2));',[result.rows[0].id, userIds]);
-        }
+        await sharingTrip(req, emails, result.rows[0].id);
         res.status(200).json(result.rows[0]);
     } catch(e) {
         res.status(500).json({msg: 'Server error'});
@@ -174,16 +186,7 @@ tripsRouter.put('/trips/:trip_id', async (req, res, next) => {
 
 
 // Delete a specific trip
-tripsRouter.delete('/trips/:trip_id', async (req, res, next) => {
-    try {
-        const userId = await pool.query('select created_by from trips where id = $1 returning *;', [req.params.trip_id]);
-        if (req.user.id !== userId) {
-            return res.status(401).json({msg: 'Unauthorized'});
-        }
-    } catch (e) {
-        res.status(500).json({msg: 'Server error'});
-    }
-
+tripsRouter.delete('/trips/:trip_id', checkedTripAuth, async (req, res, next) => {
     try {
         const check = await pool.query('select * from trips where id = $1', [req.params.trip_id])
         await pool.query('delete from trips where id = $1;', [req.params.trip_id]);
