@@ -101,7 +101,7 @@ tripsRouter.post('/trips', async (req, res, next) => {
     }
 
     try {
-        const result = await pool.query('insert into trips (country, city, start_date, end_date) values ($1, $2, $3, $4) returning *;', [country, city, start_date, end_date]);
+        const result = await pool.query('insert into trips (country, city, start_date, end_date, created_by) values ($1, $2, $3, $4, $5) returning *;', [country, city, start_date, end_date, req.user.id]);
         res.status(200).json(result.rows[0]);
     } catch (e) {
         res.status(500).json({msg: 'Server error'});
@@ -122,6 +122,15 @@ tripsRouter.get('/trips/:trip_id', async (req, res, next) => {
 
 // Update a specific trip
 tripsRouter.put('/trips/:trip_id', async (req, res, next) => { 
+    try {
+        const userId = await pool.query('select created_by from trips where id = $1 returning *;', [req.params.trip_id]);
+        if (req.user.id !== userId) {
+            return res.status(401).json({msg: 'Only the user created the trip can update it'});
+        }
+    } catch (e) {
+        res.status(500).json({msg: 'Server error'});
+    }
+
     const { country, city, start_date, end_date } = req.body;
 
     if (!country || !city || !start_date || !end_date) {
@@ -143,6 +152,15 @@ tripsRouter.put('/trips/:trip_id', async (req, res, next) => {
 
 // Delete a specific trip
 tripsRouter.delete('/trips/:trip_id', async (req, res, next) => {
+    try {
+        const userId = await pool.query('select created_by from trips where id = $1 returning *;', [req.params.trip_id]);
+        if (req.user.id !== userId) {
+            return res.status(401).json({msg: 'Only the user created the trip can update it'});
+        }
+    } catch (e) {
+        res.status(500).json({msg: 'Server error'});
+    }
+    
     try {
         const check = await pool.query('select * from trips where id = $1', [req.params.trip_id])
         await pool.query('delete from trips where id = $1;', [req.params.trip_id]);
