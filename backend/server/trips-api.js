@@ -40,19 +40,6 @@ tripsRouter.use('/trips/:trip_id', async (req, res, next) => {
 });
 
 
-tripsRouter.use('/trips/:trip_id/activities', async (req, res, next) => {
-    try {
-        const check = await pool.query('select * from activities where trip_id = $1', [req.params.trip_id]);
-        if (check.rows.length === 0) {
-            return res.status(400).json({ msg: 'invalid trip id' });
-        }
-        next();
-    } catch(e) {
-        res.status(500).json({msg: 'Server error'});
-    }
-});
-
-
 tripsRouter.use(['/trips/:trip_id/activities/:activity_id', '/trips/:trip_id/activities/:activity_id/comments/:comment_id'], async (req, res, next) => {
     try {
         const check = await pool.query('select * from activities where id = $1 and trip_id = $2', [req.params.activity_id, req.params.trip_id]);
@@ -66,18 +53,6 @@ tripsRouter.use(['/trips/:trip_id/activities/:activity_id', '/trips/:trip_id/act
 });
 
 
-tripsRouter.use('/trips/:trip_id/activities/:activity_id/comments', async (req, res, next) => {
-    try {
-        const check = await pool.query('select ac.* from activities a join activity_comments ac on a.id = ac.activity_id where a.id = $1 and a.trip_id = $2;', [req.params.activity_id, req.params.trip_id]);
-        if (check.rows.length === 0) {
-            return res.status(400).json({ msg: 'invalid id' });
-        }
-        next();
-    } catch(e) {
-        res.status(500).json({msg: 'Server error'});
-    }
-});
-
 tripsRouter.use('/trips/:trip_id/activities/:activity_id/comments/:comment_id', async (req, res, next) => {
     try {
         const check = await pool.query('select from activity_comments where id = $1 and activity_id = $2;', [req.params.comment_id, req.params.activity_id]);
@@ -89,6 +64,7 @@ tripsRouter.use('/trips/:trip_id/activities/:activity_id/comments/:comment_id', 
         res.status(500).json({msg: 'Server error'});
     }
 });
+
 // Trips
 
 // Get all trips-
