@@ -12,7 +12,7 @@ function Email(props) {
       <ReactMultiEmail
         placeholder='Input your email'
         emails={props.emails}
-        onChange={(_emails) => {props.setEmails((prev) => [_emails, ...prev]);}}
+        onChange={(_emails) => {props.setEmails(_emails);}}
         autoFocus={true}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
