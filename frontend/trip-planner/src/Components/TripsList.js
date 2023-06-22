@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Trip from './Trip';
+import TripCard from './TripCard';
 
 
 function TripsList() {
@@ -28,15 +29,9 @@ function TripsList() {
             {console.log(trips)}
             <div className="currentTrips">
                 <ul>
-                    {trips.map((el, ind) =>
+                    {trips.map((trip, ind) =>
                         <li key={ind}>
-                            <div className="trip">
-                                <p>{el.country.label}</p>
-                                <p>{el.city}</p>
-                                <p>{el.start_date.toDateString()}</p>
-                                <p>{el.end_date.toDateString()}</p>
-                                <p>{el.emails ? el.emails : ''}</p>
-                            </div>
+                            <TripCard trip={trip} />
                         </li>)}
                 </ul>
             </div>
