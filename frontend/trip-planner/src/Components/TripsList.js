@@ -3,7 +3,7 @@ import Trip from './Trip';
 
 
 function TripsList() {
-    const {trips, setTrips} = useState([]);
+    const [trips, setTrips] = useState([]);
     const [showForm, setShowForm] = useState(false);
     // Example- trips = [
     //     {
@@ -11,7 +11,8 @@ function TripsList() {
     //         country: 'Italy',
     //         city: 'Rome',
     //         start_date: '2023-08-18',
-    //         end_date: '2023-08-29'
+    //         end_date: '2023-08-29',
+    //         emails: []
     //     }
     // ]
 
@@ -22,7 +23,23 @@ function TripsList() {
     return (
         <div className="trips-div">
             <button className='add_trip' onClick={showTrip}>Add a new trip</button>
-            {showForm === false ? '' : <Trip />}
+            {showForm === false ? '' : <Trip setTrips={setTrips} />}
+            <p>Your trips</p>
+            {console.log(trips)}
+            <div className="currentTrips">
+                <ul>
+                    {trips.map((el, ind) =>
+                        <li key={ind}>
+                            <div className="trip">
+                                <p>{el.country.label}</p>
+                                <p>{el.city}</p>
+                                <p>{new Date(el.start_date)}</p>
+                                <p>{new Date(el.end_date)}</p>
+                                <p>{el.emails ? '' : el.emails}</p>
+                            </div>
+                        </li>)}
+                </ul>
+            </div>
         </div>
     );
 };
