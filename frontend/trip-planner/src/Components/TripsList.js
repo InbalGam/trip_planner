@@ -31,7 +31,7 @@ function TripsList() {
                 <ul>
                     {trips.map((trip, ind) =>
                         <li key={ind}>
-                            <TripCard trip={trip} />
+                            <TripCard trip={trip} setTrips={setTrips} />
                         </li>)}
                 </ul>
             </div>

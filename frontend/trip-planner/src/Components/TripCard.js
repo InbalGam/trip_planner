@@ -10,7 +10,10 @@ import Typography from '@mui/material/Typography';
 
 
 export default function TripCard(props) {
-  //function onClick(e) {};
+  function onClickDelete(trip) {
+    console.log(trip);
+    props.setTrips((prev) => prev.filter(el => el.country.label !== trip.country.label));
+  };
 
   return (
     <Card sx={{ minWidth: 275 }}>
@@ -31,7 +34,7 @@ export default function TripCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Delete trip</Button>
+        <Button size="small" onClick={() => onClickDelete(props.trip)}>Delete trip</Button>
       </CardActions>
     </Card>
   );
