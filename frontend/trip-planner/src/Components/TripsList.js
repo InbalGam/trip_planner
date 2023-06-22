@@ -33,9 +33,9 @@ function TripsList() {
                             <div className="trip">
                                 <p>{el.country.label}</p>
                                 <p>{el.city}</p>
-                                <p>{new Date(el.start_date)}</p>
-                                <p>{new Date(el.end_date)}</p>
-                                <p>{el.emails ? '' : el.emails}</p>
+                                <p>{el.start_date.toDateString()}</p>
+                                <p>{el.end_date.toDateString()}</p>
+                                <p>{el.emails ? el.emails : ''}</p>
                             </div>
                         </li>)}
                 </ul>
