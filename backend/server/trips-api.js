@@ -86,10 +86,12 @@ async function sharingTrip(req, emails, tripId) {
     }
     if (emails.length > 0) {
         const ids = await pool.query('select id from users where username in ($1)', [emails.join(',')]);
-        const idsTrip = ids.rows.map(i => [tripId, i.id]);
-        userIds.push(idsTrip);
+        if (ids.rows.length > 0) {
+            const idsTrip = ids.rows.map(i => [tripId, i.id]);
+            userIds.push(idsTrip);
+            await pool.query(format('insert into trips_shared (trip_id, user_id) values %L;', userIds));
+        }
     }
-    await pool.query(format('insert into trips_shared (trip_id, user_id) values %L;', userIds));
 };
 
 // Post a new trip

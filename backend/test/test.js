@@ -13,7 +13,6 @@ describe('Login Authorization tests', function() {
         return agent
             .post('/login')
             .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-            .redirects(1)
             .expect(200);
     });
 
@@ -114,7 +113,6 @@ describe('/trips routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .get('/trips')  
@@ -129,7 +127,6 @@ describe('/trips routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .get('/trips')
@@ -154,7 +151,6 @@ describe('/trips routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .post('/trips')
@@ -171,7 +167,6 @@ describe('/trips routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .post('/trips')
@@ -183,12 +178,32 @@ describe('/trips routes', function () {
         })
     });
 
+    it('POST /trips should insert a new trip - email not exist', function () {  
+        const agent = request.agent(app);
+        return agent
+        .post('/login')
+        .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
+        .then(() => {
+            return agent
+            .post('/trips')
+            .send({country: 'ItalCheck', city: 'Romecheck', start_date: '2023-05-01', end_date: '2023-05-09', emails: ['e231233enirHALAY@gmail.com']})
+            .expect(200)
+            .then((response) => {
+                expect(response.body).to.have.ownProperty('id');
+                expect(response.body).to.have.ownProperty('country');
+                expect(response.body).to.have.ownProperty('city');
+                expect(response.body).to.have.ownProperty('start_date');
+                expect(response.body).to.have.ownProperty('end_date');
+                expect(response.body).to.have.ownProperty('created_by');
+            });
+        })
+    });
+
     it('POST /trips should insert a new trip', function () {  
         const agent = request.agent(app);
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .post('/trips')
@@ -210,7 +225,6 @@ describe('/trips routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .get('/trips/19')
@@ -226,7 +240,6 @@ describe('/trips routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .get('/trips/1')
@@ -242,7 +255,6 @@ describe('/trips routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .get('/trips/34')
@@ -263,7 +275,6 @@ describe('/trips routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .put('/trips/34')
@@ -280,7 +291,6 @@ describe('/trips routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .put('/trips/34')
@@ -297,7 +307,6 @@ describe('/trips routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .put('/trips/19')
@@ -314,7 +323,6 @@ describe('/trips routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .put('/trips/1')
@@ -331,7 +339,6 @@ describe('/trips routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .put('/trips/34')
@@ -353,7 +360,6 @@ describe('/trips routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .delete('/trips/19')
@@ -369,7 +375,6 @@ describe('/trips routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .delete('/trips/1')
@@ -385,7 +390,6 @@ describe('/trips routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .delete('/trips/30')
@@ -405,7 +409,6 @@ describe('/activities routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .post('/trips/34/activities')
@@ -422,7 +425,6 @@ describe('/activities routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .post('/trips/34/activities')
@@ -439,7 +441,6 @@ describe('/activities routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .post('/trips/34/activities')
@@ -456,7 +457,6 @@ describe('/activities routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .post('/trips/34/activities')
@@ -482,7 +482,6 @@ describe('/activities routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .get('/trips/39/activities')
@@ -498,7 +497,6 @@ describe('/activities routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .get('/trips/34/activities')  
@@ -513,7 +511,6 @@ describe('/activities routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .get('/trips/34/activities')
@@ -542,7 +539,6 @@ describe('/activities routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .get('/trips/20/activities/3')
@@ -558,7 +554,6 @@ describe('/activities routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .get('/trips/32/activities/8')
@@ -582,7 +577,6 @@ describe('/activities routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .put('/trips/32/activities/8')
@@ -599,7 +593,6 @@ describe('/activities routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .put('/trips/32/activities/8')
@@ -616,7 +609,6 @@ describe('/activities routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .put('/trips/32/activities/8')
@@ -633,7 +625,6 @@ describe('/activities routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .put('/trips/32/activities/8')
@@ -659,7 +650,6 @@ describe('/activities routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .delete('/trips/34/activities/18')
@@ -675,7 +665,6 @@ describe('/activities routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .delete('/trips/34/activities/11')
@@ -695,7 +684,6 @@ describe('/comments routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .get('/trips/32/activities/18/comments')
@@ -711,7 +699,6 @@ describe('/comments routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .get('/trips/32/activities/8/comments')  
@@ -726,7 +713,6 @@ describe('/comments routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .get('/trips/32/activities/8/comments')
@@ -750,7 +736,6 @@ describe('/comments routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .post('/trips/32/activities/9/comments')
@@ -767,7 +752,6 @@ describe('/comments routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .post('/trips/110/activities/1/comments')
@@ -784,7 +768,6 @@ describe('/comments routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .post('/trips/32/activities/9/comments')
@@ -805,7 +788,6 @@ describe('/comments routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .put('/trips/32/activities/8/comments/6')
@@ -822,7 +804,6 @@ describe('/comments routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .put('/trips/332/activities/8/comments/6')
@@ -839,7 +820,6 @@ describe('/comments routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .put('/trips/32/activities/8/comments/6')
@@ -860,7 +840,6 @@ describe('/comments routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .delete('/trips/332/activities/8/comments/6')
@@ -876,7 +855,6 @@ describe('/comments routes', function () {
         return agent
         .post('/login')
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
-        .redirects(1)
         .then(() => {
             return agent
             .delete('/trips/32/activities/8/comments/6')
