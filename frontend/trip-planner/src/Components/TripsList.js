@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Trip from './Trip';
+import TripAdd from './TripAdd';
 import TripCard from './TripCard';
 import {getTrips} from '../Api';
 import { useNavigate } from 'react-router-dom';
@@ -42,14 +42,14 @@ function TripsList() {
     return (
         <div className="trips-div">
             <button className='add_trip' onClick={showTrip}>Add a new trip</button>
-            {showForm === false ? '' : <Trip getUserTrips={getUserTrips} setShowForm={setShowForm} />}
+            {showForm === false ? '' : <TripAdd getUserTrips={getUserTrips} setShowForm={setShowForm} />}
             <p>Your trips</p>
             {console.log(trips)}
             <div className="currentTrips">
                 <ul>
                     {trips.map((trip, ind) =>
                         <li key={ind}>
-                            <TripCard trip={trip} />
+                            <TripCard trip={trip} getUserTrips={getUserTrips} setShowForm={setShowForm} />
                         </li>)}
                 </ul>
             </div>

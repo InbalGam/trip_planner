@@ -119,8 +119,11 @@ tripsRouter.post('/trips', async (req, res, next) => {
 // Get a specific trip
 tripsRouter.get('/trips/:trip_id', async (req, res, next) => {
     try {
-        const result = await pool.query('select * from trips where id = $1', [req.params.trip_id]);
-        res.status(200).json(result.rows[0]);
+        const trip = await pool.query('select * from trips where id = $1', [req.params.trip_id]);
+        const userData = await pool.query('select u.username, u.nickname from trips t join trips_shared ts on t.id = ts.trip_id join users u on ts.user_id = u.id where t.id = $1 and u.id <> $2', [trip.rows[0].id, req.user.id])
+        let result = trip.rows[0];
+        result.userData = userData.rows;
+        res.status(200).json(result);
     } catch (e) {
         res.status(500).json({msg: 'Server error'});
     }

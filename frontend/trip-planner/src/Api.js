@@ -28,6 +28,17 @@ async function getTrips() {
 };
 
 
+async function getSpecificTrip(tripId) {
+    const url = `${baseURL}/trips/${tripId}`;
+    const response = await fetch(url, {
+        method: 'GET',
+        credentials: 'include'
+    });
+
+    return response;
+};
+
+
 async function insertTrip(trip) {
     const {country, city, start_date, end_date, emails} = trip;
     const url = `${baseURL}/trips`;
@@ -41,4 +52,18 @@ async function insertTrip(trip) {
     return response;
 };
 
-export {login, getTrips, insertTrip};
+
+async function updateTrip(trip, tripId) {
+    const {country, city, start_date, end_date, emails} = trip;
+    const url = `${baseURL}/trips/${tripId}`;
+    const response = await fetch(url, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({country, city, start_date, end_date, emails})
+    });
+
+    return response;
+};
+
+export {login, getTrips, insertTrip, getSpecificTrip, updateTrip};

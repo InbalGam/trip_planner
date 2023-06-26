@@ -7,7 +7,7 @@ import countryList from 'react-select-country-list';
 import {insertTrip} from '../Api';
 
 
-function Trip(props) {
+function TripAdd(props) {
     const [country, setCountry] = useState('');
     const [city, setCity] = useState('');
     const [startDate, setStartDate] = useState(new Date());
@@ -77,4 +77,4 @@ function Trip(props) {
     );
 };
 
-export default Trip;
+export default TripAdd;
