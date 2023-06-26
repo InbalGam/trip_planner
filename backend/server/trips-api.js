@@ -89,9 +89,9 @@ async function sharingTrip(req, emails, tripId) {
         if (ids.rows.length > 0) {
             const idsTrip = ids.rows.map(i => [tripId, i.id]);
             userIds.push(idsTrip);
-            await pool.query(format('insert into trips_shared (trip_id, user_id) values %L;', userIds));
         }
     }
+    await pool.query(format('insert into trips_shared (trip_id, user_id) values %L;', userIds));
 };
 
 // Post a new trip
