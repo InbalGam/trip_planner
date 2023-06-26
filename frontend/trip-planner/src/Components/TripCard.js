@@ -8,25 +8,24 @@ import { Link } from 'react-router-dom';
 
 
 export default function TripCard(props) {
+  
   function onClickDelete(trip) {
-    console.log(trip);
-    props.setTrips((prev) => prev.filter(el => el.country.label !== trip.country.label));
   };
 
   return (
-    <Link to={`/trips/${props.trip.country.label}`} >
+    <Link to={`/trips/${props.trip.id}`} >
       <Card sx={{ minWidth: 275 }}>
         <CardContent>
-          <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-            {props.trip.country.label}
+          <Typography sx={{ fontSize: 24 }} color="text.secondary" gutterBottom>
+            {props.trip.country}
           </Typography>
           <Typography variant="h5" component="div">
             {props.trip.city}
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            Start at- {props.trip.start_date.toDateString()}
+            Start at- {props.trip.start_date}
             <br />
-            End at- {props.trip.end_date.toDateString()}
+            End at- {props.trip.end_date}
           </Typography>
           <Typography variant="body2">
             {props.trip.emails ? props.trip.emails : ''}

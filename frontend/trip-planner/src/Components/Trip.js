@@ -4,15 +4,18 @@ import "react-datepicker/dist/react-datepicker.css";
 import Email from './EmailAdd';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
+import {insertTrip} from '../Api';
 
 
 function Trip(props) {
-    //const [text, setText] = useState('');
     const [country, setCountry] = useState('');
     const [city, setCity] = useState('');
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [emails, setEmails] = useState([]);
+    const [insertFailed, setInsertFailed] = useState(false);
+    const [fieldsFilled, setFieldsFilled] = useState(false);
+
 
     const options = useMemo(() => countryList().getData(), []);
     const changeHandler = value => {
@@ -23,16 +26,36 @@ function Trip(props) {
         setCity(e.target.value);
     };
 
-    function submitTrip(e) {
-        e.preventDefault();
-        const newTrip = {
-            country: country,
-            city: city,
-            start_date: startDate,
-            end_date: endDate,
-            emails: emails
+    async function insertUserTrip(trip) {
+        const result = await insertTrip(trip);
+        if (result.status === 200) {
+            return result;
+        } else {
+            setInsertFailed(true);
         }
-        props.setTrips((prev) => [newTrip, ...prev]);
+    }
+
+    async function submitTrip(e) {
+        e.preventDefault();
+        if (!country.label || !city || !startDate || !endDate || !emails) {
+            setFieldsFilled(true);
+        } else {
+            const newTrip = {
+                country: country.label,
+                city: city,
+                start_date: startDate,
+                end_date: endDate,
+                emails: emails
+            }
+            await insertUserTrip(newTrip);
+            props.getUserTrips();
+            setCity('');
+            setCountry('');
+            setEmails([]);
+            setStartDate(new Date());
+            setEndDate(new Date());
+            props.setShowForm(false);
+        }
     };
 
     return (
@@ -46,6 +69,10 @@ function Trip(props) {
             <DatePicker selected={endDate} onChange={date => setEndDate(date)} dateFormat='dd-MMM-yy' />
             <Email email={emails} setEmails={setEmails} />
             <button type="submit" value="Submit" className="submitButton">Submit trip</button>
+            <div className="failed">
+                {fieldsFilled ? 'All fields needs to be filled' : ''}
+                {insertFailed ? 'Problem adding trip' : ''}
+            </div>
         </form>
     );
 };
