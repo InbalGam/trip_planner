@@ -16,7 +16,11 @@ const PORT = process.env.PORT || 4001;
 
 app.use(morgan('short'));
 // middleware for handling CORS requests from index.html
-app.use(cors());
+app.use(cors(
+  {origin : 'http://localhost:3000', //(Whatever the frontend url is) 
+  credentials: true, // <= Accept credentials (cookies) sent by the client
+}
+));
 
 
 // middleware for parsing request bodies here:
