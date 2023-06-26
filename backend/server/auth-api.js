@@ -48,7 +48,7 @@ authRouter.get("/login", (req, res) => {
 authRouter.post("/login",
     passport.authenticate("local", { failureRedirect: "/login" }),
     (req, res) => {
-      res.redirect("/trips");
+        res.status(200).json({msg: 'Authentication succeeded'});
     }
 );
 
