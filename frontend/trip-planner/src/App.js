@@ -1,11 +1,18 @@
-import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
-import Navigation from './Components/Navigation';
+import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route, Navigate } from "react-router-dom";
+import Root from './Components/Root';
 import TripsList from './Components/TripsList';
+import TripScheduler from "./Components/TripScheduler";
+import Login from './Components/Login';
 
 function App() {
 
   const router = createBrowserRouter(createRoutesFromElements(
-    <Route path='/' element={ <Navigation /> } />
+    <Route path='/' element={ <Root /> } >
+      <Route exact path="/" element={<Navigate to="/trips" />} />
+      <Route path='login' element={ <Login/> } />
+      <Route path='trips' element={ <TripsList/> } />
+      <Route path='trips/:tripId' element={ <TripScheduler/> } />
+    </Route>
   ));
 
   return (
@@ -15,7 +22,6 @@ function App() {
       </header>
       <body className="App_body" >
         <RouterProvider router={ router } />
-        <TripsList />
       </body>
     </div>
   );
