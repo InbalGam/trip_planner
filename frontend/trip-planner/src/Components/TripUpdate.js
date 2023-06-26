@@ -55,7 +55,7 @@ function TripUpdate(props) {
     };
 
 
-    async function updateTrip(e) {
+    async function submitUpdateTrip(e) {
         e.preventDefault();
         if (!country.label || !city || !startDate || !endDate || !emails) {
             setFieldsFilled(true);
@@ -79,7 +79,7 @@ function TripUpdate(props) {
     };
 
     return (
-        <form onSubmit={updateTrip}>
+        <form onSubmit={submitUpdateTrip}>
             <Select options={options} value={country} onChange={changeHandler} />
             <label for='city'>City</label>
             <input id='city' type='text' name='city' value={city} placeholder={'Enter city here'} onChange={handleTextChange} className="trip_input"/>

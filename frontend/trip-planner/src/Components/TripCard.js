@@ -44,7 +44,7 @@ export default function TripCard(props) {
           <Button size="small" onClick={() => onClickDelete(props.trip)}>Delete trip</Button>
         </CardActions>
       </Card>
-      {showForm === false ? '' : <TripUpdate getUserTrips={props.getUserTrips} setShowForm={props.setShowForm} trip={props.trip} />}
+      {showForm === false ? '' : <TripUpdate getUserTrips={props.getUserTrips} setShowForm={setShowForm} trip={props.trip} />}
     </>
   );
 };
