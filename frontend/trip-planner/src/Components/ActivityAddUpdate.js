@@ -1,7 +1,6 @@
 import {insertTripActivity} from '../Api';
 import { useParams } from 'react-router-dom';
 import DatePicker from "react-datepicker";
-import { TimePicker } from "@mui/x-date-pickers";
 import { useState,  useEffect } from "react";
 
 function ActivityAddUpdate() {
@@ -38,11 +37,12 @@ function ActivityAddUpdate() {
             <label for='link'>Activity link</label>
             <input id='link' type='text' name='link' value={link} placeholder={'Enter link here'} onChange={handleLinkChange} />
             <label for='start_time'>Activity start time</label>
-            <TimePicker label="Controlled picker" value={startValue} onChange={(newValue) => setStartValue(newValue)}/>
+            <input type="time" id="start_time" name="start_time" min="08:00" max="24:00" value={startValue} onChange={(e) => setStartValue(e.target.value)} />
             <label for='end_time'>Activity end time</label>
-            <TimePicker label="Controlled picker" value={endValue} onChange={(newValue) => setEndValue(newValue)}/>
+            <input type="time" id="start_time" name="start_time" min="08:00" max="24:00" value={endValue} onChange={(e) => setEndValue(e.target.value)} />
             <label for='user_notes'>Notes</label>
             <textarea id='user_notes' name="user_notes"rows="5" cols="33">Enter notes here</textarea>
+            {/* TODO: ADD SUBMIT BUTTON AND FUNCTION */}
         </form>
     );
 };
