@@ -79,12 +79,7 @@ tripsRouter.get('/trips', async (req, res, next) => {
 });
 
 async function sharingTrip(req, emails, tripId) {
-    let userIds;
-    if (req.method === 'POST') {
-        userIds = [[tripId, req.user.id]];
-    } else {
-        userIds = [];
-    }
+    let userIds = [[tripId, req.user.id]];
     if (emails.length > 0) {
         const ids = await pool.query('select id from users where username in ($1)', [emails.join(',')]);
         if (ids.rows.length > 0) {
@@ -92,6 +87,7 @@ async function sharingTrip(req, emails, tripId) {
             userIds.push(idsTrip);
         }
     }
+    await pool.query('delete from trips_shared where trip_id = $1;', [tripId]);
     await pool.query(format('insert into trips_shared (trip_id, user_id) values %L;', userIds));
 };
 
