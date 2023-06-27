@@ -3,8 +3,8 @@ import Paper from '@mui/material/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
-  MonthView,
-  Appointments,
+  MonthView, WeekView,
+  Appointments, Toolbar, DateNavigator
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { useParams } from 'react-router-dom';
 import {getSpecificTrip, getActivities} from '../Api';
@@ -17,7 +17,7 @@ function TripScheduler() {
     const { tripId } = useParams();
     const [trip, setTrip] = useState({});
     const [schedulerData, setSchedulerData] = useState([]);
-    const [currentDate, setCurrentDate] = useState('');
+    const [currentDate, setCurrentDate] = useState(dateFormat(new Date(), "yyyy-mm-dd"));
     const [isActivities, setIsActivities] = useState(true);
     const [showForm, setShowForm] = useState(false);
 
@@ -62,9 +62,11 @@ function TripScheduler() {
             <Paper>
                 <p>{isActivities ? '' : 'No activities yet'}</p>
                 <Scheduler data={schedulerData}>
-                    <ViewState currentDate={'2023-05-01'} />
-                    <MonthView />
+                    <ViewState currentDate={currentDate} onCurrentDateChange={(date) => {setCurrentDate(date)}} />
+                    <WeekView startDayHour={5} cellDuration={60} />
                     <Appointments />
+                    <Toolbar/>
+                    <DateNavigator/>
                 </Scheduler>
             </Paper>
             <div>
