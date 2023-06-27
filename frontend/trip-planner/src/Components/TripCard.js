@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { useState } from "react";
-import TripUpdate from './TripUpdate';
+import TripAddUpdate from './TripAddUpdate';
 import dateFormat, { masks } from "dateformat";
 import {deleteSpecificTrip} from '../Api';
 
@@ -52,7 +52,7 @@ export default function TripCard(props) {
           {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={() => onClickDelete(props.trip)}>Delete trip</Button> : ''}
         </CardActions>
       </Card>
-      {showForm === false ? '' : <TripUpdate getUserTrips={props.getUserTrips} setShowForm={setShowForm} trip={props.trip} />}
+      {showForm === false ? '' : <TripAddUpdate getUserTrips={props.getUserTrips} setShowForm={setShowForm} trip={props.trip} isTripAdd={false} />}
       {deleteFailed === false ? '' : 'Could not delete trip'}
     </>
   );
