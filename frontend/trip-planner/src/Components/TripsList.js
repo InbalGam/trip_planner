@@ -9,16 +9,8 @@ function TripsList() {
     const [trips, setTrips] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const navigate = useNavigate();
-    // Example- trips = [
-    //     {
-    //         id: 1,
-    //         country: 'Italy',
-    //         city: 'Rome',
-    //         start_date: '2023-08-18',
-    //         end_date: '2023-08-29',
-    //         emails: []
-    //     }
-    // ]
+  
+    
     async function getUserTrips() {
         const result = await getTrips();
         if (result.status === 401) {
