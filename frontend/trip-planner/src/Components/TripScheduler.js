@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import {getSpecificTrip, getActivities} from '../Api';
 import { useState, useEffect } from "react";
 import dateFormat, { masks } from "dateformat";
+import ActivityAddUpdate from './ActivityAddUpdate';
 
 
 function TripScheduler() {
@@ -18,7 +19,8 @@ function TripScheduler() {
     const [schedulerData, setSchedulerData] = useState([]);
     const [currentDate, setCurrentDate] = useState('');
     const [isActivities, setIsActivities] = useState(true);
-        
+    const [showForm, setShowForm] = useState(false);
+
 
 
     async function getTripInfo(id) {
@@ -34,7 +36,7 @@ function TripScheduler() {
         if (jsonData.length > 0) {
             const activities = jsonData.map(el => {
                 const newDate = dateFormat(new Date(el.date), "yyyy, mm, dd");
-                return {title: el.activity_name, startDate: new Date(newDate + ', ' + el.start_time), endDate: new Date(newDate + ', ' + el.end_time)}
+                return { title: el.activity_name, startDate: new Date(newDate + ', ' + el.start_time), endDate: new Date(newDate + ', ' + el.end_time) }
             });
             setSchedulerData(activities);
             const formattedDate = dateFormat(new Date(activities[0].startDate), "yyyy-mm-dd");
@@ -50,14 +52,27 @@ function TripScheduler() {
     }, []);
 
 
-    return (<Paper>
-        <p>{isActivities ? '' : 'No activities yet'}</p>
-        <Scheduler data={schedulerData}>
-            <ViewState currentDate={'2023-05-01'} />
-            <MonthView />
-            <Appointments />
-        </Scheduler>
-    </Paper>);
+    function showActivity() {
+        setShowForm(!showForm);
+    };
+
+
+    return (
+        <>
+            <Paper>
+                <p>{isActivities ? '' : 'No activities yet'}</p>
+                <Scheduler data={schedulerData}>
+                    <ViewState currentDate={'2023-05-01'} />
+                    <MonthView />
+                    <Appointments />
+                </Scheduler>
+            </Paper>
+            <div>
+                <button className='add_activity' onClick={showActivity}>Add a new activity</button>
+                {showForm === false ? '' : <ActivityAddUpdate />}
+            </div>
+        </>
+    );
 };
 
 
