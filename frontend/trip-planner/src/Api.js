@@ -66,4 +66,16 @@ async function updateTrip(trip, tripId) {
     return response;
 };
 
-export {login, getTrips, insertTrip, getSpecificTrip, updateTrip};
+
+async function deleteSpecificTrip(tripId) {
+    const url = `${baseURL}/trips/${tripId}`;
+    const response = await fetch(url, {
+        method: 'DELETE',
+        credentials: 'include'
+    });
+
+    return response;
+};
+
+
+export {login, getTrips, insertTrip, getSpecificTrip, updateTrip, deleteSpecificTrip};

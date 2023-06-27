@@ -8,16 +8,24 @@ import { Link } from 'react-router-dom';
 import { useState } from "react";
 import TripUpdate from './TripUpdate';
 import dateFormat, { masks } from "dateformat";
+import {deleteSpecificTrip} from '../Api';
 
 
 export default function TripCard(props) {
   const [showForm, setShowForm] = useState(false);
+  const [deleteFailed, setDeleteFailed] = useState();
 
   function onClickEdit() {
     setShowForm(!showForm);
   };
 
-  function onClickDelete(trip) {
+  async function onClickDelete(trip) {
+    const result = await deleteSpecificTrip(trip.id);
+    if (result.status === 200) {
+      setDeleteFailed(false);
+    } else {
+      setDeleteFailed(true);
+    }
   };
   
   return (
@@ -45,6 +53,7 @@ export default function TripCard(props) {
         </CardActions>
       </Card>
       {showForm === false ? '' : <TripUpdate getUserTrips={props.getUserTrips} setShowForm={setShowForm} trip={props.trip} />}
+      {deleteFailed === false ? 'Trip deleted' : 'Could not delete trip'}
     </>
   );
 };
