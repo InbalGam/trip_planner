@@ -17,6 +17,7 @@ function TripScheduler() {
     const [trip, setTrip] = useState({});
     const [schedulerData, setSchedulerData] = useState([]);
     const [currentDate, setCurrentDate] = useState('');
+    const [isActivities, setIsActivities] = useState(true);
         
 
 
@@ -30,13 +31,17 @@ function TripScheduler() {
     async function getTripActivities(id) {
         const result = await getActivities(id);
         const jsonData = await result.json();
-        const activities = jsonData.map(el => {
-            const newDate = dateFormat(new Date(el.date), "yyyy, mm, dd");
-            return {title: el.activity_name, startDate: new Date(newDate + ', ' + el.start_time), endDate: new Date(newDate + ', ' + el.end_time)}
-        });
-        setSchedulerData(activities);
-        const formattedDate = dateFormat(new Date(activities[0].startDate), "yyyy-mm-dd");
-        setCurrentDate(formattedDate.toString());
+        if (jsonData.length > 0) {
+            const activities = jsonData.map(el => {
+                const newDate = dateFormat(new Date(el.date), "yyyy, mm, dd");
+                return {title: el.activity_name, startDate: new Date(newDate + ', ' + el.start_time), endDate: new Date(newDate + ', ' + el.end_time)}
+            });
+            setSchedulerData(activities);
+            const formattedDate = dateFormat(new Date(activities[0].startDate), "yyyy-mm-dd");
+            setCurrentDate(formattedDate.toString());
+        } else {
+            setIsActivities(false);
+        }
     };
 
     useEffect(() => {
@@ -46,8 +51,9 @@ function TripScheduler() {
 
 
     return (<Paper>
+        <p>{isActivities ? '' : 'No activities yet'}</p>
         <Scheduler data={schedulerData}>
-            <ViewState currentDate={currentDate} />
+            <ViewState currentDate={'2023-05-01'} />
             <MonthView />
             <Appointments />
         </Scheduler>
