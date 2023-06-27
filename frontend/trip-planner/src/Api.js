@@ -3,7 +3,7 @@ import fetch from 'cross-fetch';
 
 const baseURL = 'http://localhost:4001';
 
-
+// Auth
 async function login(username, password) {
     const url = `${baseURL}/login`;
     const response = await fetch(url, {
@@ -17,6 +17,7 @@ async function login(username, password) {
 };
 
 
+// Trips
 async function getTrips() {
     const url = `${baseURL}/trips`;
     const response = await fetch(url, {
@@ -78,4 +79,16 @@ async function deleteSpecificTrip(tripId) {
 };
 
 
-export {login, getTrips, insertTrip, getSpecificTrip, updateTrip, deleteSpecificTrip};
+// Activities
+async function getActivities(tripId) {
+    const url = `${baseURL}/trips/${tripId}/activities`;
+    const response = await fetch(url, {
+        method: 'GET',
+        credentials: 'include'
+    });
+
+    return response;
+};
+
+
+export {login, getTrips, insertTrip, getSpecificTrip, updateTrip, deleteSpecificTrip, getActivities};
