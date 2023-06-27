@@ -70,7 +70,7 @@ tripsRouter.use('/trips/:trip_id/activities/:activity_id/comments/:comment_id', 
 // Get all trips-
 tripsRouter.get('/trips', async (req, res, next) => { 
     try {
-        const result = await pool.query('select t.* from trips t join trips_shared ts on t.id = ts.trip_id where ts.user_id = $1', [req.user.id]);
+        const result = await pool.query('select t.* from trips t join trips_shared ts on t.id = ts.trip_id where ts.user_id = $1 order by t.start_date', [req.user.id]);
         const newResult = result.rows.map(el => ({...el, isCreatedByMe: el.created_by === req.user.id ? 1 : 0}));
         res.status(200).json(newResult);
     } catch (e) {
@@ -180,7 +180,7 @@ tripsRouter.delete('/trips/:trip_id', checkedTripAuth, async (req, res, next) =>
 // Get all activities-
 tripsRouter.get('/trips/:trip_id/activities', async (req, res, next) => {
     try {
-        const result = await pool.query('select * from activities where trip_id = $1', [req.params.trip_id]);
+        const result = await pool.query('select * from activities where trip_id = $1 order by date, start_time', [req.params.trip_id]);
         res.status(200).json(result.rows);
     } catch(e) {
         res.status(500).json({msg: 'Server error'});
