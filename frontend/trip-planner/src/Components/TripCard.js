@@ -13,7 +13,7 @@ import {deleteSpecificTrip} from '../Api';
 
 export default function TripCard(props) {
   const [showForm, setShowForm] = useState(false);
-  const [deleteFailed, setDeleteFailed] = useState();
+  const [deleteFailed, setDeleteFailed] = useState(false);
 
   function onClickEdit() {
     setShowForm(!showForm);
@@ -48,12 +48,12 @@ export default function TripCard(props) {
           </Link>
         </CardContent>
         <CardActions>
-          <Button size="small" onClick={onClickEdit}>Edit trip</Button>
-          <Button size="small" onClick={() => onClickDelete(props.trip)}>Delete trip</Button>
+          {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={onClickEdit}>Edit trip</Button> : ''}
+          {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={() => onClickDelete(props.trip)}>Delete trip</Button> : ''}
         </CardActions>
       </Card>
       {showForm === false ? '' : <TripUpdate getUserTrips={props.getUserTrips} setShowForm={setShowForm} trip={props.trip} />}
-      {deleteFailed === false ? 'Trip deleted' : 'Could not delete trip'}
+      {deleteFailed === false ? '' : 'Could not delete trip'}
     </>
   );
 };
