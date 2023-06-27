@@ -17,6 +17,17 @@ async function login(username, password) {
 };
 
 
+async function logout() {
+    const url = `${baseURL}/logout`;
+    const response = await fetch(url, {
+        method: 'GET',
+        credentials: 'include'
+    });
+
+    return response;
+};
+
+
 // Trips
 async function getTrips() {
     const url = `${baseURL}/trips`;
@@ -91,4 +102,4 @@ async function getActivities(tripId) {
 };
 
 
-export {login, getTrips, insertTrip, getSpecificTrip, updateTrip, deleteSpecificTrip, getActivities};
+export {login, logout, getTrips, insertTrip, getSpecificTrip, updateTrip, deleteSpecificTrip, getActivities};

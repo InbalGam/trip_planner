@@ -3,6 +3,7 @@ import Root from './Components/Root';
 import TripsList from './Components/TripsList';
 import TripScheduler from "./Components/TripScheduler";
 import Login from './Components/Login';
+import Logout from './Components/Logout';
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
       <Route path='login' element={ <Login/> } />
       <Route path='trips' element={ <TripsList/> } />
       <Route path='trips/:tripId' element={ <TripScheduler/> } />
+      <Route path='logout' element={ <Logout/> } />
     </Route>
   ));
 
