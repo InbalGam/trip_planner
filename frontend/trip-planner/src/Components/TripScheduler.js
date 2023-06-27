@@ -69,7 +69,7 @@ function TripScheduler() {
             </Paper>
             <div>
                 <button className='add_activity' onClick={showActivity}>Add a new activity</button>
-                {showForm === false ? '' : <ActivityAddUpdate />}
+                {showForm === false ? '' : <ActivityAddUpdate getTripActivities={getTripActivities} />}
             </div>
         </>
     );
