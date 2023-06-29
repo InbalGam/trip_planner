@@ -23,10 +23,14 @@ export default function TripCard(props) {
   async function onClickDelete(trip) {
     try {
       const result = await deleteSpecificTrip(trip.id);
-      if (result.status === 200) {
-        setDeleteFailed(false);
+      if (result.status === 401) {
+        navigate('/login');
       } else {
-        setDeleteFailed(true);
+        if (result.status === 200) {
+          setDeleteFailed(false);
+        } else {
+          setDeleteFailed(true);
+        }
       }
     } catch (e) {
       navigate('/error');

@@ -30,12 +30,16 @@ function TripScheduler() {
         try {
             setIsLoading(true);
             const result = await getSpecificTrip(id);
-            const jsonData = await result.json();
+            if (result.status === 401) {
+                navigate('/login');
+            } else {
+                const jsonData = await result.json();
             setTrip(jsonData);
             const justDate = jsonData.start_date.split('T')[0]
             const formattedDate = dateFormat(new Date(justDate), "yyyy-mm-dd");
             setCurrentDate(formattedDate.toString());
             setIsLoading(false);
+            };
         } catch (e) {
             navigate('/error');
         }
@@ -46,19 +50,23 @@ function TripScheduler() {
         try {
             setIsLoading(true);
             const result = await getActivities(id);
-            const jsonData = await result.json();
-            if (jsonData.length > 0) {
-                const activities = jsonData.map(el => {
-                    const newDate = dateFormat(new Date(el.date), "yyyy, mm, dd");
-                    return { title: el.activity_name, startDate: new Date(newDate + ', ' + el.start_time), endDate: new Date(newDate + ', ' + el.end_time) }
-                });
-                setSchedulerData(activities);
-                const formattedDate = dateFormat(new Date(activities[0].startDate), "yyyy-mm-dd");
-                setCurrentDate(formattedDate.toString());
+            if (result.status === 401) {
+                navigate('/login');
             } else {
-                setIsActivities(false);
-            }
-            setIsLoading(false);
+                const jsonData = await result.json();
+                if (jsonData.length > 0) {
+                    const activities = jsonData.map(el => {
+                        const newDate = dateFormat(new Date(el.date), "yyyy, mm, dd");
+                        return { title: el.activity_name, startDate: new Date(newDate + ', ' + el.start_time), endDate: new Date(newDate + ', ' + el.end_time) }
+                    });
+                    setSchedulerData(activities);
+                    const formattedDate = dateFormat(new Date(activities[0].startDate), "yyyy-mm-dd");
+                    setCurrentDate(formattedDate.toString());
+                } else {
+                    setIsActivities(false);
+                }
+                setIsLoading(false);
+            };
         } catch (e) {
             navigate('/error');
         }

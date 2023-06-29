@@ -33,11 +33,15 @@ function ActivityAddUpdate(props) {
     async function insertUserActivity(id, activity) {
         try {
             const result = await insertTripActivity(id, activity);
-            if (result.status === 200) {
-                return result;
+            if (result.status === 401) {
+                navigate('/login');
             } else {
-                setInsertFailed(true);
-            }
+                if (result.status === 200) {
+                    return result;
+                } else {
+                    setInsertFailed(true);
+                }
+            };
         } catch (e) {
             navigate('/error');
         }

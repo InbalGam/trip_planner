@@ -34,11 +34,15 @@ function TripAdd(props) {
     async function insertUserTrip(trip) {
         try {
             const result = await insertTrip(trip);
-            if (result.status === 200) {
-                return result;
+            if (result.status === 401) {
+                navigate('/login');
             } else {
-                setInsertFailed(true);
-            }
+                if (result.status === 200) {
+                    return result;
+                } else {
+                    setInsertFailed(true);
+                }
+            };
         } catch (e) {
             navigate('/error');
         }
@@ -48,14 +52,18 @@ function TripAdd(props) {
     async function getATrip(id) {
         try {
             const tripDB = await getSpecificTrip(id);
-            const jsonData = await tripDB.json();
-            setTrip(jsonData);
-            setCountry(options.filter(obj => obj.label === jsonData.country)[0]);
-            setCity(jsonData.city);
-            const emailsDB = jsonData.userData.map(el => el.username);
-            setEmails(emailsDB);
-            setStartDate(new Date(jsonData.start_date));
-            setEndDate(new Date(jsonData.end_date));
+            if (tripDB.status === 401) {
+                navigate('/login');
+            } else {
+                const jsonData = await tripDB.json();
+                setTrip(jsonData);
+                setCountry(options.filter(obj => obj.label === jsonData.country)[0]);
+                setCity(jsonData.city);
+                const emailsDB = jsonData.userData.map(el => el.username);
+                setEmails(emailsDB);
+                setStartDate(new Date(jsonData.start_date));
+                setEndDate(new Date(jsonData.end_date));
+            };
         } catch (e) {
             navigate('/error');
         }
@@ -72,11 +80,15 @@ function TripAdd(props) {
     async function updateUserTrip(updatedTrip) {
         try {
             const result = await updateTrip(updatedTrip, props.trip.id);
-            if (result.status === 200) {
-                return result;
+            if (result.status === 401) {
+                navigate('/login');
             } else {
-                setUpdateFailed(true);
-            }
+                if (result.status === 200) {
+                    return result;
+                } else {
+                    setUpdateFailed(true);
+                }
+            };
         } catch (e) {
             navigate('/error');
         }
