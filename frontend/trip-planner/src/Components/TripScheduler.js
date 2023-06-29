@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
-import { Scheduler, MonthView, WeekView, Appointments, Toolbar, DateNavigator } from '@devexpress/dx-react-scheduler-material-ui';
+import { Scheduler, MonthView, WeekView, Appointments, Toolbar, DateNavigator, AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import { useParams, useNavigate } from 'react-router-dom';
 import {getSpecificTrip, getActivities} from '../Api';
 import { useState, useEffect } from "react";
@@ -54,7 +54,7 @@ function TripScheduler() {
                 if (jsonData.length > 0) {
                     const activities = jsonData.map(el => {
                         const newDate = dateFormat(new Date(el.date), "yyyy, mm, dd");
-                        return { title: el.activity_name, startDate: new Date(newDate + ', ' + el.start_time), endDate: new Date(newDate + ', ' + el.end_time) }
+                        return { id: el.id, title: el.activity_name, startDate: new Date(newDate + ', ' + el.start_time), endDate: new Date(newDate + ', ' + el.end_time) }
                     });
                     setSchedulerData(activities);
                     const formattedDate = dateFormat(new Date(activities[0].startDate), "yyyy-mm-dd");
@@ -81,12 +81,18 @@ function TripScheduler() {
     };
 
 
-    function actionsOnActivity(e) {
-        console.log('hello');
-        setShowForm(true);
-        setIsActivityAdd(false);
+    // function actionsOnActivity(e) {
+    //     console.log(e);
+    //     setShowForm(!showForm);
+    //     // setIsActivityAdd(false);
+    // };
+
+    function navigateToActivity(e) {
+        console.log(e);
+        navigate(`/trips/${tripId}/activities/${e.data.id}`);
     };
 
+    const myAppointmentComponent = (props) => <Appointments.Appointment {...props} onDoubleClick={navigateToActivity} />; // TODO- openActivity
 
     return (
         <>
@@ -95,7 +101,14 @@ function TripScheduler() {
                 <Scheduler data={schedulerData}>
                     <ViewState currentDate={currentDate} onCurrentDateChange={(date) => { setCurrentDate(date) }} />
                     <WeekView startDayHour={5} cellDuration={60} />
-                    <Appointments onClick={actionsOnActivity} draggable={true}/>
+                    <Appointments draggable={true} appointmentComponent={myAppointmentComponent}/>
+                    <AppointmentTooltip
+          showOpenButton
+          showCloseButton
+          showDeleteButton
+        //   onOpenButtonClick
+        //   onDeleteButtonClick={() => console.log('hey there')}
+        />
                     <Toolbar />
                     <DateNavigator />
                 </Scheduler>
