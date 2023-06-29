@@ -110,6 +110,7 @@ function TripAdd(props) {
             <div className="failed">
                 {fieldsFilled ? 'All fields needs to be filled' : ''}
                 {insertFailed ? 'Problem adding trip' : ''}
+                {updateFailed ? 'Problem updating trip' : ''}
             </div>
         </form>
     );
