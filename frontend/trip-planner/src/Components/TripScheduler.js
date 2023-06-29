@@ -27,6 +27,9 @@ function TripScheduler() {
         const result = await getSpecificTrip(id);
         const jsonData = await result.json();
         setTrip(jsonData);
+        const justDate = jsonData.start_date.split('T')[0]
+        const formattedDate = dateFormat(new Date(justDate), "yyyy-mm-dd");
+        setCurrentDate(formattedDate.toString());
     };
 
 
