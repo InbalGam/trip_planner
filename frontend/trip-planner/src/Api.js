@@ -116,9 +116,9 @@ async function insertTripActivity(tripId, activity) {
 };
 
 
-async function updateTripActivity(tripId, activity) {
+async function updateTripActivity(tripId, activity, activityId) {
     const {date, activity_name, address, activityURL, start_time, end_time, user_notes} = activity;
-    const url = `${baseURL}/trips/${tripId}/activities`;
+    const url = `${baseURL}/trips/${tripId}/activities/${activityId}`;
     const response = await fetch(url, {
         method: 'PUT',
         credentials: 'include',
