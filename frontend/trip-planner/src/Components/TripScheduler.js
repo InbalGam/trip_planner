@@ -1,11 +1,7 @@
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
-import {
-  Scheduler,
-  MonthView, WeekView,
-  Appointments, Toolbar, DateNavigator
-} from '@devexpress/dx-react-scheduler-material-ui';
+import { Scheduler, MonthView, WeekView, Appointments, Toolbar, DateNavigator } from '@devexpress/dx-react-scheduler-material-ui';
 import { useParams, useNavigate } from 'react-router-dom';
 import {getSpecificTrip, getActivities} from '../Api';
 import { useState, useEffect } from "react";
@@ -22,6 +18,7 @@ function TripScheduler() {
     const [isActivities, setIsActivities] = useState(true);
     const [showForm, setShowForm] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const[isActivityAdd, setIsActivityAdd] = useState(false);
     const navigate = useNavigate();
 
 
@@ -80,6 +77,14 @@ function TripScheduler() {
 
     function showActivity() {
         setShowForm(!showForm);
+        setIsActivityAdd(true);
+    };
+
+
+    function actionsOnActivity(e) {
+        console.log('hello');
+        setShowForm(true);
+        setIsActivityAdd(false);
     };
 
 
@@ -90,14 +95,14 @@ function TripScheduler() {
                 <Scheduler data={schedulerData}>
                     <ViewState currentDate={currentDate} onCurrentDateChange={(date) => { setCurrentDate(date) }} />
                     <WeekView startDayHour={5} cellDuration={60} />
-                    <Appointments />
+                    <Appointments onClick={actionsOnActivity} draggable={true}/>
                     <Toolbar />
                     <DateNavigator />
                 </Scheduler>
             </Paper>}
             <div>
                 <button className='add_activity' onClick={showActivity} >Add a new activity</button>
-                {showForm === false ? '' : <ActivityAddUpdate getTripActivities={getTripActivities} setShowForm={setShowForm} isActivityAdd={true} />}
+                {showForm === false ? '' : <ActivityAddUpdate getTripActivities={getTripActivities} setShowForm={setShowForm} isActivityAdd={isActivityAdd} />}
             </div>
         </>
     );

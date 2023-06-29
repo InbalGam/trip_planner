@@ -1,4 +1,4 @@
-import {insertTripActivity} from '../Api';
+import {insertTripActivity, updateTripActivity} from '../Api';
 import { useParams, useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import { useState,  useEffect } from "react";
@@ -33,6 +33,33 @@ function ActivityAddUpdate(props) {
     async function insertUserActivity(id, activity) {
         try {
             const result = await insertTripActivity(id, activity);
+            if (result.status === 401) {
+                navigate('/login');
+            } else {
+                if (result.status === 200) {
+                    return result;
+                } else {
+                    setInsertFailed(true);
+                }
+            };
+        } catch (e) {
+            navigate('/error');
+        }
+    };
+
+
+    async function getAnActivity(tripId) {};
+
+
+    useEffect(() => {
+        if (!props.isActivityAdd) {
+            getAnActivity(tripId);
+        }
+    }, []);
+
+    async function updateUserActivity(tripId, activity, activityId) {
+        try {
+            const result = await updateTripActivity(tripId, activity, activityId);
             if (result.status === 401) {
                 navigate('/login');
             } else {
