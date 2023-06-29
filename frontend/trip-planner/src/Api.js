@@ -116,4 +116,18 @@ async function insertTripActivity(tripId, activity) {
 };
 
 
-export {login, logout, getTrips, insertTrip, getSpecificTrip, updateTrip, deleteSpecificTrip, getActivities, insertTripActivity};
+async function updateTripActivity(tripId, activity) {
+    const {date, activity_name, address, activityURL, start_time, end_time, user_notes} = activity;
+    const url = `${baseURL}/trips/${tripId}/activities`;
+    const response = await fetch(url, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({date, activity_name, address, activityURL, start_time, end_time, user_notes})
+    });
+
+    return response;
+};
+
+
+export {login, logout, getTrips, insertTrip, getSpecificTrip, updateTrip, deleteSpecificTrip, getActivities, insertTripActivity, updateTripActivity};
