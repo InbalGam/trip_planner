@@ -6,7 +6,7 @@ import {
   MonthView, WeekView,
   Appointments, Toolbar, DateNavigator
 } from '@devexpress/dx-react-scheduler-material-ui';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {getSpecificTrip, getActivities} from '../Api';
 import { useState, useEffect } from "react";
 import dateFormat, { masks } from "dateformat";
@@ -22,37 +22,46 @@ function TripScheduler() {
     const [isActivities, setIsActivities] = useState(true);
     const [showForm, setShowForm] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
 
 
     async function getTripInfo(id) {
-        setIsLoading(true);
-        const result = await getSpecificTrip(id);
-        const jsonData = await result.json();
-        setTrip(jsonData);
-        const justDate = jsonData.start_date.split('T')[0]
-        const formattedDate = dateFormat(new Date(justDate), "yyyy-mm-dd");
-        setCurrentDate(formattedDate.toString());
-        setIsLoading(false);
+        try {
+            setIsLoading(true);
+            const result = await getSpecificTrip(id);
+            const jsonData = await result.json();
+            setTrip(jsonData);
+            const justDate = jsonData.start_date.split('T')[0]
+            const formattedDate = dateFormat(new Date(justDate), "yyyy-mm-dd");
+            setCurrentDate(formattedDate.toString());
+            setIsLoading(false);
+        } catch (e) {
+            navigate('/error');
+        }
     };
 
 
     async function getTripActivities(id) {
-        setIsLoading(true);
-        const result = await getActivities(id);
-        const jsonData = await result.json();
-        if (jsonData.length > 0) {
-            const activities = jsonData.map(el => {
-                const newDate = dateFormat(new Date(el.date), "yyyy, mm, dd");
-                return { title: el.activity_name, startDate: new Date(newDate + ', ' + el.start_time), endDate: new Date(newDate + ', ' + el.end_time) }
-            });
-            setSchedulerData(activities);
-            const formattedDate = dateFormat(new Date(activities[0].startDate), "yyyy-mm-dd");
-            setCurrentDate(formattedDate.toString());
-        } else {
-            setIsActivities(false);
+        try {
+            setIsLoading(true);
+            const result = await getActivities(id);
+            const jsonData = await result.json();
+            if (jsonData.length > 0) {
+                const activities = jsonData.map(el => {
+                    const newDate = dateFormat(new Date(el.date), "yyyy, mm, dd");
+                    return { title: el.activity_name, startDate: new Date(newDate + ', ' + el.start_time), endDate: new Date(newDate + ', ' + el.end_time) }
+                });
+                setSchedulerData(activities);
+                const formattedDate = dateFormat(new Date(activities[0].startDate), "yyyy-mm-dd");
+                setCurrentDate(formattedDate.toString());
+            } else {
+                setIsActivities(false);
+            }
+            setIsLoading(false);
+        } catch (e) {
+            navigate('/error');
         }
-        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -79,8 +88,8 @@ function TripScheduler() {
                 </Scheduler>
             </Paper>}
             <div>
-                <button className='add_activity' onClick={showActivity}>Add a new activity</button>
-                {showForm === false ? '' : <ActivityAddUpdate getTripActivities={getTripActivities} />}
+                <button className='add_activity' onClick={showActivity} >Add a new activity</button>
+                {showForm === false ? '' : <ActivityAddUpdate getTripActivities={getTripActivities} setShowForm={setShowForm} isActivityAdd={true} />}
             </div>
         </>
     );

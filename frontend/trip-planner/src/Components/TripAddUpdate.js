@@ -5,6 +5,7 @@ import Email from './EmailAdd';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
 import {insertTrip, getSpecificTrip, updateTrip} from '../Api';
+import { useNavigate } from 'react-router-dom';
 
 
 function TripAdd(props) {
@@ -17,6 +18,7 @@ function TripAdd(props) {
     const [fieldsFilled, setFieldsFilled] = useState(false);
     const [updateFailed, setUpdateFailed] = useState(false);
     const [trip, setTrip] = useState({});
+    const navigate = useNavigate();
 
 
     const options = useMemo(() => countryList().getData(), []);
@@ -30,25 +32,33 @@ function TripAdd(props) {
 
 
     async function insertUserTrip(trip) {
-        const result = await insertTrip(trip);
-        if (result.status === 200) {
-            return result;
-        } else {
-            setInsertFailed(true);
+        try {
+            const result = await insertTrip(trip);
+            if (result.status === 200) {
+                return result;
+            } else {
+                setInsertFailed(true);
+            }
+        } catch (e) {
+            navigate('/error');
         }
     };
 
 
     async function getATrip(id) {
-        const tripDB = await getSpecificTrip(id);
-        const jsonData = await tripDB.json();
-        setTrip(jsonData);
-        setCountry(options.filter(obj => obj.label === jsonData.country)[0]);
-        setCity(jsonData.city);
-        const emailsDB = jsonData.userData.map(el => el.username);
-        setEmails(emailsDB);
-        setStartDate(new Date(jsonData.start_date));
-        setEndDate(new Date(jsonData.end_date));
+        try {
+            const tripDB = await getSpecificTrip(id);
+            const jsonData = await tripDB.json();
+            setTrip(jsonData);
+            setCountry(options.filter(obj => obj.label === jsonData.country)[0]);
+            setCity(jsonData.city);
+            const emailsDB = jsonData.userData.map(el => el.username);
+            setEmails(emailsDB);
+            setStartDate(new Date(jsonData.start_date));
+            setEndDate(new Date(jsonData.end_date));
+        } catch (e) {
+            navigate('/error');
+        }
     };
 
 
@@ -60,11 +70,15 @@ function TripAdd(props) {
 
 
     async function updateUserTrip(updatedTrip) {
-        const result = await updateTrip(updatedTrip, props.trip.id);
-        if (result.status === 200) {
-            return result;
-        } else {
-            setUpdateFailed(true);
+        try {
+            const result = await updateTrip(updatedTrip, props.trip.id);
+            if (result.status === 200) {
+                return result;
+            } else {
+                setUpdateFailed(true);
+            }
+        } catch (e) {
+            navigate('/error');
         }
     };
 

@@ -10,14 +10,18 @@ function TripsList() {
     const [showForm, setShowForm] = useState(false);
     const navigate = useNavigate();
   
-    
+
     async function getUserTrips() {
-        const result = await getTrips();
-        if (result.status === 401) {
-            navigate('/login');
-        } else {
-            const jsonData = await result.json();
-            setTrips(jsonData);
+        try {
+            const result = await getTrips();
+            if (result.status === 401) {
+                navigate('/login');
+            } else {
+                const jsonData = await result.json();
+                setTrips(jsonData);
+            }
+        } catch (e) {
+            navigate('/error');
         }
     };
 

@@ -4,7 +4,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import TripAddUpdate from './TripAddUpdate';
 import dateFormat, { masks } from "dateformat";
@@ -14,17 +14,22 @@ import {deleteSpecificTrip} from '../Api';
 export default function TripCard(props) {
   const [showForm, setShowForm] = useState(false);
   const [deleteFailed, setDeleteFailed] = useState(false);
+  const navigate = useNavigate();
 
   function onClickEdit() {
     setShowForm(!showForm);
   };
 
   async function onClickDelete(trip) {
-    const result = await deleteSpecificTrip(trip.id);
-    if (result.status === 200) {
-      setDeleteFailed(false);
-    } else {
-      setDeleteFailed(true);
+    try {
+      const result = await deleteSpecificTrip(trip.id);
+      if (result.status === 200) {
+        setDeleteFailed(false);
+      } else {
+        setDeleteFailed(true);
+      }
+    } catch (e) {
+      navigate('/error');
     }
   };
   
