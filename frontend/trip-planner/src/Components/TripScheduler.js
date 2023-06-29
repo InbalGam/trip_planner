@@ -11,6 +11,7 @@ import {getSpecificTrip, getActivities} from '../Api';
 import { useState, useEffect } from "react";
 import dateFormat, { masks } from "dateformat";
 import ActivityAddUpdate from './ActivityAddUpdate';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 
 function TripScheduler() {
@@ -20,20 +21,24 @@ function TripScheduler() {
     const [currentDate, setCurrentDate] = useState(dateFormat(new Date(), "yyyy-mm-dd"));
     const [isActivities, setIsActivities] = useState(true);
     const [showForm, setShowForm] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
 
 
     async function getTripInfo(id) {
+        setIsLoading(true);
         const result = await getSpecificTrip(id);
         const jsonData = await result.json();
         setTrip(jsonData);
         const justDate = jsonData.start_date.split('T')[0]
         const formattedDate = dateFormat(new Date(justDate), "yyyy-mm-dd");
         setCurrentDate(formattedDate.toString());
+        setIsLoading(false);
     };
 
 
     async function getTripActivities(id) {
+        setIsLoading(true);
         const result = await getActivities(id);
         const jsonData = await result.json();
         if (jsonData.length > 0) {
@@ -47,6 +52,7 @@ function TripScheduler() {
         } else {
             setIsActivities(false);
         }
+        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -62,16 +68,16 @@ function TripScheduler() {
 
     return (
         <>
-            <Paper>
+            {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> : <Paper>
                 <p>{isActivities ? '' : 'No activities yet'}</p>
                 <Scheduler data={schedulerData}>
-                    <ViewState currentDate={currentDate} onCurrentDateChange={(date) => {setCurrentDate(date)}} />
+                    <ViewState currentDate={currentDate} onCurrentDateChange={(date) => { setCurrentDate(date) }} />
                     <WeekView startDayHour={5} cellDuration={60} />
                     <Appointments />
-                    <Toolbar/>
-                    <DateNavigator/>
+                    <Toolbar />
+                    <DateNavigator />
                 </Scheduler>
-            </Paper>
+            </Paper>}
             <div>
                 <button className='add_activity' onClick={showActivity}>Add a new activity</button>
                 {showForm === false ? '' : <ActivityAddUpdate getTripActivities={getTripActivities} />}
