@@ -267,8 +267,9 @@ tripsRouter.delete('/trips/:trip_id/activities/:activity_id', async (req, res, n
 // Get all comments-
 tripsRouter.get('/trips/:trip_id/activities/:activity_id/comments', async (req, res, next) => {
     try {
-        const result = await pool.query('select ac.* from activities a join activity_comments ac on a.id = ac.activity_id where a.id = $1 and a.trip_id = $2;', [req.params.activity_id, req.params.trip_id]);
-        res.status(200).json(result.rows);
+        const result = await pool.query('select ac.*, u.nickname from activities a join activity_comments ac on a.id = ac.activity_id join users u on ac.user_id = u.id where a.id = $1 and a.trip_id = $2;', [req.params.activity_id, req.params.trip_id]);
+        const newResult = result.rows.map(el => ({...el, isCreatedByMe: el.user_id === req.user.id ? 1 : 0}));
+        res.status(200).json(newResult);
     } catch(e) {
         res.status(500).json({msg: 'Server error'});
     }
