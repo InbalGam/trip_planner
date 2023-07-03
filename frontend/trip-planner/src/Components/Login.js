@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from "react";
 import {login} from '../Api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 
 function Login() {
@@ -9,6 +9,7 @@ function Login() {
     const [password, setPassword] = useState('');
     const [authFailed, setAuthFailed] = useState(false);
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
     function handleUsernameChange(e) {
         setUsername(e.target.value);
@@ -33,9 +34,9 @@ function Login() {
         }
     };
 
-
     return (
         <div className="login">
+            {searchParams.get("logout") ? 'Succefully logged out' : ''}
             <p>Log in below</p>
             <form onSubmit={submitLogin}>
                 <label for='username'>Username</label>
