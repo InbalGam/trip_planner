@@ -152,4 +152,60 @@ async function getSpecificTripActivity(tripId, activityId) {
     return response;
 };
 
-export {login, logout, getTrips, insertTrip, getSpecificTrip, updateTrip, deleteSpecificTrip, getActivities, insertTripActivity, updateTripActivity, deleteSpecificTripActivity, getSpecificTripActivity};
+
+
+// Comments
+
+async function getComments(tripId, activityId) {
+    const url = `${baseURL}/trips/${tripId}/activities/${activityId}/comments`;
+    const response = await fetch(url, {
+        method: 'GET',
+        credentials: 'include'
+    });
+
+    return response;
+};
+
+
+async function insertActivityComment(tripId, activityId, userComment) {
+    const { comment } = userComment;
+    const url = `${baseURL}/trips/${tripId}/activities/${activityId}/comments`;
+    const response = await fetch(url, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({comment})
+    });
+
+    return response;
+};
+
+
+async function updateActivityComment(tripId, activityId, userComment, commentId) {
+    const { comment } = userComment;
+    const url = `${baseURL}/trips/${tripId}/activities/${activityId}/comments/${commentId}`;
+    const response = await fetch(url, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({comment})
+    });
+
+    return response;
+};
+
+
+async function deleteActivityComment(tripId, activityId, commentId) {
+    const url = `${baseURL}/trips/${tripId}/activities/${activityId}/comments/${commentId}`;
+    const response = await fetch(url, {
+        method: 'PUT',
+        credentials: 'include'
+    });
+
+    return response;
+};
+
+
+export {login, logout, getTrips, insertTrip, getSpecificTrip, updateTrip, deleteSpecificTrip, 
+    getActivities, insertTripActivity, updateTripActivity, deleteSpecificTripActivity, getSpecificTripActivity, 
+    getComments, insertActivityComment, updateActivityComment, deleteActivityComment};
