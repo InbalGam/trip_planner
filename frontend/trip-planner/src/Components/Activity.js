@@ -40,6 +40,7 @@ function Activity() {
 
     return (
         <div>
+            {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> : ''}
             <h2>{activity.activity_name}</h2>
             <p>{activity.date}</p>
             <p>{startTime} - {endTime}</p>
