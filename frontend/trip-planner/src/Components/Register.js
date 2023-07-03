@@ -13,6 +13,7 @@ function Register() {
     const [validNickname, setValidNickname] = useState(true);
     const [registerAuth, setRegisterAuth] = useState(false);
     const [registerSuccess, setRegisterSuccess] = useState(false);
+    const[msg, setMsg] = useState('');
     const navigate = useNavigate();
 
     function handleUsernameChange(e) {
@@ -30,36 +31,31 @@ function Register() {
 
     async function submitForm(e) {
         e.preventDefault();
-        if (password.length < 8) {
-            setValidPassword(!validPassword);
-            setValidNickname(true);
-            setValidUsername(true);
-        }
-        if (nickname.length < 3) {
-            setValidNickname(!validNickname);
-            setValidUsername(true);
-            setValidPassword(true);
-        }
-        if (!validateEmail(username)) {
-            setValidUsername(!validUsername);
-            setValidPassword(true);
-            setValidNickname(true);
-        }
-        try {
-            const result = await register(username, password, nickname);
-            if (result) {
-                setRegisterSuccess(!registerSuccess);
-                setUsername('');
-                setPassword('');
-                setNickname('');
-                setValidNickname(true);
-                setValidPassword(true);
-                setValidUsername(true);
-            } else {
-                setRegisterAuth(!registerAuth);
+        setValidPassword(password.length >= 8);
+        setValidNickname(nickname.length >= 3);
+        setValidUsername(validateEmail(username));
+        
+        if ((password.length >= 8) && (nickname.length >= 3) && (validateEmail(username))) {
+            try {
+                const result = await register(username, password, nickname);
+                const jsonData = await result.json();
+                setMsg(jsonData.msg);
+                console.log(jsonData.msg);
+                if (result.status === 201) {
+                    setRegisterSuccess(!registerSuccess);
+                    setUsername('');
+                    setPassword('');
+                    setNickname('');
+                    setValidNickname(true);
+                    setValidPassword(true);
+                    setValidUsername(true);
+                    navigate('/login?register=1')
+                } else {
+                    setRegisterAuth(!registerAuth);
+                }
+            } catch (e) {
+                navigate('/error');
             }
-        } catch (e) {
-            navigate('/error');
         }
     };
 
@@ -73,17 +69,14 @@ function Register() {
                 <input id='username' type='text' name='username' value={username} placeholder={'Enter your email here'} onChange={handleUsernameChange} />
                 {validUsername ? '' : 'The username needs to be a valid email'}
                 <label htmlFor='password'>Password-</label>
-                <input id='password' type='text' name='password' value={password} placeholder={'Enter your password here'} onChange={handlePasswordChange} />
+                <input id='password' type='password' name='password' value={password} placeholder={'Enter your password here'} onChange={handlePasswordChange} />
                 {validPassword ? '' : 'Your password must be at least 8 characters'}
                 <label htmlFor='nickname'>Nickname-</label>
                 <input id='nickname' type='text' name='nickname' value={nickname} placeholder={'Enter your nickname here'} onChange={handleNicknameChange} />
                 {validNickname ? '' : 'Your nickname must be at least 3 characters'}
                 <button type="submit" value="Submit" className="submitButton">Submit</button>
                 {registerAuth ? 'Could not register' : ''}
-                {registerSuccess ? <div>
-                    <p>Register succeeded</p>
-                    <Link to='/login'>You can now login here</Link>
-                </div> : ''}
+                {msg ? msg : ''}
             </form>
         </div>
     );
