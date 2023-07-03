@@ -3,7 +3,7 @@ import Paper from '@mui/material/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import { Scheduler, MonthView, WeekView, Appointments, Toolbar, DateNavigator, AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
 import { useParams, useNavigate } from 'react-router-dom';
-import {getSpecificTrip, getActivities} from '../Api';
+import {getSpecificTrip, getActivities, deleteSpecificTripActivity} from '../Api';
 import { useState, useEffect } from "react";
 import dateFormat, { masks } from "dateformat";
 import ActivityAddUpdate from './ActivityAddUpdate';
@@ -20,6 +20,7 @@ function TripScheduler() {
     const [isLoading, setIsLoading] = useState(false);
     const[isActivityAdd, setIsActivityAdd] = useState(false);
     const navigate = useNavigate();
+    const [deleteFailed, setDeleteFailed] = useState(false);
 
 
 
@@ -57,8 +58,6 @@ function TripScheduler() {
                         return { id: el.id, title: el.activity_name, startDate: new Date(newDate + ', ' + el.start_time), endDate: new Date(newDate + ', ' + el.end_time) }
                     });
                     setSchedulerData(activities);
-                    const formattedDate = dateFormat(new Date(activities[0].startDate), "yyyy-mm-dd");
-                    setCurrentDate(formattedDate.toString());
                 } else {
                     setIsActivities(false);
                 }
@@ -81,41 +80,47 @@ function TripScheduler() {
     };
 
 
-    // function actionsOnActivity(e) {
-    //     console.log(e);
-    //     setShowForm(!showForm);
-    //     // setIsActivityAdd(false);
-    // };
-
-    function navigateToActivity(e) {
-        console.log(e);
-        navigate(`/trips/${tripId}/activities/${e.data.id}`);
+    async function deleteAnActivity(activityId) {
+        try {
+            const result = await deleteSpecificTripActivity(tripId, activityId);
+            if (result.status === 401) {
+                navigate('/login');
+              } else {
+                if (result.status === 200) {
+                  getTripActivities(tripId);
+                  setDeleteFailed(false);
+                } else {
+                  setDeleteFailed(true);
+                }
+            }
+        } catch (e) {
+            navigate('/error');
+        }
     };
 
-    const myAppointmentComponent = (props) => <Appointments.Appointment {...props} onDoubleClick={navigateToActivity} />; // TODO- openActivity
+
+    const myAppointmentComponent = (props) => <Appointments.Appointment {...props} onDoubleClick={(e) => navigate(`/trips/${tripId}/activities/${props.data.id}`)} />;
+    const myLayoutComponent = (props) => <AppointmentTooltip.Layout {...props} onDeleteButtonClick={(e) => deleteAnActivity(props.appointmentMeta.data.id)} />
+
 
     return (
         <>
-            {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> : <Paper>
+            {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> : ''}
+            <Paper>
                 <p>{isActivities ? '' : 'No activities yet'}</p>
                 <Scheduler data={schedulerData}>
                     <ViewState currentDate={currentDate} onCurrentDateChange={(date) => { setCurrentDate(date) }} />
                     <WeekView startDayHour={5} cellDuration={60} />
-                    <Appointments draggable={true} appointmentComponent={myAppointmentComponent}/>
-                    <AppointmentTooltip
-          showOpenButton
-          showCloseButton
-          showDeleteButton
-        //   onOpenButtonClick
-        //   onDeleteButtonClick={() => console.log('hey there')}
-        />
+                    <Appointments appointmentComponent={myAppointmentComponent} />
+                    <AppointmentTooltip showOpenButton showCloseButton showDeleteButton layoutComponent={myLayoutComponent} />
                     <Toolbar />
                     <DateNavigator />
                 </Scheduler>
-            </Paper>}
+            </Paper>
             <div>
                 <button className='add_activity' onClick={showActivity} >Add a new activity</button>
                 {showForm === false ? '' : <ActivityAddUpdate getTripActivities={getTripActivities} setShowForm={setShowForm} isActivityAdd={isActivityAdd} />}
+                {deleteFailed === false ? '' : 'Could not delete activity'}
             </div>
         </>
     );
