@@ -74,7 +74,7 @@ function TripScheduler() {
     }, []);
 
 
-    function showActivity() {
+    function showActivity(e) {
         setShowForm(!showForm);
         setIsActivityAdd(true);
     };
