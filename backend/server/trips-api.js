@@ -104,7 +104,7 @@ tripsRouter.post('/trips', async (req, res, next) => {
     }
 
     try {
-        const result = await pool.query('insert into trips (country, city, start_date, end_date, created_by) values ($1, $2, $3, $4, $5) returning *;', [country, city, start_date, end_date, req.user.id]);
+        const result = await pool.query('insert into trips (country, city, start_date, end_date, created_by) values ($1, $2, $3, $4, $5) returning *;', [country, city, new Date(start_date), new Date(end_date), req.user.id]);
         await sharingTrip(req, emails, result.rows[0].id);
         res.status(200).json(result.rows[0]);
     } catch (e) {
@@ -154,7 +154,7 @@ tripsRouter.put('/trips/:trip_id', checkedTripAuth, async (req, res, next) => {
     }
 
     try {
-        const result = await pool.query('update trips set country = $2, city = $3, start_date = $4, end_date = $5 where id = $1 returning *;', [req.params.trip_id, country, city, start_date, end_date]);
+        const result = await pool.query('update trips set country = $2, city = $3, start_date = $4, end_date = $5 where id = $1 returning *;', [req.params.trip_id, country, city, new Date(start_date), new Date(end_date)]);
         await sharingTrip(req, emails, result.rows[0].id);
         res.status(200).json(result.rows[0]);
     } catch(e) {
@@ -206,7 +206,7 @@ tripsRouter.post('/trips/:trip_id/activities', async (req, res, next) => {
 
     try {
         const result = await pool.query('insert into activities (date, trip_id, activity_name, address, url, start_time, end_time, user_id, user_notes) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning *;',
-            [date, req.params.trip_id, activity_name, address, activityURL, start_time, end_time, req.user.id, user_notes]);
+            [new Date(date), req.params.trip_id, activity_name, address, activityURL, start_time, end_time, req.user.id, user_notes]);
         res.status(200).json(result.rows[0]);
     } catch (e) {
         res.status(500).json({msg: 'Server error'});
@@ -243,7 +243,7 @@ tripsRouter.put('/trips/:trip_id/activities/:activity_id', async (req, res, next
 
     try {
         const result = await pool.query('update activities set date = $2, trip_id = $3, activity_name = $4, address = $5, url = $6, start_time = $7, end_time = $8, user_id = $9, user_notes = $10 where id = $1 and trip_id = $3 returning *;', 
-        [req.params.activity_id, date, req.params.trip_id, activity_name, address, activityURL, start_time, end_time, req.user.id, user_notes]);
+        [req.params.activity_id, new Date(date), req.params.trip_id, activity_name, address, activityURL, start_time, end_time, req.user.id, user_notes]);
         res.status(200).json(result.rows[0]);
     } catch(e) {
         res.status(500).json({msg: 'Server error'});
