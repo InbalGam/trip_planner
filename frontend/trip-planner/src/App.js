@@ -4,6 +4,7 @@ import TripsList from './Components/TripsList';
 import TripScheduler from "./Components/TripScheduler";
 import Login from './Components/Login';
 import Logout from './Components/Logout';
+import Activity from './Components/Activity';
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
       <Route path='login' element={ <Login/> } />
       <Route path='trips' element={ <TripsList/> } />
       <Route path='trips/:tripId' element={ <TripScheduler/> } />
+      <Route path='trips/:tripId/activities/:activityId' element={ <Activity/> } />
       <Route path='logout' element={ <Logout/> } />
     </Route>
   ));
