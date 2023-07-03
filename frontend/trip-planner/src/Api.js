@@ -142,4 +142,14 @@ async function deleteSpecificTripActivity(tripId, activityId) {
 };
 
 
-export {login, logout, getTrips, insertTrip, getSpecificTrip, updateTrip, deleteSpecificTrip, getActivities, insertTripActivity, updateTripActivity, deleteSpecificTripActivity};
+async function getSpecificTripActivity(tripId, activityId) {
+    const url = `${baseURL}/trips/${tripId}/activities/${activityId}`;
+    const response = await fetch(url, {
+        method: 'GET',
+        credentials: 'include'
+    });
+
+    return response;
+};
+
+export {login, logout, getTrips, insertTrip, getSpecificTrip, updateTrip, deleteSpecificTrip, getActivities, insertTripActivity, updateTripActivity, deleteSpecificTripActivity, getSpecificTripActivity};
