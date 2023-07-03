@@ -1,8 +1,8 @@
 function ErrorPage() {
     return (
         <div>
-            <h2>404</h2>
-            <h3>Did not find what you were looking for</h3>
+            <h2>Oops.. there was an error</h2>
+            <h3>Please try again</h3>
         </div>
     );
 };
