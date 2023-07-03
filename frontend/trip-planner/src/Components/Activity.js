@@ -4,6 +4,7 @@ import { getSpecificTripActivity } from '../Api';
 import ClipLoader from 'react-spinners/ClipLoader';
 import ActivityAddUpdate from './ActivityAddUpdate';
 import dateFormat, { masks } from "dateformat";
+import CommentsList from './CommentsList';
 
 
 function Activity() {
@@ -16,6 +17,7 @@ function Activity() {
     const [activity, setActivity] = useState({});
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
+    const [commentsForm, setCommentsForm] = useState(false);
 
 
     async function getSpecificActivity(idTrip, idActivity) {
@@ -27,7 +29,6 @@ function Activity() {
             } else {
                 const jsonData = await result.json();
                 setActivity(jsonData);
-                console.log(jsonData);
                 const splittedStartTime = jsonData.start_time.split(':');
                 setStartTime(splittedStartTime[0] + ':' + splittedStartTime[1]);
                 const splittedEndTime = jsonData.end_time.split(':');
@@ -50,6 +51,10 @@ function Activity() {
         setShowActivity(!showActivity);
     };
 
+    function showComments(e) {
+        setCommentsForm(!commentsForm);
+    };
+
     return (
         <div className='container'>
             <div >
@@ -69,6 +74,8 @@ function Activity() {
                 {showForm === false ? '' : <ActivityAddUpdate setShowForm={setShowForm} isActivityAdd={isActivityAdd} activityId={activityId} getSpecificActivity={getSpecificActivity} setShowActivity={setShowActivity} />}
             </div>
             <div className='comments'>
+                <button onClick={showComments} >Show Comments</button>
+                {commentsForm === false ? '' : <CommentsList />}
             </div>
         </div>
     );
