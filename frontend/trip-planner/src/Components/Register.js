@@ -40,7 +40,6 @@ function Register() {
                 const result = await register(username, password, nickname);
                 const jsonData = await result.json();
                 setMsg(jsonData.msg);
-                console.log(jsonData.msg);
                 if (result.status === 201) {
                     setRegisterSuccess(!registerSuccess);
                     setUsername('');
