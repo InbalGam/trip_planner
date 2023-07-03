@@ -6,6 +6,7 @@ import Login from './Components/Login';
 import Logout from './Components/Logout';
 import Activity from './Components/Activity';
 import ErrorPage from "./Components/ErrorPage";
+import Register from "./Components/Register";
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
     <Route path='/' element={ <Root /> } >
       <Route exact path="/" element={<Navigate to="/trips" />} />
       <Route path='login' element={ <Login/> } />
+      <Route path='register' element={ <Register/> } />
       <Route path='trips' element={ <TripsList/> } />
       <Route path='trips/:tripId' element={ <TripScheduler/> } />
       <Route path='trips/:tripId/activities/:activityId' element={ <Activity/> } />

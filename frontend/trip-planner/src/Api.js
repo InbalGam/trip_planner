@@ -4,6 +4,18 @@ import fetch from 'cross-fetch';
 const baseURL = 'http://localhost:4001';
 
 // Auth
+async function register(username, password, nickname) {
+    const url = `${baseURL}/register`;
+    const response = await fetch(url, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username, password, nickname})
+    });
+
+    return response.status === 200;
+};
+
 async function login(username, password) {
     const url = `${baseURL}/login`;
     const response = await fetch(url, {
@@ -206,6 +218,6 @@ async function deleteActivityComment(tripId, activityId, commentId) {
 };
 
 
-export {login, logout, getTrips, insertTrip, getSpecificTrip, updateTrip, deleteSpecificTrip, 
+export {register, login, logout, getTrips, insertTrip, getSpecificTrip, updateTrip, deleteSpecificTrip, 
     getActivities, insertTripActivity, updateTripActivity, deleteSpecificTripActivity, getSpecificTripActivity, 
     getComments, insertActivityComment, updateActivityComment, deleteActivityComment};
