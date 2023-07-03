@@ -198,7 +198,7 @@ async function updateActivityComment(tripId, activityId, userComment, commentId)
 async function deleteActivityComment(tripId, activityId, commentId) {
     const url = `${baseURL}/trips/${tripId}/activities/${activityId}/comments/${commentId}`;
     const response = await fetch(url, {
-        method: 'PUT',
+        method: 'DELETE',
         credentials: 'include'
     });
 
