@@ -101,6 +101,7 @@ function TripScheduler() {
 
     const myAppointmentComponent = (props) => <Appointments.Appointment {...props} onDoubleClick={(e) => navigate(`/trips/${tripId}/activities/${props.data.id}`)} />;
     const myLayoutComponent = (props) => <AppointmentTooltip.Layout {...props} onDeleteButtonClick={(e) => deleteAnActivity(props.appointmentMeta.data.id)} />
+    const myHeaderComponent = (props) => <AppointmentTooltip.Header {...props} ><button className='activity_open_button' onClick={(e) => navigate(`/trips/${tripId}/activities/${props.appointmentData.id}`)} >Open</button></AppointmentTooltip.Header>
 
 
     return (
@@ -112,7 +113,7 @@ function TripScheduler() {
                     <ViewState currentDate={currentDate} onCurrentDateChange={(date) => { setCurrentDate(date) }} />
                     <WeekView startDayHour={5} cellDuration={60} />
                     <Appointments appointmentComponent={myAppointmentComponent} />
-                    <AppointmentTooltip showOpenButton showCloseButton showDeleteButton layoutComponent={myLayoutComponent} />
+                    <AppointmentTooltip showCloseButton showDeleteButton layoutComponent={myLayoutComponent} headerComponent={myHeaderComponent} />
                     <Toolbar />
                     <DateNavigator />
                 </Scheduler>
