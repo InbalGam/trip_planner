@@ -21,11 +21,15 @@ function Login() {
     async function submitLogin(e) {
         e.preventDefault();
         setAuthFailed(false);
-        const result = await login(username, password);
-        if (result === true) {
-            navigate('/trips');
-        } else {
-            setAuthFailed(true);
+        try {
+            const result = await login(username, password);
+            if (result === true) {
+                navigate('/trips');
+            } else {
+                setAuthFailed(true);
+            }
+        } catch (e) {
+            navigate('/error');
         }
     };
 
