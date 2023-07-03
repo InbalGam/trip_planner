@@ -32,11 +32,11 @@ function TripScheduler() {
                 navigate('/login');
             } else {
                 const jsonData = await result.json();
-            setTrip(jsonData);
-            const justDate = jsonData.start_date.split('T')[0]
-            const formattedDate = dateFormat(new Date(justDate), "yyyy-mm-dd");
-            setCurrentDate(formattedDate.toString());
-            setIsLoading(false);
+                setTrip(jsonData);
+                const justDate = jsonData.start_date.split('T')[0]
+                const formattedDate = dateFormat(new Date(justDate), "yyyy-mm-dd");
+                setCurrentDate(formattedDate.toString());
+                setIsLoading(false);
             };
         } catch (e) {
             navigate('/error');
