@@ -110,9 +110,11 @@ function ActivityAddUpdate(props) {
             if (props.isActivityAdd) {
                 await insertUserActivity(tripId, newActivity);
                 props.getTripActivities(tripId);
+                props.setShowForm(false);
             } else {
                 await updateUserActivity(tripId, newActivity, props.activityId);
                 props.getSpecificActivity(tripId, props.activityId);
+                props.setShowActivity(true);
             }
             setActivityDate(new Date());
             setActivityName('');
@@ -121,8 +123,6 @@ function ActivityAddUpdate(props) {
             setUserNotes('');
             setStartValue('10:00');
             setEndValue('10:00');
-            props.setShowForm(false);
-            props.setShowActivity(true);
         };
     };
 
