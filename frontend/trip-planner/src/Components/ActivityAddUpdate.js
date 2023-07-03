@@ -1,4 +1,4 @@
-import {insertTripActivity, updateTripActivity} from '../Api';
+import {insertTripActivity, updateTripActivity, getSpecificTripActivity} from '../Api';
 import { useParams, useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import { useState,  useEffect } from "react";
@@ -48,12 +48,30 @@ function ActivityAddUpdate(props) {
     };
 
 
-    async function getAnActivity(tripId) {};
+    async function getAnActivity(tripId, activityId) {
+        try {
+            const result = await getSpecificTripActivity(tripId, activityId);
+            if (result.status === 401) {
+                navigate('/login');
+            } else {
+                const jsonData = await result.json();
+                setActivityName(jsonData.activity_name);
+                setAddress(jsonData.address);
+                setLink(jsonData.url);
+                setUserNotes(jsonData.user_notes);
+                setStartValue(jsonData.start_time);
+                setEndValue(jsonData.end_time);
+                setActivityDate(new Date(jsonData.date));
+            };
+        } catch (e) {
+            navigate('/error');
+        }
+    };
 
 
     useEffect(() => {
         if (!props.isActivityAdd) {
-            getAnActivity(tripId);
+            getAnActivity(tripId, props.activityId);
         }
     }, []);
 
@@ -91,8 +109,11 @@ function ActivityAddUpdate(props) {
             };
             if (props.isActivityAdd) {
                 await insertUserActivity(tripId, newActivity);
+                props.getTripActivities(tripId);
+            } else {
+                await updateUserActivity(tripId, newActivity, props.activityId);
+                props.getSpecificActivity(tripId, props.activityId);
             }
-            props.getTripActivities(tripId);
             setActivityDate(new Date());
             setActivityName('');
             setAddress('');
