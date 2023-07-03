@@ -264,6 +264,20 @@ tripsRouter.delete('/trips/:trip_id/activities/:activity_id', async (req, res, n
 
 // Comments
 
+const checkedCommentAuth = async (req, res, next) => {
+    try {
+        const userId = await pool.query('select user_id from activity_comments where id = $1;', [req.params.comment_id]);
+        if (req.user.id !== userId.rows[0].user_id) {
+            return res.status(401).json({msg: 'Unauthorized'});
+        }
+        next();
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({msg: 'Server error'});
+    }
+};
+
+
 // Get all comments-
 tripsRouter.get('/trips/:trip_id/activities/:activity_id/comments', async (req, res, next) => {
     try {
@@ -295,7 +309,7 @@ tripsRouter.post('/trips/:trip_id/activities/:activity_id/comments', async (req,
 
 
 // Update a specific comment
-tripsRouter.put('/trips/:trip_id/activities/:activity_id/comments/:comment_id', async (req, res, next) => {
+tripsRouter.put('/trips/:trip_id/activities/:activity_id/comments/:comment_id', checkedCommentAuth, async (req, res, next) => {
     const { comment } = req.body;
 
     if (!comment) {
@@ -313,7 +327,7 @@ tripsRouter.put('/trips/:trip_id/activities/:activity_id/comments/:comment_id', 
 
 
 // Delete a specific comment
-tripsRouter.delete('/trips/:trip_id/activities/:activity_id/comments/:comment_id', async (req, res, next) => {
+tripsRouter.delete('/trips/:trip_id/activities/:activity_id/comments/:comment_id', checkedCommentAuth, async (req, res, next) => {
     try {
         await pool.query('delete from activity_comments where id = $1 and activity_id = $2;', [req.params.comment_id, req.params.activity_id]);
         res.status(200).json({ msg: 'Deleted comment' });
