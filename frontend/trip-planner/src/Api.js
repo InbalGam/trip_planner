@@ -13,7 +13,7 @@ async function register(username, password, nickname) {
         body: JSON.stringify({username, password, nickname})
     });
 
-    return response.status === 201;
+    return response;
 };
 
 async function login(username, password) {
