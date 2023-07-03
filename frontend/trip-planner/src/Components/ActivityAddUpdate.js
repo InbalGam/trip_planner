@@ -122,6 +122,7 @@ function ActivityAddUpdate(props) {
             setStartValue('10:00');
             setEndValue('10:00');
             props.setShowForm(false);
+            props.setShowActivity(true);
         };
     };
 

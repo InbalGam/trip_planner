@@ -10,6 +10,7 @@ function Activity() {
     const { tripId, activityId } = useParams();
     const navigate = useNavigate();
     const [showForm, setShowForm] = useState(false);
+    const [showActivity, setShowActivity] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
     const [isActivityAdd, setIsActivityAdd] = useState(false);
     const [activity, setActivity] = useState({});
@@ -46,13 +47,14 @@ function Activity() {
 
     function showActivityForm(e) {
         setShowForm(!showForm);
+        setShowActivity(!showActivity);
     };
 
     return (
         <div className='container'>
             <div >
                 {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> : 
-                <div className='ActivityInfo'>
+                showActivity === false ? '' : <div className='ActivityInfo'>
                     <h2>{activity.activity_name}</h2>
                     <button className='activityEdit' onClick={showActivityForm}>Edit activity</button>
                     <p>{dateFormat(new Date(activity.date), "dddd, mmmm dS, yyyy")}</p>
@@ -64,7 +66,7 @@ function Activity() {
                 </div>}
             </div>
             <div className='editActivityDiv'>
-                {showForm === false ? '' : <ActivityAddUpdate setShowForm={setShowForm} isActivityAdd={isActivityAdd} activityId={activityId} getSpecificActivity={getSpecificActivity} />}
+                {showForm === false ? '' : <ActivityAddUpdate setShowForm={setShowForm} isActivityAdd={isActivityAdd} activityId={activityId} getSpecificActivity={getSpecificActivity} setShowActivity={setShowActivity} />}
             </div>
             <div className='comments'>
             </div>
