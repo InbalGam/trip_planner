@@ -11,15 +11,17 @@ import Register from "./Components/Register";
 function App() {
 
   const router = createBrowserRouter(createRoutesFromElements(
-    <Route path='/' element={ <Root /> } >
-      <Route exact path="/" element={<Navigate to="/trips" />} />
-      <Route path='login' element={ <Login/> } />
-      <Route path='register' element={ <Register/> } />
-      <Route path='trips' element={ <TripsList/> } />
-      <Route path='trips/:tripId' element={ <TripScheduler/> } />
-      <Route path='trips/:tripId/activities/:activityId' element={ <Activity/> } />
+    <Route path='/' >
+      <Route path='/' element={ <Root /> } >
+        <Route exact path="/" element={<Navigate to="/trips" />} />
+        <Route path='register' element={ <Register/> } />
+        <Route path='trips' element={ <TripsList/> } />
+        <Route path='trips/:tripId' element={ <TripScheduler/> } />
+        <Route path='trips/:tripId/activities/:activityId' element={ <Activity/> } />
+        <Route path='error' element={ <ErrorPage/> } />
+      </Route>
       <Route path='logout' element={ <Logout/> } />
-      <Route path='error' element={ <ErrorPage/> } />
+      <Route path='login' element={ <Login/> } />
     </Route>
   ));
 
