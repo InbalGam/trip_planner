@@ -5,6 +5,7 @@ import TripScheduler from "./Components/TripScheduler";
 import Login from './Components/Login';
 import Logout from './Components/Logout';
 import Activity from './Components/Activity';
+import ErrorPage from "./Components/ErrorPage";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
       <Route path='trips/:tripId' element={ <TripScheduler/> } />
       <Route path='trips/:tripId/activities/:activityId' element={ <Activity/> } />
       <Route path='logout' element={ <Logout/> } />
+      <Route path='error' element={ <ErrorPage/> } />
     </Route>
   ));
 
