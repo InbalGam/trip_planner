@@ -2,6 +2,7 @@ import { useState } from "react";
 import {register} from '../Api';
 import {validateEmail} from '../utils';
 import { Link, useNavigate} from 'react-router-dom';
+import styles from './Styles/Register.css';
 
 
 function Register() {
@@ -60,7 +61,7 @@ function Register() {
 
 
     return (
-        <div>
+        <div className="register_container">
             <h2>Welcome to The Trip Planner</h2>
             <h3>You are minutes away from starting to plan your dream vacation!</h3>
             <form onSubmit={submitForm}>

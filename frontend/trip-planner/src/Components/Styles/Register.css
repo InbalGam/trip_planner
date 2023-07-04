@@ -1,0 +1,52 @@
+* {
+    background-color: #f7f5fe;
+}
+
+.register_container {
+    text-align: center;
+}
+
+h2 {
+    margin-top: 3rem;
+    font-family: 'Playfair Display', serif;
+    color: #060565;
+}
+
+h3 {
+    font-family: 'Playfair Display', serif;
+    color: #060565;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+form input {
+    width: 10%;
+    align-self: center;
+    margin-top: 0.5rem;
+}
+
+form button {
+    width: 3%;
+    align-self: center;
+    margin-top: 0.5rem;
+    border: 0.06rem solid #ccc;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    box-shadow: 2px 2px;
+    font-weight: bold;
+}
+
+form button:hover {
+    background-color: #c5a1b9;
+}
+
+form label {
+    color: #650343;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bolder;
+    margin-top: 0.5rem;
+}
