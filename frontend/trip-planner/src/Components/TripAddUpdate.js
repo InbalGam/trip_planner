@@ -6,6 +6,7 @@ import Select from 'react-select';
 import countryList from 'react-select-country-list';
 import {insertTrip, getSpecificTrip, updateTrip} from '../Api';
 import { useNavigate } from 'react-router-dom';
+import styles from './Styles/TripAddUpdate.css';
 
 
 function TripAdd(props) {
@@ -124,13 +125,13 @@ function TripAdd(props) {
 
     return (
         <form onSubmit={submitTrip}>
-            <Select options={options} value={country} onChange={changeHandler} />
+            <Select options={options} value={country} onChange={changeHandler} className="countrySelect"/>
             <label for='city'>City</label>
-            <input id='city' type='text' name='city' value={city} placeholder={'Enter city here'} onChange={handleTextChange} className="trip_input"/>
+            <input id='city' type='text' name='city' value={city} placeholder={'Enter city here'} onChange={handleTextChange} className="city_input"/>
             <label for='start_date'>Start date</label>
-            <DatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat='dd-MMM-yy' />
+            <DatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat='dd-MMM-yy' className="datePick" />
             <label for='end_date'>End date</label>
-            <DatePicker selected={endDate} onChange={date => setEndDate(date)} dateFormat='dd-MMM-yy' />
+            <DatePicker selected={endDate} onChange={date => setEndDate(date)} dateFormat='dd-MMM-yy' className="datePick" />
             <Email email={emails} emails={emails} setEmails={setEmails} />
             <button type="submit" value="Submit" className="submitButton">Submit trip</button>
             <div className="failed">

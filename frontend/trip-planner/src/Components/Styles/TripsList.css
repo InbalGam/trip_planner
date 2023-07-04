@@ -6,7 +6,7 @@
     display: flex;
     flex-direction: row-reverse;
     gap: 10rem;
-    margin-right: 40%;
+    margin-right: 30%;
 }
 
 .add_trip_container {

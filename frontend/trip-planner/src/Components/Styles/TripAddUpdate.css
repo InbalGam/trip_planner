@@ -1,0 +1,107 @@
+* {
+    background-color: #f7f5fe;
+}
+
+form {
+    margin-top: 2.75rem;
+    border: 0.06rem solid #ccc;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    box-shadow: 0.25rem 0.25rem #c5a1b9;
+    text-align: left;
+}
+
+.countrySelect {
+    color: black;
+    background-color: white;
+    margin-bottom: 2rem;
+}
+
+form label {
+    margin-left: 1rem;
+}
+
+form input {
+    margin-left: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.city_input {
+    align-self: flex-start;
+    width: 30%;
+}
+
+.addEmailHeadline {
+    margin-left: 1rem;
+    color: #650343;
+    font-family: 'Open Sans', sans-serif;
+    margin-top: 0;
+}
+
+.emails {
+    border-style: none;
+    border-radius: none;
+    box-shadow: none;
+}
+
+form .submitButton {
+    width: 20%;
+    height: 2rem;
+    border: 0.06rem solid #ccc;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    box-shadow: 0.125rem 0.125rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+form .submitButton:hover {
+    background-color: #c5a1b9;
+}
+
+.datePick {
+    width: 20%;
+}
+
+.react-datepicker__header {
+    background-color: #c5a1b9;
+}
+
+.react-datepicker__current-month {
+    background-color: #c5a1b9;
+}
+
+.react-datepicker__day-names {
+    background-color: #c5a1b9;
+}
+
+.react-datepicker__day-name {
+    background-color: #c5a1b9;
+}
+
+.react-datepicker__month-container {
+    background-color: #c5a1b9;
+}
+
+.react-datepicker__month {
+    background-color: #c5a1b9;
+}
+
+.react-datepicker__week {
+    background-color: #c5a1b9;
+}
+
+.react-datepicker__day {
+    background-color: #c5a1b9;
+}
+
+.react-datepicker__day--selected {
+    background-color: #7c476a;
+}
+
+.failed {
+    margin-left: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
