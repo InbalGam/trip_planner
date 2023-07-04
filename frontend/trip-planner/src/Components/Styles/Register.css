@@ -17,19 +17,19 @@ h3 {
     color: #060565;
 }
 
-form {
+.registerForm {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-form input {
+.registerForm input {
     width: 10%;
     align-self: center;
     margin-top: 0.5rem;
 }
 
-form button {
+.registerForm button {
     width: 3%;
     align-self: center;
     margin-top: 0.5rem;
@@ -40,12 +40,12 @@ form button {
     font-weight: bold;
 }
 
-form button:hover {
+.registerForm button:hover {
     background-color: #c5a1b9;
     cursor: pointer;
 }
 
-form label {
+.registerForm label {
     color: #650343;
     font-family: 'Open Sans', sans-serif;
     font-weight: bolder;

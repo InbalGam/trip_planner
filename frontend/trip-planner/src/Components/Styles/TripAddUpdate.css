@@ -2,7 +2,7 @@
     background-color: #f7f5fe;
 }
 
-form {
+.tripForm {
     margin-top: 2.75rem;
     border: 0.06rem solid #ccc;
     border-radius: 0.25rem;
@@ -17,11 +17,11 @@ form {
     margin-bottom: 2rem;
 }
 
-form label {
+.tripForm label {
     margin-left: 1rem;
 }
 
-form input {
+.tripForm input {
     margin-left: 1rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -45,7 +45,7 @@ form input {
     box-shadow: none;
 }
 
-form .submitButton {
+.tripForm .submitButton {
     width: 20%;
     height: 2rem;
     border: 0.06rem solid #ccc;
@@ -56,7 +56,7 @@ form .submitButton {
     margin-bottom: 1rem;
 }
 
-form .submitButton:hover {
+.tripForm .submitButton:hover {
     background-color: #c5a1b9;
     cursor: pointer;
 }
