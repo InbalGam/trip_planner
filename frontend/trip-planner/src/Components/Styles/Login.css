@@ -34,7 +34,7 @@ form button {
     border: 0.06rem solid #ccc;
     border-radius: 0.25rem;
     box-sizing: border-box;
-    box-shadow: 2px 2px;
+    box-shadow: 0.125rem 0.125rem;
     font-weight: bold;
 }
 
