@@ -34,6 +34,7 @@
 
 .nav-links .logoutLink:hover {
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .nav-links .tripsLink {
@@ -44,4 +45,5 @@
 
 .nav-links .tripsLink:hover {
     text-decoration: underline;
+    cursor: pointer;
 }

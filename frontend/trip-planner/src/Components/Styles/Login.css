@@ -46,6 +46,7 @@ form button {
 
 form button:hover {
     background-color: #c5a1b9;
+    cursor: pointer;
 }
 
 form label {
@@ -72,4 +73,5 @@ form label {
 
 .registrationLink:hover {
     text-decoration: underline;
+    cursor: pointer;
 }

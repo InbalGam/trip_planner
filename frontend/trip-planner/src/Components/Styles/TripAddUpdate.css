@@ -58,6 +58,7 @@ form .submitButton {
 
 form .submitButton:hover {
     background-color: #c5a1b9;
+    cursor: pointer;
 }
 
 .datePick {

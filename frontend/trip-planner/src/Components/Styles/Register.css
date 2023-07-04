@@ -42,6 +42,7 @@ form button {
 
 form button:hover {
     background-color: #c5a1b9;
+    cursor: pointer;
 }
 
 form label {

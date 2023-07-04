@@ -30,6 +30,7 @@
 
 .add_trip_container .add_trip:hover {
     background-color: #c5a1b9;
+    cursor: pointer;
 }
 
 .trips {
