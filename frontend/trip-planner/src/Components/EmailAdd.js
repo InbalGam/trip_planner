@@ -7,8 +7,8 @@ function Email(props) {
   const [focused, setFocused] = useState(false);
 
   return (
-    <form>
-      <h3>Email</h3>
+    <form className='emails'>
+      <h3 className="addEmailHeadline">Share trip</h3>
       <ReactMultiEmail
         placeholder='Input email'
         emails={props.emails}
