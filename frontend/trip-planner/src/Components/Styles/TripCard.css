@@ -1,0 +1,31 @@
+.countryName {
+    font-family: 'Belanosima', sans-serif;
+}
+
+.cityName {
+    font-family: 'Belanosima', sans-serif;
+}
+
+.dates {
+    font-family: 'Roboto', sans-serif;
+}
+
+
+.countryName:active {
+    color: black;
+    text-decoration: none;
+}
+
+.cityName:active {
+    color: black;
+    text-decoration: none;
+}
+
+.dates:active {
+    color: black;
+    text-decoration: none;
+}
+
+.tripCard:active {
+    text-decoration: none;
+}
