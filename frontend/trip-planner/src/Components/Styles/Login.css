@@ -8,6 +8,12 @@
     font-weight: bold;
 }
 
+.authStatus {
+    font-size: 1.15rem;
+    color: #590674;
+    font-weight: bold;
+}
+
 .loginHeadline {
     font-family: 'Playfair Display', serif;
     margin-top: 3rem;
@@ -21,19 +27,19 @@
     text-align: center;
 }
 
-form {
+.loginForm {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-form input {
+.loginForm input {
     width: 10%;
     align-self: center;
     margin-top: 0.5rem;
 }
 
-form button {
+.loginForm button {
     width: 3%;
     align-self: center;
     margin-top: 0.5rem;
@@ -44,12 +50,12 @@ form button {
     font-weight: bold;
 }
 
-form button:hover {
+.loginForm button:hover {
     background-color: #c5a1b9;
     cursor: pointer;
 }
 
-form label {
+.loginForm label {
     color: #650343;
     font-family: 'Open Sans', sans-serif;
     font-weight: bolder;
