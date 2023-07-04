@@ -40,7 +40,7 @@ export default function TripCard(props) {
   return (
     <>
 
-      <Card sx={{ minWidth: 275 }}>
+      <Card sx={{ minWidth: 375 }}>
         <CardContent>
           <Link to={`/trips/${props.trip.id}`} >
             <Typography sx={{ fontSize: 24 }} color="text.secondary" gutterBottom>
@@ -50,9 +50,9 @@ export default function TripCard(props) {
               {props.trip.city}
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              Start at- {dateFormat(new Date(props.trip.start_date), "dddd, mmmm dS, yyyy")}
+              Starting: {dateFormat(new Date(props.trip.start_date), "dddd, mmmm dS, yyyy")}
               <br />
-              End at- {dateFormat(new Date(props.trip.end_date), "dddd, mmmm dS, yyyy")}
+              Ending: {dateFormat(new Date(props.trip.end_date), "dddd, mmmm dS, yyyy")}
             </Typography>
           </Link>
         </CardContent>
