@@ -14,7 +14,6 @@ function App() {
     <Route path='/' >
       <Route path='/' element={ <Root /> } >
         <Route exact path="/" element={<Navigate to="/trips" />} />
-        <Route path='register' element={ <Register/> } />
         <Route path='trips' element={ <TripsList/> } />
         <Route path='trips/:tripId' element={ <TripScheduler/> } />
         <Route path='trips/:tripId/activities/:activityId' element={ <Activity/> } />
@@ -22,6 +21,7 @@ function App() {
       </Route>
       <Route path='logout' element={ <Logout/> } />
       <Route path='login' element={ <Login/> } />
+      <Route path='register' element={ <Register/> } />
     </Route>
   ));
 
