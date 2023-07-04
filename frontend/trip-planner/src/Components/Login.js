@@ -37,8 +37,8 @@ function Login() {
 
     return (
         <div className="login_container">
-            {searchParams.get("logout") ? 'Succefully logged out' : ''}
-            {searchParams.get("register") ? 'Succefully registered, you can log in' : ''}
+            <p className='messages'>{searchParams.get("logout") ? 'Succefully logged out' : ''}</p>
+            <p className='messages'>{searchParams.get("register") ? 'Succefully registered, you can log in' : ''}</p>
             <p className='loginHeadline'>Log in below</p>
             <form onSubmit={submitLogin}>
                 <label for='username'>Username</label>

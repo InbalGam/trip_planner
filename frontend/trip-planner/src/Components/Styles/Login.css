@@ -2,6 +2,12 @@
     background-color: #f7f5fe;
 }
 
+.messages {
+    font-size: 1.15rem;
+    color: #590674;
+    font-weight: bold;
+}
+
 .loginHeadline {
     font-family: 'Playfair Display', serif;
     margin-top: 3rem;
