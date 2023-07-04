@@ -38,8 +38,10 @@ function TripsList() {
 
     return (
         <div className="trips_container">
-            <button className='add_trip' onClick={showTrip}>Add a new trip</button>
-            {showForm === false ? '' : <TripAddUpdate getUserTrips={getUserTrips} setShowForm={setShowForm} isTripAdd={true} />}
+            <div className="add_trip_container">
+                <button className='add_trip' onClick={showTrip}>Add a new trip</button>
+                {showForm === false ? '' : <TripAddUpdate getUserTrips={getUserTrips} setShowForm={setShowForm} isTripAdd={true} />}
+            </div>
             <div className="trips">
                 <h2>Your trips</h2>
                 {console.log(trips)}
