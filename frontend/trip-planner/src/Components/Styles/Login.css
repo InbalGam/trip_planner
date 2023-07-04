@@ -1,0 +1,69 @@
+* {
+    background-color: #f7f5fe;
+}
+
+.loginHeadline {
+    font-family: 'Playfair Display', serif;
+    margin-top: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #060565;
+}
+
+.login_container {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+form input {
+    width: 10%;
+    align-self: center;
+    margin-top: 0.5rem;
+}
+
+form button {
+    width: 3%;
+    align-self: center;
+    margin-top: 0.5rem;
+    border: 0.06rem solid #ccc;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    box-shadow: 2px 2px;
+    font-weight: bold;
+}
+
+form button:hover {
+    background-color: #c5a1b9;
+}
+
+form label {
+    color: #650343;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bolder;
+}
+
+.registrationHeadline {
+    font-family: 'Playfair Display', serif;
+    margin-top: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #060565;
+}
+
+.registrationLink {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.25rem;
+    text-decoration: none;
+    color: #650343;
+}
+
+.registrationLink:hover {
+    text-decoration: underline;
+}

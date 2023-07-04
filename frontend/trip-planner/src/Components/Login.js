@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState } from "react";
 import {login} from '../Api';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import styles from './Styles/Login.css';
 
 
 function Login() {
@@ -35,10 +36,10 @@ function Login() {
     };
 
     return (
-        <div className="login">
+        <div className="login_container">
             {searchParams.get("logout") ? 'Succefully logged out' : ''}
             {searchParams.get("register") ? 'Succefully registered, you can log in' : ''}
-            <p>Log in below</p>
+            <p className='loginHeadline'>Log in below</p>
             <form onSubmit={submitLogin}>
                 <label for='username'>Username</label>
                 <input id='username' type='text' name='username' value={username} placeholder={'username'} onChange={handleUsernameChange} />
@@ -49,8 +50,8 @@ function Login() {
             <div className='authStatus'>
                 {authFailed ? 'Username or Password are incorrect, try again' : ''}
             </div>
-            <p>Not registered yet?</p>
-            <Link to='/register'>Register here</Link>
+            <p className='registrationHeadline'>Not registered yet?</p>
+            <Link to='/register' className='registrationLink' >Register here</Link>
         </div>
     );
 };
