@@ -10,7 +10,7 @@ function Email(props) {
     <form>
       <h3>Email</h3>
       <ReactMultiEmail
-        placeholder='Input your email'
+        placeholder='Input email'
         emails={props.emails}
         onChange={(_emails) => {props.setEmails(_emails);}}
         autoFocus={true}
