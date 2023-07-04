@@ -64,7 +64,7 @@ function Register() {
         <div className="register_container">
             <h2>Welcome to The Trip Planner</h2>
             <h3>You are minutes away from starting to plan your dream vacation!</h3>
-            <form onSubmit={submitForm}>
+            <form onSubmit={submitForm} className='registerForm'>
                 <label htmlFor='username'>Email-</label>
                 <input id='username' type='text' name='username' value={username} placeholder={'Enter your email here'} onChange={handleUsernameChange} />
                 {validUsername ? '' : 'The username needs to be a valid email'}

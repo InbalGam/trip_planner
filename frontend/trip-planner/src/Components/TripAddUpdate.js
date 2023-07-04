@@ -124,7 +124,7 @@ function TripAdd(props) {
     };
 
     return (
-        <form onSubmit={submitTrip}>
+        <form onSubmit={submitTrip} className={'tripForm'}>
             <Select options={options} value={country} onChange={changeHandler} className="countrySelect"/>
             <label for='city'>City</label>
             <input id='city' type='text' name='city' value={city} placeholder={'Enter city here'} onChange={handleTextChange} className="city_input"/>
