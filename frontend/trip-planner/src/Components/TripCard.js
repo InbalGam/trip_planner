@@ -9,6 +9,7 @@ import { useState } from "react";
 import TripAddUpdate from './TripAddUpdate';
 import dateFormat, { masks } from "dateformat";
 import {deleteSpecificTrip} from '../Api';
+import styles from './Styles/TripCard.css';
 
 
 export default function TripCard(props) {
@@ -36,31 +37,30 @@ export default function TripCard(props) {
       navigate('/error');
     }
   };
-  
+
   return (
     <>
-
-      <Card sx={{ minWidth: 375 }}>
-        <CardContent>
-          <Link to={`/trips/${props.trip.id}`} >
-            <Typography sx={{ fontSize: 24 }} color="text.secondary" gutterBottom>
+      <Link to={`/trips/${props.trip.id}`} >
+        <Card sx={{ minWidth: 375 }} className='tripCard'>
+          <CardContent>
+            <Typography sx={{ fontSize: 24 }} gutterBottom className='countryName'>
               {props.trip.country}
             </Typography>
-            <Typography variant="h5" component="div">
+            <Typography variant="h5" component="div" className='cityName'>
               {props.trip.city}
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            <Typography sx={{ mb: 1.5 }} className='dates'>
               Starting: {dateFormat(new Date(props.trip.start_date), "dddd, mmmm dS, yyyy")}
               <br />
               Ending: {dateFormat(new Date(props.trip.end_date), "dddd, mmmm dS, yyyy")}
             </Typography>
-          </Link>
-        </CardContent>
-        <CardActions>
-          {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={onClickEdit}>Edit trip</Button> : ''}
-          {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={() => onClickDelete(props.trip)}>Delete trip</Button> : ''}
-        </CardActions>
-      </Card>
+          </CardContent>
+          <CardActions>
+            {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={onClickEdit}>Edit trip</Button> : ''}
+            {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={() => onClickDelete(props.trip)}>Delete trip</Button> : ''}
+          </CardActions>
+        </Card>
+      </Link>
       {showForm === false ? '' : <TripAddUpdate getUserTrips={props.getUserTrips} setShowForm={setShowForm} trip={props.trip} isTripAdd={false} />}
       {deleteFailed === false ? '' : 'Could not delete trip'}
     </>
