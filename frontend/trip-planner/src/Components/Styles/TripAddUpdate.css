@@ -25,7 +25,6 @@
 
 .tripForm input {
     margin-left: 1rem;
-    margin-top: 1rem;
     margin-bottom: 1rem;
 }
 
@@ -45,6 +44,14 @@
     border-style: none;
     border-radius: none;
     box-shadow: none;
+}
+
+.react-multi-email {
+    padding: 0;
+}
+
+.react-multi-email [data-tag] [data-tag-item] {
+    overflow: visible;
 }
 
 .tripForm .submitButton {
