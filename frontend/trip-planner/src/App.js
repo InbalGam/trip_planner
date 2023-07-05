@@ -7,6 +7,8 @@ import Logout from './Components/Logout';
 import Activity from './Components/Activity';
 import ErrorPage from "./Components/ErrorPage";
 import Register from "./Components/Register";
+import styles from './Components/Styles/App.css';
+
 
 function App() {
 
