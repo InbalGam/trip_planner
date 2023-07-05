@@ -109,7 +109,7 @@ function TripScheduler() {
         <div className='schedulerContainder'>
             {deleteFailed === false ? '' : 'Could not delete activity'}
             <Paper>
-                <p>{isActivities ? '' : 'No activities yet'}</p>
+                <p>{isActivities ? '' : ''}</p>
                 <Scheduler data={schedulerData}>
                     <ViewState currentDate={currentDate} onCurrentDateChange={(date) => { setCurrentDate(date) }} />
                     <WeekView startDayHour={5} cellDuration={60} />
