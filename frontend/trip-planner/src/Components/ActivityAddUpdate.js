@@ -1,5 +1,5 @@
 import {insertTripActivity, updateTripActivity, getSpecificTripActivity} from '../Api';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, json } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import { useState,  useEffect } from "react";
 import styles from './Styles/ActivityAddUpdate.css';
@@ -22,7 +22,7 @@ function ActivityAddUpdate(props) {
     const [activityType, setActivityType] = useState('');
 
     const options = [{value: 'OD' , label: 'Outdoor'}, {value: 'FD' , label: 'Food & Drink'}, {value: 'M' , label: 'Meeting'},
-    {value: 'MU' , label: 'Museum'}, {value: 'CT' , label: 'City Tour'}, {value: 'S' , label: 'Sports'}];
+        {value: 'MU' , label: 'Museum'}, {value: 'CT' , label: 'City Tour'}, {value: 'S' , label: 'Sports'}];
     const changeHandler = value => {
         setActivityType(value)
     };
@@ -72,6 +72,7 @@ function ActivityAddUpdate(props) {
                 setStartValue(jsonData.start_time);
                 setEndValue(jsonData.end_time);
                 setActivityDate(new Date(jsonData.date));
+                setActivityType(jsonData.type);
             };
         } catch (e) {
             navigate('/error');
@@ -115,7 +116,8 @@ function ActivityAddUpdate(props) {
                 activityURL: link, 
                 start_time: startValue, 
                 end_time: endValue, 
-                user_notes: userNotes
+                user_notes: userNotes,
+                type: activityType
             };
             if (props.isActivityAdd) {
                 await insertUserActivity(tripId, newActivity);
@@ -133,6 +135,7 @@ function ActivityAddUpdate(props) {
             setUserNotes('');
             setStartValue('10:00');
             setEndValue('10:00');
+            setActivityType('');
         };
     };
 

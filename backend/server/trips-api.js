@@ -190,7 +190,7 @@ tripsRouter.get('/trips/:trip_id/activities', async (req, res, next) => {
 
 // Post a new activity
 tripsRouter.post('/trips/:trip_id/activities', async (req, res, next) => {
-    const { date, activity_name, address, activityURL, start_time, end_time, user_notes } = req.body;
+    const { date, activity_name, address, activityURL, start_time, end_time, user_notes, type } = req.body;
 
     if (!date || !activity_name || !start_time || !end_time) {
         return res.status(400).json({ msg: 'Date, activity_name, start_time and end_time must be specified' });
@@ -205,8 +205,8 @@ tripsRouter.post('/trips/:trip_id/activities', async (req, res, next) => {
     }
 
     try {
-        const result = await pool.query('insert into activities (date, trip_id, activity_name, address, url, start_time, end_time, user_id, user_notes) values ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning *;',
-            [new Date(date), req.params.trip_id, activity_name, address, activityURL, start_time, end_time, req.user.id, user_notes]);
+        const result = await pool.query('insert into activities (date, trip_id, activity_name, address, url, start_time, end_time, user_id, user_notes, type) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) returning *;',
+            [new Date(date), req.params.trip_id, activity_name, address, activityURL, start_time, end_time, req.user.id, user_notes, type]);
         res.status(200).json(result.rows[0]);
     } catch (e) {
         res.status(500).json({msg: 'Server error'});
@@ -227,7 +227,7 @@ tripsRouter.get('/trips/:trip_id/activities/:activity_id', async (req, res, next
 
 // Update a specific activity
 tripsRouter.put('/trips/:trip_id/activities/:activity_id', async (req, res, next) => {
-    const { date, activity_name, address, activityURL, start_time, end_time, user_notes } = req.body;
+    const { date, activity_name, address, activityURL, start_time, end_time, user_notes, type } = req.body;
 
     if (!date || !activity_name || !start_time || !end_time) {
         return res.status(400).json({ msg: 'Date, activity_name, start_time and end_time must be specified' });
@@ -242,8 +242,8 @@ tripsRouter.put('/trips/:trip_id/activities/:activity_id', async (req, res, next
     }
 
     try {
-        const result = await pool.query('update activities set date = $2, trip_id = $3, activity_name = $4, address = $5, url = $6, start_time = $7, end_time = $8, user_id = $9, user_notes = $10 where id = $1 and trip_id = $3 returning *;', 
-        [req.params.activity_id, new Date(date), req.params.trip_id, activity_name, address, activityURL, start_time, end_time, req.user.id, user_notes]);
+        const result = await pool.query('update activities set date = $2, trip_id = $3, activity_name = $4, address = $5, url = $6, start_time = $7, end_time = $8, user_id = $9, user_notes = $10, type = $11 where id = $1 and trip_id = $3 returning *;', 
+        [req.params.activity_id, new Date(date), req.params.trip_id, activity_name, address, activityURL, start_time, end_time, req.user.id, user_notes, type]);
         res.status(200).json(result.rows[0]);
     } catch(e) {
         res.status(500).json({msg: 'Server error'});

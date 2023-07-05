@@ -100,7 +100,7 @@ function TripScheduler() {
     };
 
 
-    const myAppointmentComponent = (props) => <Appointments.Appointment {...props} onDoubleClick={(e) => navigate(`/trips/${tripId}/activities/${props.data.id}`)} />;
+    const myAppointmentComponent = (props) => <Appointments.Appointment {...props} onDoubleClick={(e) => navigate(`/trips/${tripId}/activities/${props.data.id}`)} className='appointment' />;
     const myLayoutComponent = (props) => <AppointmentTooltip.Layout {...props} onDeleteButtonClick={(e) => deleteAnActivity(props.appointmentMeta.data.id)} />
     const myHeaderComponent = (props) => <AppointmentTooltip.Header {...props} ><button className='activity_open_button' onClick={(e) => navigate(`/trips/${tripId}/activities/${props.appointmentData.id}`)} >Open</button></AppointmentTooltip.Header>
 
