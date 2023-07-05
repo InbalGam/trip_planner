@@ -56,7 +56,7 @@ function TripScheduler() {
                 if (jsonData.length > 0) {
                     const activities = jsonData.map(el => {
                         const newDate = dateFormat(new Date(el.date), "yyyy, mm, dd");
-                        return { id: el.id, title: el.activity_name, startDate: new Date(newDate + ', ' + el.start_time), endDate: new Date(newDate + ', ' + el.end_time) }
+                        return { id: el.id, title: el.activity_name, startDate: new Date(newDate + ', ' + el.start_time), endDate: new Date(newDate + ', ' + el.end_time), type: el.type }
                     });
                     setSchedulerData(activities);
                 } else {
