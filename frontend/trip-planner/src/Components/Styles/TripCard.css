@@ -15,3 +15,7 @@
     color: black;
     text-decoration: none;
 }
+
+.tripCardActionButtons:hover {
+    background-color: #fbf7ff !important;
+}
