@@ -2,6 +2,8 @@ import {insertTripActivity, updateTripActivity, getSpecificTripActivity} from '.
 import { useParams, useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import { useState,  useEffect } from "react";
+import styles from './Styles/ActivityAddUpdate.css';
+
 
 function ActivityAddUpdate(props) {
     const { tripId } = useParams();
@@ -127,7 +129,7 @@ function ActivityAddUpdate(props) {
     };
 
     return (
-        <form onSubmit={submitActivity}>
+        <form onSubmit={submitActivity} className='activityForm'>
             <label htmlFor='activity_date'>Activity date</label>
             <DatePicker selected={activityDate} onChange={date => setActivityDate(date)} dateFormat='dd-MMM-yy' />
             <label htmlFor='activity_name'>Activity name</label>

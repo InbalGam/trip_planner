@@ -8,7 +8,8 @@ import { useState, useEffect } from "react";
 import dateFormat, { masks } from "dateformat";
 import ActivityAddUpdate from './ActivityAddUpdate';
 import ClipLoader from 'react-spinners/ClipLoader';
-
+import styles from './Styles/TripScheduler.css';
+import AddIcon from '@mui/icons-material/Add';
 
 function TripScheduler() {
     const { tripId } = useParams();
@@ -105,8 +106,8 @@ function TripScheduler() {
 
 
     return (
-        <>
-            {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> : ''}
+        <div className='schedulerContainder'>
+            {deleteFailed === false ? '' : 'Could not delete activity'}
             <Paper>
                 <p>{isActivities ? '' : 'No activities yet'}</p>
                 <Scheduler data={schedulerData}>
@@ -118,12 +119,12 @@ function TripScheduler() {
                     <DateNavigator />
                 </Scheduler>
             </Paper>
-            <div>
-                <button className='add_activity' onClick={showActivity} >Add a new activity</button>
+            <div className='addActivityContainer'>
+                <button className='add_activity' onClick={showActivity} ><AddIcon/></button>
                 {showForm === false ? '' : <ActivityAddUpdate getTripActivities={getTripActivities} setShowForm={setShowForm} isActivityAdd={isActivityAdd} />}
-                {deleteFailed === false ? '' : 'Could not delete activity'}
             </div>
-        </>
+            {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> : ''}
+        </div>
     );
 };
 

@@ -1,81 +1,52 @@
-.tripForm {
-    margin-top: 2.75rem;
+.activityForm {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    position: relative;
+    align-content: flex-start;
+    justify-content: space-between;
     border: 0.06rem solid #ccc;
     border-radius: 0.25rem;
     box-sizing: border-box;
     box-shadow: 2px 1px -1px rgba(0,0,0,0.2);
-    text-align: left;
-    display: flex;
-    flex-direction: column;
+    height: 12rem;
+    width: 44rem;
+    margin-bottom: 5rem;
+    margin-top: 2rem;
+    margin-left: 2rem;
     background-color: #eee0fe;
 }
 
-.countrySelect {
-    color: black;
-    background-color: white;
-    margin-bottom: 2rem;
-    display: inline-block;
-}
-
-.tripForm label {
-    margin-left: 1rem;
-    color: #650343;
+.activityForm label {
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
     font-family: 'Roboto', sans-serif;
-    font-weight: bold;
 }
 
-.tripForm input {
-    margin-left: 1rem;
-    margin-bottom: 1rem;
+.activityForm input {
+    margin-right: 1rem;
+    height: 1.5rem;
+    margin-left: 0.5rem;
+    margin-bottom: 0.25rem;
 }
 
-.city_input {
-    align-self: flex-start;
+.activityForm .submitButton {
     width: 30%;
-}
-
-.addEmailHeadline {
-    margin-left: 1rem;
-    color: #650343;
-    font-family: 'Roboto', sans-serif;
-    margin-top: 1rem;
-}
-
-.emails {
-    border-style: none;
-    border-radius: none;
-    box-shadow: none;
-}
-
-.react-multi-email {
-    padding: 0;
-}
-
-.react-multi-email [data-tag] [data-tag-item] {
-    overflow: visible;
-}
-
-.tripForm .submitButton {
-    width: 20%;
-    height: 2rem;
     border: 0.06rem solid #ccc;
     border-radius: 0.25rem;
     box-sizing: border-box;
     box-shadow: 2px 1px -1px rgba(0,0,0,0.2);
     margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-left: 0.5rem;
     align-self: center;
     background-color: #fbf7ff;
     font-family: 'Roboto', sans-serif;
 }
 
-.tripForm .submitButton:hover {
+.activityForm .submitButton:hover {
     background-color: #c5a1b9;
     cursor: pointer;
-}
-
-.datePick {
-    width: 20%;
 }
 
 .react-datepicker__header {
@@ -115,7 +86,6 @@
 }
 
 .failed {
-    margin-left: 1rem;
-    margin-bottom: 0.5rem;
     font-weight: bold;
+    margin-bottom: 0;
 }
