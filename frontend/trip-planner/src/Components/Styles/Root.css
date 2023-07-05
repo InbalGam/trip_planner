@@ -6,7 +6,7 @@
 }
 
 .nav-bar p {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 1.5rem;
     font-weight: bold;
     padding-left: 7rem;
@@ -18,7 +18,8 @@
     padding-left: 75%;
     justify-content: space-between;
     font-size: 1.2rem;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
 }
 
 .nav-links .logoutLink {

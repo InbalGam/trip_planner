@@ -15,16 +15,17 @@
 }
 
 .add_trip_container .add_trip {
-    width: 30%;
     align-self: center;
     padding: 0.5rem;
     border: 0.06rem solid #ccc;
-    border-radius: 0.25rem;
+    border-radius: 4rem;
     box-sizing: border-box;
     box-shadow:  2px 1px -1px rgba(0,0,0,0.2);
     font-weight: bold;
-    background-color: #eee0fe;
+    background-color: #a56690;
     font-family: 'Roboto', sans-serif;
+    padding: 1rem;
+    color: white;
 }
 
 .add_trip_container .add_trip:hover {
@@ -38,6 +39,7 @@
 
 h2 {
     padding-left: 7.5rem;
+    font-family: 'Raleway', sans-serif;
 }
 
 ul {
