@@ -24,6 +24,7 @@
     box-shadow:  2px 1px -1px rgba(0,0,0,0.2);
     font-weight: bold;
     background-color: #eee0fe;
+    font-family: 'Roboto', sans-serif;
 }
 
 .add_trip_container .add_trip:hover {

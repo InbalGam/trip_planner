@@ -1,36 +1,17 @@
 .countryName {
-    font-family: 'Belanosima', sans-serif;
+    font-family: 'Belanosima', sans-serif !important;
 }
 
 .cityName {
-    font-family: 'Belanosima', sans-serif;
+    font-family: 'Belanosima', sans-serif !important;
 }
 
 .dates {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif !important;
     margin-top: 0.5rem !important;
 }
 
 .tripCardLink {
     color: black;
-    text-decoration: none;
-}
-
-.countryName:active {
-    color: black;
-    text-decoration: none;
-}
-
-.cityName:active {
-    color: black;
-    text-decoration: none;
-}
-
-.dates:active {
-    color: black;
-    text-decoration: none;
-}
-
-.tripCard:active {
     text-decoration: none;
 }
