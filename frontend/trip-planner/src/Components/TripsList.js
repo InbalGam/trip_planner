@@ -4,6 +4,7 @@ import TripCard from './TripCard';
 import {getTrips} from '../Api';
 import { useNavigate } from 'react-router-dom';
 import styles from './Styles/TripsList.css';
+import AddIcon from '@mui/icons-material/Add';
 
 
 function TripsList() {
@@ -39,7 +40,7 @@ function TripsList() {
     return (
         <div className="trips_container">
             <div className="add_trip_container">
-                <button className='add_trip' onClick={showTrip}>Add a new trip</button>
+                <button className='add_trip' onClick={showTrip}><AddIcon/></button>
                 {showForm === false ? '' : <TripAddUpdate getUserTrips={getUserTrips} setShowForm={setShowForm} isTripAdd={true} />}
             </div>
             <div className="trips">
