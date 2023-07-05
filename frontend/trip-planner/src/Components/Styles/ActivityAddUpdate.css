@@ -1,6 +1,5 @@
 .activityForm {
     display: flex;
-    flex-direction: column;
     flex-wrap: wrap;
     position: relative;
     align-content: flex-start;
@@ -9,26 +8,60 @@
     border-radius: 0.25rem;
     box-sizing: border-box;
     box-shadow: 2px 1px -1px rgba(0,0,0,0.2);
-    height: 12rem;
-    width: 44rem;
     margin-bottom: 5rem;
     margin-top: 2rem;
     margin-left: 2rem;
     background-color: #eee0fe;
+    padding: 1.5rem;
 }
 
-.activityForm label {
-    margin-right: 0.5rem;
+.activityFormDiv1 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    align-content: flex-start;
+    padding: 0.5rem;
+}
+
+.activityFormDiv2 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    align-content: flex-start;
+    padding: 0.5rem;
     margin-left: 0.5rem;
-    margin-top: 0.5rem;
+}
+
+.activityFormDiv3 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    align-content: flex-start;
+    padding: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+.activityFormDiv1 input {
+    margin-top: 1rem;
+}
+
+.activityFormDiv1 .selectActivityType {
+    margin-top: 1rem;
+}
+
+.activityFormDiv2 label {
     font-family: 'Roboto', sans-serif;
+    margin-top: 0.5rem;
 }
 
-.activityForm input {
-    margin-right: 1rem;
-    height: 1.5rem;
-    margin-left: 0.5rem;
-    margin-bottom: 0.25rem;
+.activityFormDiv2 input {
+    margin-top: 0.25rem;
 }
 
 .activityForm .submitButton {

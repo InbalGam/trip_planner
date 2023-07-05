@@ -33,3 +33,9 @@
     background-color: #c5a1b9;
     cursor: pointer;
 }
+
+.appointment {
+    background-color: #c5a1b9 !important;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 1rem !important;
+}
