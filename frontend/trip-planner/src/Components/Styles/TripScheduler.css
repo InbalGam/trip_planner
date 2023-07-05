@@ -41,19 +41,19 @@
 }
 
 .appointment_Outdoor {
-    background-color: #946539 !important;
+    background-color: #5d9439 !important;
     font-family: 'Roboto', sans-serif !important;
     font-size: 1rem !important;
 }
 
 .appointment_Food {
-    background-color: #f09ac5 !important;
+    background-color: #e78a20 !important;
     font-family: 'Roboto', sans-serif !important;
     font-size: 1rem !important;
 }
 
 .appointment_Drink {
-    background-color: #eede84 !important;
+    background-color: #e9d149 !important;
     font-family: 'Roboto', sans-serif !important;
     font-size: 1rem !important;
 }
@@ -65,13 +65,13 @@
 }
 
 .appointment_Museum {
-    background-color: #7df0ea !important;
+    background-color: #6c15b3 !important;
     font-family: 'Roboto', sans-serif !important;
     font-size: 1rem !important;
 }
 
 .appointment_Tour {
-    background-color: #87bd8e !important;
+    background-color: #7fc288 !important;
     font-family: 'Roboto', sans-serif !important;
     font-size: 1rem !important;
 }
