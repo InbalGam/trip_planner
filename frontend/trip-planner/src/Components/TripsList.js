@@ -39,15 +39,14 @@ function TripsList() {
 
     return (
         <div className="trips_container">
-            <div className="add_trip_container">
-                <button className='add_trip' onClick={showTrip}><AddIcon/></button>
-                {showForm === false ? '' : <TripAddUpdate getUserTrips={getUserTrips} setShowForm={setShowForm} isTripAdd={true} />}
-            </div>
             <div className="trips">
+                <div className="add_trip_container">
+                    <button className='add_trip' onClick={showTrip}><AddIcon /></button>
+                </div>
+                {showForm === false ? '' : <TripAddUpdate getUserTrips={getUserTrips} setShowForm={setShowForm} isTripAdd={true} />}
                 <h2>Your trips</h2>
-                {console.log(trips)}
                 <div className="userTrips">
-                    <ul>
+                    <ul className="listOfTrips">
                         {trips.map((trip, ind) =>
                             <li key={ind}>
                                 <TripCard trip={trip} getUserTrips={getUserTrips} setShowForm={setShowForm} />

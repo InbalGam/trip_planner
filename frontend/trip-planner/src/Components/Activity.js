@@ -5,6 +5,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import ActivityAddUpdate from './ActivityAddUpdate';
 import dateFormat, { masks } from "dateformat";
 import CommentsList from './CommentsList';
+import styles from './Styles/Activity.css';
 
 
 function Activity() {
