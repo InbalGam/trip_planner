@@ -8,8 +8,13 @@
 
 .dates {
     font-family: 'Roboto', sans-serif;
+    margin-top: 0.5rem !important;
 }
 
+.tripCardLink {
+    color: black;
+    text-decoration: none;
+}
 
 .countryName:active {
     color: black;

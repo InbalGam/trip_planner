@@ -10,7 +10,8 @@ import TripAddUpdate from './TripAddUpdate';
 import dateFormat, { masks } from "dateformat";
 import {deleteSpecificTrip} from '../Api';
 import styles from './Styles/TripCard.css';
-
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function TripCard(props) {
   const [showForm, setShowForm] = useState(false);
@@ -40,7 +41,7 @@ export default function TripCard(props) {
 
   return (
     <>
-      <Link to={`/trips/${props.trip.id}`} >
+      <Link to={`/trips/${props.trip.id}`} className='tripCardLink'>
         <Card sx={{ minWidth: 375 }} className='tripCard'>
           <CardContent>
             <Typography sx={{ fontSize: 24 }} gutterBottom className='countryName'>
@@ -50,14 +51,12 @@ export default function TripCard(props) {
               {props.trip.city}
             </Typography>
             <Typography sx={{ mb: 1.5 }} className='dates'>
-              Starting: {dateFormat(new Date(props.trip.start_date), "dddd, mmmm dS, yyyy")}
-              <br />
-              Ending: {dateFormat(new Date(props.trip.end_date), "dddd, mmmm dS, yyyy")}
+              {dateFormat(new Date(props.trip.start_date), "mmmm dS, yyyy")} - {dateFormat(new Date(props.trip.end_date), "mmmm dS, yyyy")}
             </Typography>
           </CardContent>
           <CardActions>
-            {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={onClickEdit}>Edit trip</Button> : ''}
-            {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={() => onClickDelete(props.trip)}>Delete trip</Button> : ''}
+            {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={onClickEdit} className='tripCardActionButtons'><EditIcon/></Button> : ''}
+            {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={() => onClickDelete(props.trip)} className='tripCardActionButtons'><DeleteIcon/></Button> : ''}
           </CardActions>
         </Card>
       </Link>
