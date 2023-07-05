@@ -21,10 +21,10 @@ function ActivityAddUpdate(props) {
     const navigate = useNavigate();
     const [activityType, setActivityType] = useState('');
 
-    const options = [{value: 'OD' , label: 'Outdoor'}, {value: 'FD' , label: 'Food & Drink'}, {value: 'M' , label: 'Meeting'},
-        {value: 'MU' , label: 'Museum'}, {value: 'CT' , label: 'City Tour'}, {value: 'S' , label: 'Sports'}];
+    const typeOptions = [{value: 'OD' , label: 'Outdoor'}, {value: 'F' , label: 'Food'}, {value: 'D' , label: 'Drink'}, {value: 'M' , label: 'Meeting'},
+        {value: 'MU' , label: 'Museum'}, {value: 'T' , label: 'Tour'}, {value: 'S' , label: 'Sports'}];
     const changeHandler = value => {
-        setActivityType(value)
+        setActivityType(value);
     };
 
     function handleTextChange(e) {
@@ -96,6 +96,7 @@ function ActivityAddUpdate(props) {
                     return result;
                 } else {
                     setInsertFailed(true);
+                    setUpdateFailed(true);
                 }
             };
         } catch (e) {
@@ -105,6 +106,7 @@ function ActivityAddUpdate(props) {
 
 
     async function submitActivity(e) {
+        console.log(activityType.label);
         e.preventDefault();
         if (!activityDate || !activityName || !startValue || !endValue) {
             setFieldsFilled(true);
@@ -117,7 +119,7 @@ function ActivityAddUpdate(props) {
                 start_time: startValue, 
                 end_time: endValue, 
                 user_notes: userNotes,
-                type: activityType
+                type: activityType.label
             };
             if (props.isActivityAdd) {
                 await insertUserActivity(tripId, newActivity);
@@ -143,7 +145,7 @@ function ActivityAddUpdate(props) {
         <form onSubmit={submitActivity} className='activityForm'>
             <div className='activityFormDiv1'>
                 <input id='activity_name' type='text' name='activity_name' value={activityName} placeholder={'Enter activity name here'} onChange={handleTextChange} />
-                <Select options={options} value={activityType} onChange={changeHandler} placeholder='select activity type' className="selectActivityType"/>
+                <Select options={typeOptions} value={activityType} onChange={changeHandler} placeholder='select activity type' className="selectActivityType"/>
                 <input id='address' type='text' name='address' value={address} placeholder={'Enter address here'} onChange={handleAddressChange} />
                 <input id='link' type='text' name='link' value={link} placeholder={'Enter link here'} onChange={handleLinkChange} />
             </div>
