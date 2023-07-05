@@ -10,6 +10,7 @@ import ActivityAddUpdate from './ActivityAddUpdate';
 import ClipLoader from 'react-spinners/ClipLoader';
 import styles from './Styles/TripScheduler.css';
 import AddIcon from '@mui/icons-material/Add';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 function TripScheduler() {
     const { tripId } = useParams();
@@ -102,7 +103,7 @@ function TripScheduler() {
 
     const myAppointmentComponent = (props) => <Appointments.Appointment {...props} onDoubleClick={(e) => navigate(`/trips/${tripId}/activities/${props.data.id}`)}  className={props.data.type ? `appointment_${props.data.type}` : 'appointment'} />;
     const myLayoutComponent = (props) => <AppointmentTooltip.Layout {...props} onDeleteButtonClick={(e) => deleteAnActivity(props.appointmentMeta.data.id)} />
-    const myHeaderComponent = (props) => <AppointmentTooltip.Header {...props} ><button className='activity_open_button' onClick={(e) => navigate(`/trips/${tripId}/activities/${props.appointmentData.id}`)} >Open</button></AppointmentTooltip.Header>
+    const myHeaderComponent = (props) => <AppointmentTooltip.Header {...props} ><button className='activity_open_button' onClick={(e) => navigate(`/trips/${tripId}/activities/${props.appointmentData.id}`)} ><OpenInNewIcon/></button></AppointmentTooltip.Header>
 
 
     return (
@@ -122,7 +123,7 @@ function TripScheduler() {
                     </Scheduler>
                 </Paper>
                 <div className='addActivityContainer'>
-                    <button className='add_activity' onClick={showActivity} ><AddIcon /></button>
+                    <button className='add_activity' onClick={showActivity} ><AddIcon className='addIcon' style={{fontSize: '32px'}}/></button>
                     {showForm === false ? '' : <ActivityAddUpdate getTripActivities={getTripActivities} setShowForm={setShowForm} isActivityAdd={isActivityAdd} />}
                 </div>
             </div>
