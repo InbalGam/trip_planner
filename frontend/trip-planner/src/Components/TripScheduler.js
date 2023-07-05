@@ -106,24 +106,26 @@ function TripScheduler() {
 
 
     return (
-        <div className='schedulerContainder'>
-            {deleteFailed === false ? '' : 'Could not delete activity'}
-            <Paper>
-                <p>{isActivities ? '' : ''}</p>
-                <Scheduler data={schedulerData}>
-                    <ViewState currentDate={currentDate} onCurrentDateChange={(date) => { setCurrentDate(date) }} />
-                    <WeekView startDayHour={5} cellDuration={60} />
-                    <Appointments appointmentComponent={myAppointmentComponent} />
-                    <AppointmentTooltip showCloseButton showDeleteButton layoutComponent={myLayoutComponent} headerComponent={myHeaderComponent} />
-                    <Toolbar />
-                    <DateNavigator />
-                </Scheduler>
-            </Paper>
-            <div className='addActivityContainer'>
-                <button className='add_activity' onClick={showActivity} ><AddIcon/></button>
-                {showForm === false ? '' : <ActivityAddUpdate getTripActivities={getTripActivities} setShowForm={setShowForm} isActivityAdd={isActivityAdd} />}
+        <div className='schedulerLoaderContainder'>
+            {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className='loader' /> : ''}
+            <div className='schedulerContainder'>
+                {deleteFailed === false ? '' : 'Could not delete activity'}
+                <Paper>
+                    <p>{isActivities ? '' : ''}</p>
+                    <Scheduler data={schedulerData}>
+                        <ViewState currentDate={currentDate} onCurrentDateChange={(date) => { setCurrentDate(date) }} />
+                        <WeekView startDayHour={5} cellDuration={60} />
+                        <Appointments appointmentComponent={myAppointmentComponent} />
+                        <AppointmentTooltip showCloseButton showDeleteButton layoutComponent={myLayoutComponent} headerComponent={myHeaderComponent} />
+                        <Toolbar />
+                        <DateNavigator />
+                    </Scheduler>
+                </Paper>
+                <div className='addActivityContainer'>
+                    <button className='add_activity' onClick={showActivity} ><AddIcon /></button>
+                    {showForm === false ? '' : <ActivityAddUpdate getTripActivities={getTripActivities} setShowForm={setShowForm} isActivityAdd={isActivityAdd} />}
+                </div>
             </div>
-            {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> : ''}
         </div>
     );
 };

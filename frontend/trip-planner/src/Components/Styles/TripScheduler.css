@@ -81,3 +81,17 @@
     font-family: 'Roboto', sans-serif !important;
     font-size: 1rem !important;
 }
+
+.schedulerLoaderContainder {
+    display: flex;
+    flex-direction: column;
+}
+
+.loader {
+    align-self: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 9999999;
+    transform: translate(-50%, -50%);
+}
