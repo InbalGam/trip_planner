@@ -72,7 +72,7 @@ function Activity() {
                     </div>}
             </div>
             <div className='comments'>
-                <h3>Comments</h3>
+                <h3 className='commentsHeadline'>Comments</h3>
                 <CommentsList />
             </div>
         </div>
