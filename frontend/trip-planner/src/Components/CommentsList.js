@@ -74,10 +74,12 @@ function CommentsList() {
                         <li key={ind}>
                             <div className='comment'>
                                 <p className='commentBody'>{el.comment}</p>
-                                <p className='commentUser'>{el.nickname}</p>
-                                <p className='commentTime'>{dateFormat(new Date(el.timestamp), "mmmm dS, yyyy")}</p> 
-                                {el.isCreatedByMe === 1 ? <button size="small" onClick={(e) => onClickDelete(el.id)} className='commentDelete'><DeleteIcon/></button> : ''}
-                                {deleteFailed === false ? '' : 'Could not delete comment'}
+                                <div className='commentInfo'>
+                                    <p className='commentUser'>{el.nickname}</p>
+                                    <p className='commentTime'>{dateFormat(new Date(el.timestamp), "mmmm dS, yyyy")}</p> 
+                                    {el.isCreatedByMe === 1 ? <button size="small" onClick={(e) => onClickDelete(el.id)} className='commentDelete'><DeleteIcon/></button> : ''}
+                                    {deleteFailed === false ? '' : 'Could not delete comment'}
+                                </div>
                             </div>
                         </li>) : 'No comments yet'}
                 </ul>

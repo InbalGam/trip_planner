@@ -1,0 +1,35 @@
+.commentForm {
+    display: flex;
+    flex-direction: column;
+    border: 0.06rem solid #ccc;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    box-shadow: 2px 1px -1px rgba(0,0,0,0.2);
+    background-color: #eee0fe;
+    padding: 1rem;
+    max-width: 50%;
+    margin-top: 1rem;
+    margin-left: 2.5rem;
+}
+
+.commentForm .commentSubmit {
+    padding: 0.5rem;
+    border: 0.06rem solid #ccc;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    box-shadow: 2px 1px -1px rgba(0,0,0,0.2);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    align-self: center;
+    background-color: #fbf7ff;
+    font-family: 'Roboto', sans-serif;
+}
+
+.commentForm .commentSubmit:hover {
+    background-color: #c5a1b9;
+    cursor: pointer;
+}
+
+.commentForm p {
+    font-family: 'Raleway', sans-serif;
+}
