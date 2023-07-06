@@ -16,6 +16,10 @@
     text-decoration: none;
 }
 
+.tripCardActionButtons {
+    color: #9f43ac !important;
+}
+
 .tripCardActionButtons:hover {
     background-color: #fbf7ff !important;
 }
