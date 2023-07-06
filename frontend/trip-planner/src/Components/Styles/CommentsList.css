@@ -30,7 +30,6 @@
     margin-bottom: 1rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-    max-width: 70%;
 }
 
 .commentBody {
@@ -64,4 +63,8 @@
 .commentDelete:hover {
     background-color: #c5a1b9;
     cursor: pointer;
+}
+
+.CommentsContainer ul {
+    padding: 0;
 }

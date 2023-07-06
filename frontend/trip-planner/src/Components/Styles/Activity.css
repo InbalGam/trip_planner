@@ -15,6 +15,8 @@
     margin-top: 2.75rem;
     margin-bottom: 1rem;
     padding: 2rem;
+    min-width: 50%;
+    justify-content: center
 }
 
 .container p {
@@ -38,4 +40,23 @@
 .activityEdit {
     background-color: #c5a1b9;
     cursor: pointer;
+}
+
+.comments {
+    min-width: 60%;
+    text-align: center;
+}
+
+.comments h3 {
+    font-family: 'Raleway', sans-serif !important;
+}
+
+@media only screen and (max-width: 550px) {
+    .comments {
+        min-width: 90%;
+    }
+
+    .activityInfoContainer {
+        min-width: 90%;
+    }
 }
