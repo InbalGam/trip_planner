@@ -32,8 +32,9 @@ h3 {
     border: 0.06rem solid #ccc;
     border-radius: 0.25rem;
     box-sizing: border-box;
-    box-shadow: 2px 2px;
+    box-shadow: 2px 1px -1px rgba(0,0,0,0.2);
     font-weight: bold;
+    background-color: #f7cbe8;
 }
 
 .registerForm button:hover {
