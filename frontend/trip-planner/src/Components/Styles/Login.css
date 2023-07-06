@@ -78,3 +78,22 @@
     text-decoration: underline;
     cursor: pointer;
 }
+
+
+@media only screen and (max-width: 550px) {
+    .login_container {
+        margin-top: 50%;
+    }
+
+    .loginForm label {
+        font-size: 1.5rem;
+    }
+
+    .loginForm input {
+        width: 40%;
+    }
+
+    .loginForm button {
+        width: 18%;
+    }
+}

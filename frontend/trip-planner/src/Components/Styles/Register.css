@@ -48,3 +48,31 @@ h3 {
     font-weight: bolder;
     margin-top: 0.5rem;
 }
+
+
+@media only screen and (max-width: 550px) {
+    .register_container {
+        margin-top: 40%;
+    }
+
+    .register_container h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .register_container h3 {
+        font-size: 1.5rem;
+    }
+
+    .registerForm label {
+        font-size: 1.5rem;
+    }
+
+    .registerForm input {
+        width: 40%;
+    }
+
+    .registerForm button {
+        width: 18%;
+    }
+}
