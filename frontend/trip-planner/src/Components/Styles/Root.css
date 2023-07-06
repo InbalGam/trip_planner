@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     border-bottom: 1px solid #060565;
     background-color: #eee0fe;
 }
@@ -16,11 +17,11 @@
 
 .nav-links {
     display: flex;
-    padding-left: 75%;
     justify-content: space-between;
     font-size: 1.2rem;
     font-family: 'Raleway', sans-serif;
     font-weight: bold;
+    margin-right: 2rem;
 }
 
 .nav-links .logoutLink {
@@ -44,4 +45,10 @@
 .nav-links .tripsLink:hover {
     text-decoration: underline;
     cursor: pointer;
+}
+
+@media only screen and (max-width: 550px) {
+    .nav-bar p {
+        padding-left: 2rem;
+    }
 }

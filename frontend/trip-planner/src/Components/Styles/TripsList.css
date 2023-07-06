@@ -62,3 +62,19 @@ ul {
     background-color: #eee0fe !important;
     height: 100%;
 }
+
+@media only screen and (max-width: 550px) {
+    .trips_container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .trips {
+        margin: 0;
+    }
+
+    .listOfTrips {
+        flex-direction: column;
+        padding: 0;
+    }
+}
