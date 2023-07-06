@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
-import { Scheduler, MonthView, WeekView, Appointments, Toolbar, DateNavigator, AppointmentTooltip } from '@devexpress/dx-react-scheduler-material-ui';
+import { Scheduler, DayView, WeekView, Appointments, Toolbar, DateNavigator, AppointmentTooltip, ViewSwitcher } from '@devexpress/dx-react-scheduler-material-ui';
 import { useParams, useNavigate } from 'react-router-dom';
 import {getSpecificTrip, getActivities, deleteSpecificTripActivity} from '../Api';
 import { useState, useEffect } from "react";
@@ -111,14 +111,16 @@ function TripScheduler() {
             {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className='loader' /> : ''}
             <div className='schedulerContainder'>
                 {deleteFailed === false ? '' : 'Could not delete activity'}
-                <Paper>
+                <Paper className='paper'>
                     <p>{isActivities ? '' : ''}</p>
                     <Scheduler data={schedulerData}>
                         <ViewState currentDate={currentDate} onCurrentDateChange={(date) => { setCurrentDate(date) }} />
                         <WeekView startDayHour={5} cellDuration={60} />
+                        <DayView startDayHour={5} cellDuration={60} />
                         <Appointments appointmentComponent={myAppointmentComponent} />
                         <AppointmentTooltip showCloseButton showDeleteButton layoutComponent={myLayoutComponent} headerComponent={myHeaderComponent} />
                         <Toolbar />
+                        <ViewSwitcher/>
                         <DateNavigator />
                     </Scheduler>
                 </Paper>
