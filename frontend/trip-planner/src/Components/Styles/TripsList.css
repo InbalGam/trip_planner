@@ -50,7 +50,7 @@ ul {
 
 .userTrips li {
     margin-top: 1.5rem;
-    border: 0.06rem solid #ccc;
+    /* border: 0.06rem solid #ccc; */
     border-radius: 0.25rem;
     box-sizing: border-box;
     cursor: pointer;
@@ -60,7 +60,7 @@ ul {
 
 .css-75jre3-MuiPaper-root-MuiCard-root {
     background-color: #eee0fe !important;
-    height: 100%;
+    min-height: 200px;
 }
 
 @media only screen and (max-width: 550px) {

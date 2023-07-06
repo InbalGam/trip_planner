@@ -18,18 +18,21 @@ export default function TripCard(props) {
   const [deleteFailed, setDeleteFailed] = useState(false);
   const navigate = useNavigate();
 
-  function onClickEdit() {
+  function onClickEdit(e) {
+    e.preventDefault();
     setShowForm(!showForm);
   };
 
-  async function onClickDelete(trip) {
+  async function onClickDelete(event) {
+    event.preventDefault();
     try {
-      const result = await deleteSpecificTrip(trip.id);
+      const result = await deleteSpecificTrip(props.trip.id);
       if (result.status === 401) {
         navigate('/login');
       } else {
         if (result.status === 200) {
           setDeleteFailed(false);
+          props.getUserTrips();
         } else {
           setDeleteFailed(true);
         }
@@ -41,8 +44,8 @@ export default function TripCard(props) {
 
   return (
     <>
-      <Link to={`/trips/${props.trip.id}`} className='tripCardLink'>
-        <Card sx={{ minWidth: 375 }} className='tripCard'>
+      <Card sx={{ minWidth: 375 }} className='tripCard'>
+        <Link to={`/trips/${props.trip.id}`} className='tripCardLink'>
           <CardContent>
             <Typography sx={{ fontSize: 24 }} gutterBottom className='countryName'>
               {props.trip.country}
@@ -54,12 +57,12 @@ export default function TripCard(props) {
               {dateFormat(new Date(props.trip.start_date), "mmmm dS, yyyy")} - {dateFormat(new Date(props.trip.end_date), "mmmm dS, yyyy")}
             </Typography>
           </CardContent>
-          <CardActions>
-            {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={onClickEdit} className='tripCardActionButtons'><EditIcon/></Button> : ''}
-            {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={() => onClickDelete(props.trip)} className='tripCardActionButtons'><DeleteIcon/></Button> : ''}
-          </CardActions>
-        </Card>
-      </Link>
+        </Link>
+        <CardActions>
+          {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={onClickEdit} className='tripCardActionButtons'><EditIcon /></Button> : ''}
+          {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={(event) => onClickDelete(event)} className='tripCardActionButtons'><DeleteIcon /></Button> : ''}
+        </CardActions>
+      </Card>
       {showForm === false ? '' : <TripAddUpdate getUserTrips={props.getUserTrips} setShowForm={setShowForm} trip={props.trip} isTripAdd={false} />}
       {deleteFailed === false ? '' : 'Could not delete trip'}
     </>
