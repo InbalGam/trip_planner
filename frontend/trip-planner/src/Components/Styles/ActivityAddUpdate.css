@@ -122,3 +122,12 @@
     font-weight: bold;
     margin-bottom: 0;
 }
+
+@media only screen and (max-width: 550px) {
+    .activityForm {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        margin-bottom: 1rem;
+    }
+}
+
