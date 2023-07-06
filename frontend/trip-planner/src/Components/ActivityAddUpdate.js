@@ -128,6 +128,7 @@ function ActivityAddUpdate(props) {
             } else {
                 await updateUserActivity(tripId, newActivity, props.activityId);
                 props.getSpecificActivity(tripId, props.activityId);
+                props.setShowForm(false);
                 props.setShowActivity(true);
             }
             setActivityDate(new Date());
