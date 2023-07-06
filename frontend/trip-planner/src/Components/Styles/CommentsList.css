@@ -1,0 +1,50 @@
+.CommentsContainer .addComment {
+    align-self: center;
+    padding: 0.5rem;
+    border: 0.06rem solid #ccc;
+    border-radius: 4rem;
+    box-sizing: border-box;
+    box-shadow:  2px 1px -1px rgba(0,0,0,0.2);
+    font-weight: bold;
+    background-color: #a56690;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    margin-left: 2rem;
+}
+
+.CommentsContainer .addComment:hover {
+    background-color: #c5a1b9;
+    cursor: pointer;
+}
+
+.comment {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    border: 0.06rem solid #ccc;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    box-shadow: 2px 1px -1px rgba(0,0,0,0.2);
+    background-color: #eee0fe;
+    padding: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.commentDelete {
+    border: 0.06rem solid #ccc;
+    border-radius: 1rem;
+    box-sizing: border-box;
+    box-shadow: 2px 1px -1px rgba(0,0,0,0.2);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.25rem;
+    align-self: flex-end;
+    background-color: #fbf7ff;
+}
+
+.commentDelete:hover {
+    background-color: #c5a1b9;
+    cursor: pointer;
+}

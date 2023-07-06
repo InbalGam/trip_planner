@@ -3,6 +3,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import ClipLoader from 'react-spinners/ClipLoader';
 import Comment from './Comment';
+import AddIcon from '@mui/icons-material/Add';
+import styles from './Styles/CommentsList.css';
+import DeleteIcon from '@mui/icons-material/Delete';
+import dateFormat, { masks } from "dateformat";
+
 
 function CommentsList() {
     const { tripId, activityId } = useParams();
@@ -61,17 +66,17 @@ function CommentsList() {
     return (
         <div>
             {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> :
-            <div>
-                <button onClick={addComment} >Add comment</button>
+            <div className='CommentsContainer'>
+                <button onClick={addComment} className='addComment' ><AddIcon/></button>
                 {showForm === false ? '' : <Comment setShowForm={setShowForm} getActivityComments={getActivityComments} />}
                 <ul>
                     {comments ? comments.map((el, ind) => 
                         <li key={ind}>
-                            <div>
+                            <div className='comment'>
                                 <p className='commentBody'>{el.comment}</p>
                                 <p className='commentUser'>{el.nickname}</p>
-                                <p className='commentTime'>{el.timestamp}</p>
-                                {el.isCreatedByMe === 1 ? <button size="small" onClick={(e) => onClickDelete(el.id)}>Delete comment</button> : ''}
+                                <p className='commentTime'>{dateFormat(new Date(el.timestamp), "mmmm dS, yyyy")}</p> 
+                                {el.isCreatedByMe === 1 ? <button size="small" onClick={(e) => onClickDelete(el.id)} className='commentDelete'><DeleteIcon/></button> : ''}
                                 {deleteFailed === false ? '' : 'Could not delete comment'}
                             </div>
                         </li>) : 'No comments yet'}

@@ -1,7 +1,7 @@
 import { insertActivityComment } from '../Api';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
-
+import styles from './Styles/Comment.css';
 
 function Comment(props) {
     const [comment, setComment] = useState('');
