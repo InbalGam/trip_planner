@@ -6,6 +6,7 @@ import ActivityAddUpdate from './ActivityAddUpdate';
 import dateFormat, { masks } from "dateformat";
 import CommentsList from './CommentsList';
 import styles from './Styles/Activity.css';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 function Activity() {
@@ -14,7 +15,6 @@ function Activity() {
     const [showForm, setShowForm] = useState(false);
     const [showActivity, setShowActivity] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
-    const [isActivityAdd, setIsActivityAdd] = useState(false);
     const [activity, setActivity] = useState({});
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
@@ -52,31 +52,28 @@ function Activity() {
         setShowActivity(!showActivity);
     };
 
-    function showComments(e) {
-        setCommentsForm(!commentsForm);
-    };
-
     return (
-        <div className='container'>
-            <div >
-                {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> : 
-                showActivity === false ? '' : <div className='ActivityInfo'>
-                    <h2>{activity.activity_name}</h2>
-                    <button className='activityEdit' onClick={showActivityForm}>Edit activity</button>
-                    <p>{dateFormat(new Date(activity.date), "dddd, mmmm dS, yyyy")}</p>
-                    <p>{startTime} - {endTime}</p>
-                    <p>{activity.address === "" ? 'No address entered' : activity.address}</p>
-                    <p>{activity.url === "" ? 'No URL entered' : activity.url}</p>
-                    <p>Activity Notes-</p>
-                    <p>{activity.user_notes === "" ? 'None' : activity.user_notes}</p> 
-                </div>}
-            </div>
-            <div className='editActivityDiv'>
-                {showForm === false ? '' : <ActivityAddUpdate setShowForm={setShowForm} isActivityAdd={isActivityAdd} activityId={activityId} getSpecificActivity={getSpecificActivity} setShowActivity={setShowActivity} />}
+        <div className='activityContainer'>
+            <div className='activityInfoContainer'>
+                <div className='editActivityDiv'>
+                    <button className='activityEdit' onClick={showActivityForm}><EditIcon /></button>
+                </div>
+                {showForm === false ? '' : <ActivityAddUpdate setShowForm={setShowForm} isActivityAdd={false} activityId={activityId} getSpecificActivity={getSpecificActivity} setShowActivity={setShowActivity} />}
+
+                {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> :
+                    showActivity === false ? '' 
+                    : <div className='ActivityInfo'>
+                        <h2 className='activityName'>{activity.activity_name}</h2>
+                        <p>{dateFormat(new Date(activity.date), "dddd, mmmm dS, yyyy")}</p>
+                        <p>{startTime} - {endTime}</p>
+                        <p>{activity.address === "" ? 'No address entered' : activity.address}</p>
+                        <p>{activity.url === "" ? 'No URL entered' : activity.url}</p>
+                        <p>{activity.user_notes === "" ? 'No activity notes' : activity.user_notes}</p>
+                    </div>}
             </div>
             <div className='comments'>
-                <button onClick={showComments} >Show Comments</button>
-                {commentsForm === false ? '' : <CommentsList />}
+                <h3>Comments</h3>
+                <CommentsList />
             </div>
         </div>
     );
