@@ -10,7 +10,6 @@
 
 .add_trip_container .add_trip {
     align-self: center;
-    padding: 0.5rem;
     border: 0.06rem solid #ccc;
     border-radius: 4rem;
     box-sizing: border-box;
