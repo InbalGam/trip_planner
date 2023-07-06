@@ -7,7 +7,7 @@ import countryList from 'react-select-country-list';
 import {insertTrip, getSpecificTrip, updateTrip} from '../Api';
 import { useNavigate } from 'react-router-dom';
 import styles from './Styles/TripAddUpdate.css';
-
+import SendIcon from '@mui/icons-material/Send';
 
 function TripAdd(props) {
     const [country, setCountry] = useState('');
@@ -133,7 +133,7 @@ function TripAdd(props) {
             <label for='end_date'>End date</label>
             <DatePicker selected={endDate} onChange={date => setEndDate(date)} dateFormat='dd-MMM-yy' className="datePick" />
             <Email email={emails} emails={emails} setEmails={setEmails} />
-            <button type="submit" value="Submit" className="submitButton">Submit trip</button>
+            <button type="submit" value="Submit" className="submitButton"><SendIcon/></button>
             <div className="failed">
                 {fieldsFilled ? 'All fields needs to be filled' : ''}
                 {insertFailed ? 'Problem adding trip' : ''}

@@ -2,6 +2,7 @@ import { insertActivityComment } from '../Api';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import styles from './Styles/Comment.css';
+import SendIcon from '@mui/icons-material/Send';
 
 function Comment(props) {
     const [comment, setComment] = useState('');
@@ -46,7 +47,7 @@ function Comment(props) {
     return (
         <form onSubmit={addComment} className='commentForm'>
             <textarea id='comment' name='comment' value={comment} placeholder={'Enter comment here'} onChange={handleTextChange} rows="5" cols="33" className='commentArea'></textarea>
-            <button type="submit" value="Submit" className="commentSubmit">Submit comment</button>
+            <button type="submit" value="Submit" className="commentSubmit"><SendIcon/></button>
             <p>{insertFailed ? 'Problem adding comment' : ''}</p>
             <p>{fieldsFilled ? 'You must enter a comment to submit' : ''}</p>
         </form>

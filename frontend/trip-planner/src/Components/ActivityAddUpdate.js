@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import { useState,  useEffect } from "react";
 import styles from './Styles/ActivityAddUpdate.css';
 import Select from 'react-select';
-
+import SendIcon from '@mui/icons-material/Send';
 
 function ActivityAddUpdate(props) {
     const { tripId } = useParams();
@@ -161,7 +161,7 @@ function ActivityAddUpdate(props) {
             <div className='activityFormDiv3'>
                 <label htmlFor='user_notes'>Notes</label>
                 <textarea id='user_notes' name="user_notes" rows="5" cols="33" value={userNotes} onChange={(e) => setUserNotes(e.target.value)}>Enter notes here</textarea>
-                <button type="submit" value="Submit" className="submitButton">Submit activity</button>
+                <button type="submit" value="Submit" className="submitButton"><SendIcon/></button>
                 <div className="failed">
                     {fieldsFilled ? 'All fields needs to be filled' : ''}
                     {insertFailed ? 'Problem adding activity' : ''}
