@@ -84,6 +84,7 @@ function TripScheduler() {
 
     async function deleteAnActivity(activityId) {
         try {
+            setIsLoading(true);
             const result = await deleteSpecificTripActivity(tripId, activityId);
             if (result.status === 401) {
                 navigate('/login');
@@ -95,6 +96,7 @@ function TripScheduler() {
                   setDeleteFailed(true);
                 }
             }
+            setIsLoading(false);
         } catch (e) {
             navigate('/error');
         }
