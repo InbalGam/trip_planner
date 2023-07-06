@@ -5,13 +5,13 @@ import styles from './Styles/Root.css';
 function Root() {
     return (
         <div>
-                <div className='nav-bar'>
-                    <p>The Trip Planner</p>
-                    <div className='nav-links'>
-                        <NavLink to='/trips' className='tripsLink'>Trips</NavLink>
-                        <NavLink to='/logout' className='logoutLink'>Log out</NavLink>
-                    </div>
+            <div className='nav-bar'>
+                <p>The Trip Planner</p>
+                <div className='nav-links'>
+                    <NavLink to='/trips' className='tripsLink'>Trips</NavLink>
+                    <NavLink to='/logout' className='logoutLink'>Log out</NavLink>
                 </div>
+            </div>
             <Outlet />
         </div>
     );
