@@ -64,13 +64,12 @@ async function getSpecificTrip(tripId) {
 
 
 async function insertTrip(trip) {
-    const {country, city, start_date, end_date, emails} = trip;
     const url = `${baseURL}/trips`;
     const response = await fetch(url, {
         method: 'POST',
         credentials: 'include',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({country, city, start_date, end_date, emails})
+        body: JSON.stringify(trip)
     });
 
     return response;
@@ -78,13 +77,12 @@ async function insertTrip(trip) {
 
 
 async function updateTrip(trip, tripId) {
-    const {country, city, start_date, end_date, emails} = trip;
     const url = `${baseURL}/trips/${tripId}`;
     const response = await fetch(url, {
         method: 'PUT',
         credentials: 'include',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({country, city, start_date, end_date, emails})
+        body: JSON.stringify(trip)
     });
 
     return response;
@@ -115,13 +113,12 @@ async function getActivities(tripId) {
 
 
 async function insertTripActivity(tripId, activity) {
-    const {date, activity_name, address, activityURL, start_time, end_time, user_notes, type} = activity;
     const url = `${baseURL}/trips/${tripId}/activities`;
     const response = await fetch(url, {
         method: 'POST',
         credentials: 'include',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({date, activity_name, address, activityURL, start_time, end_time, user_notes, type})
+        body: JSON.stringify(activity)
     });
 
     return response;
@@ -129,7 +126,6 @@ async function insertTripActivity(tripId, activity) {
 
 
 async function updateTripActivity(tripId, activity, activityId) {
-    //const {date, activity_name, address, activityURL, start_time, end_time, user_notes, type} = activity;
     const url = `${baseURL}/trips/${tripId}/activities/${activityId}`;
     const response = await fetch(url, {
         method: 'PUT',
@@ -180,13 +176,12 @@ async function getComments(tripId, activityId) {
 
 
 async function insertActivityComment(tripId, activityId, userComment) {
-    const { comment } = userComment;
     const url = `${baseURL}/trips/${tripId}/activities/${activityId}/comments`;
     const response = await fetch(url, {
         method: 'POST',
         credentials: 'include',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({comment})
+        body: JSON.stringify(userComment)
     });
 
     return response;
@@ -194,13 +189,12 @@ async function insertActivityComment(tripId, activityId, userComment) {
 
 
 async function updateActivityComment(tripId, activityId, userComment, commentId) {
-    const { comment } = userComment;
     const url = `${baseURL}/trips/${tripId}/activities/${activityId}/comments/${commentId}`;
     const response = await fetch(url, {
         method: 'PUT',
         credentials: 'include',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({comment})
+        body: JSON.stringify(userComment)
     });
 
     return response;
