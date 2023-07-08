@@ -72,7 +72,7 @@ function ActivityAddUpdate(props) {
                 setStartValue(jsonData.start_time);
                 setEndValue(jsonData.end_time);
                 setActivityDate(new Date(jsonData.date));
-                setActivityType(jsonData.type);
+                setActivityType(typeOptions.filter(obj => obj.label === jsonData.type)[0]);
             };
         } catch (e) {
             navigate('/error');
