@@ -644,6 +644,7 @@ describe('/activities routes', function () {
                 expect(response.body).to.have.ownProperty('end_time');
                 expect(response.body).to.have.ownProperty('user_id');
                 expect(response.body).to.have.ownProperty('user_notes');
+                expect(response.body).to.have.ownProperty('type');
             });
         })
     });
