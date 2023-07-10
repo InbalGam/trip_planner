@@ -23,7 +23,7 @@ function Activity() {
     const [endTime, setEndTime] = useState('');
     const [commentsForm, setCommentsForm] = useState(false);
 
-    const Marker = () => <div><LocationOnIcon/></div>;
+    const Marker = () => <div><LocationOnIcon className='mapMarker'/></div>;
 
 
     async function getSpecificActivity(idTrip, idActivity) {
@@ -74,9 +74,9 @@ function Activity() {
                             <p>{activity.address === "" ? 'No address entered' : activity.address}</p>
                             <p>{activity.url === "" ? 'No URL entered' : activity.url}</p>
                             <p>{activity.user_notes === "" ? 'No activity notes' : activity.user_notes}</p>
-                            <GoogleMapReact bootstrapURLKeys={{ key: GOOGLE_API, libraries:['places']}} defaultCenter={{ lat: activity.address_lat, lng: activity.address_lng }} defaultZoom={11}>
+                            <div className='GoogleMap'><GoogleMapReact bootstrapURLKeys={{ key: GOOGLE_API, libraries:['places']}} defaultCenter={{ lat: activity.address_lat, lng: activity.address_lng }} defaultZoom={15} >
                                     <Marker lat={activity.address_lat} lng={activity.address_lng} />
-                            </GoogleMapReact>
+                            </GoogleMapReact></div>
                         </div>}
             </div>
             <div className='comments'>
