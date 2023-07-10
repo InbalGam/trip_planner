@@ -52,6 +52,12 @@
     padding: 0;
 }
 
+.react-multi-email input {
+    margin-bottom: 1rem;
+    margin-left: 0;
+    background-color: white;
+}
+
 .react-multi-email [data-tag] [data-tag-item] {
     overflow: visible;
 }

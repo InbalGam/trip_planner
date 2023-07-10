@@ -132,7 +132,7 @@ function TripAdd(props) {
             <DatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat='dd-MMM-yy' className="datePick" />
             <label for='end_date'>End date</label>
             <DatePicker selected={endDate} onChange={date => setEndDate(date)} dateFormat='dd-MMM-yy' className="datePick" />
-            <Email email={emails} emails={emails} setEmails={setEmails} />
+            <Email email={emails} emails={emails} setEmails={setEmails} className='emails'/>
             <button type="submit" value="Submit" className="submitButton"><SendIcon/></button>
             <div className="failed">
                 {fieldsFilled ? 'All fields needs to be filled' : ''}

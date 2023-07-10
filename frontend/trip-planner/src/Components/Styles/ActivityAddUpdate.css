@@ -64,6 +64,24 @@
     margin-top: 0.25rem;
 }
 
+input {
+    padding: 0.625rem 2.1875rem 0.625rem 0.93rem;
+    border: none;
+    border-radius: 0.31rem;
+    outline: auto;
+    outline-color: #706e82;
+    background-color: #f0eff2;
+}
+
+textarea {
+    padding: 0.625rem 2.1875rem 0.625rem 0.93rem;
+    border: none;
+    border-radius: 0.31rem;
+    outline: auto;
+    outline-color: #706e82;
+    background-color: #f0eff2;
+}
+
 .activityForm .submitButton {
     width: 30%;
     border: 0.06rem solid #ccc;
