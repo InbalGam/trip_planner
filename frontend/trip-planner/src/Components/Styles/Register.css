@@ -9,7 +9,6 @@ h2 {
 }
 
 h3 {
-    font-family: 'Playfair Display', serif;
     color: #060565;
 }
 
@@ -43,7 +42,6 @@ h3 {
 
 .registerForm label {
     color: #650343;
-    font-family: 'Open Sans', sans-serif;
     font-weight: bolder;
     margin-top: 0.5rem;
 }
