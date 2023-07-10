@@ -5,6 +5,9 @@ import { useState,  useEffect } from "react";
 import styles from './Styles/ActivityAddUpdate.css';
 import Select from 'react-select';
 import SendIcon from '@mui/icons-material/Send';
+import AutoComplete from 'react-google-autocomplete';
+import {GOOGLE_API} from '../apiKey';
+
 
 function ActivityAddUpdate(props) {
     const { tripId } = useParams();
@@ -147,7 +150,7 @@ function ActivityAddUpdate(props) {
             <div className='activityFormDiv1'>
                 <input id='activity_name' type='text' name='activity_name' value={activityName} placeholder={'Enter activity name here'} onChange={handleTextChange} />
                 <Select options={typeOptions} value={activityType} onChange={changeHandler} placeholder='select activity type' className="selectActivityType"/>
-                <input id='address' type='text' name='address' value={address} placeholder={'Enter address here'} onChange={handleAddressChange} />
+                <AutoComplete apiKey={GOOGLE_API} value={address} placeholder={'Enter address here'} onChange={handleAddressChange} onPlaceSelected={(place) => {console.log(place); setAddress(place.formatted_address)}} options={{types: [], fields:['ALL']}}/>
                 <input id='link' type='text' name='link' value={link} placeholder={'Enter link here'} onChange={handleLinkChange} />
             </div>
             <div className='activityFormDiv2'>

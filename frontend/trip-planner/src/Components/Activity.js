@@ -7,6 +7,9 @@ import dateFormat, { masks } from "dateformat";
 import CommentsList from './CommentsList';
 import styles from './Styles/Activity.css';
 import EditIcon from '@mui/icons-material/Edit';
+import GoogleMapReact from 'google-map-react';
+import {GOOGLE_API} from '../apiKey';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 
 function Activity() {
@@ -19,6 +22,8 @@ function Activity() {
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const [commentsForm, setCommentsForm] = useState(false);
+
+    const Marker = () => <div><LocationOnIcon/></div>;
 
 
     async function getSpecificActivity(idTrip, idActivity) {
@@ -61,15 +66,18 @@ function Activity() {
                 {showForm === false ? '' : <ActivityAddUpdate setShowForm={setShowForm} isActivityAdd={false} activityId={activityId} getSpecificActivity={getSpecificActivity} setShowActivity={setShowActivity} />}
 
                 {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> :
-                    showActivity === false ? '' 
-                    : <div className='ActivityInfo'>
-                        <h2 className='activityName'>{activity.activity_name}</h2>
-                        <p>{dateFormat(new Date(activity.date), "dddd, mmmm dS, yyyy")}</p>
-                        <p>{startTime} - {endTime}</p>
-                        <p>{activity.address === "" ? 'No address entered' : activity.address}</p>
-                        <p>{activity.url === "" ? 'No URL entered' : activity.url}</p>
-                        <p>{activity.user_notes === "" ? 'No activity notes' : activity.user_notes}</p>
-                    </div>}
+                    showActivity === false ? ''
+                        : <div className='ActivityInfo'>
+                            <h2 className='activityName'>{activity.activity_name}</h2>
+                            <p>{dateFormat(new Date(activity.date), "dddd, mmmm dS, yyyy")}</p>
+                            <p>{startTime} - {endTime}</p>
+                            <p>{activity.address === "" ? 'No address entered' : activity.address}</p>
+                            <p>{activity.url === "" ? 'No URL entered' : activity.url}</p>
+                            <p>{activity.user_notes === "" ? 'No activity notes' : activity.user_notes}</p>
+                            <GoogleMapReact bootstrapURLKeys={{ key: GOOGLE_API, libraries:['places']}} defaultCenter={{ lat: 10.99835602, lng: 77.01502627 }} defaultZoom={11}>
+                                    <Marker lat={10.99835602} lng={77.01502627} />
+                            </GoogleMapReact>
+                        </div>}
             </div>
             <div className='comments'>
                 <h3 className='commentsHeadline'>Comments</h3>
