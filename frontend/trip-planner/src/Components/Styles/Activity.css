@@ -57,6 +57,11 @@
     position: relative;
 }
 
+.activityURL:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .mapMarker {
     color: rgb(120, 29, 180);
 }
