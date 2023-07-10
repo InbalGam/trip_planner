@@ -23,6 +23,8 @@ function ActivityAddUpdate(props) {
     const [updateFailed, setUpdateFailed] = useState(false);
     const navigate = useNavigate();
     const [activityType, setActivityType] = useState('');
+    const [addressLAT, setAddressLAT] = useState('');
+    const [addressLNG, setAddressLNG] = useState('');
 
     const typeOptions = [{value: 'OD' , label: 'Outdoor'}, {value: 'F' , label: 'Food'}, {value: 'D' , label: 'Drink'}, {value: 'M' , label: 'Meeting'},
         {value: 'MU' , label: 'Museum'}, {value: 'T' , label: 'Tour'}, {value: 'S' , label: 'Sports'}];
@@ -76,6 +78,8 @@ function ActivityAddUpdate(props) {
                 setEndValue(jsonData.end_time);
                 setActivityDate(new Date(jsonData.date));
                 setActivityType(typeOptions.filter(obj => obj.label === jsonData.type)[0]);
+                setAddressLAT(jsonData.address_lat);
+                setAddressLNG(jsonData.address_lng);
             };
         } catch (e) {
             navigate('/error');
@@ -122,7 +126,9 @@ function ActivityAddUpdate(props) {
                 start_time: startValue, 
                 end_time: endValue, 
                 user_notes: userNotes,
-                type: activityType.label
+                type: activityType.label,
+                address_lat: addressLAT,
+                address_lng: addressLNG
             };
             if (props.isActivityAdd) {
                 await insertUserActivity(tripId, newActivity);
@@ -142,6 +148,8 @@ function ActivityAddUpdate(props) {
             setStartValue('10:00');
             setEndValue('10:00');
             setActivityType('');
+            setAddressLAT('');
+            setAddressLNG('');
         };
     };
 
@@ -150,7 +158,8 @@ function ActivityAddUpdate(props) {
             <div className='activityFormDiv1'>
                 <input id='activity_name' type='text' name='activity_name' value={activityName} placeholder={'Enter activity name here'} onChange={handleTextChange} />
                 <Select options={typeOptions} value={activityType} onChange={changeHandler} placeholder='select activity type' className="selectActivityType"/>
-                <AutoComplete apiKey={GOOGLE_API} value={address} placeholder={'Enter address here'} onChange={handleAddressChange} onPlaceSelected={(place) => {console.log(place); setAddress(place.formatted_address)}} options={{types: [], fields:['ALL']}}/>
+                <AutoComplete apiKey={GOOGLE_API} value={address} placeholder={'Enter address here'} onChange={handleAddressChange} 
+                    onPlaceSelected={(place) => {setAddress(place.formatted_address); setAddressLAT(place.geometry.location.lat()); setAddressLNG(place.geometry.location.lng());}} options={{types: [], fields:['ALL']}}/>
                 <input id='link' type='text' name='link' value={link} placeholder={'Enter link here'} onChange={handleLinkChange} />
             </div>
             <div className='activityFormDiv2'>

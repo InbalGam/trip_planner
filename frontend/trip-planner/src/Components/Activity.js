@@ -74,8 +74,8 @@ function Activity() {
                             <p>{activity.address === "" ? 'No address entered' : activity.address}</p>
                             <p>{activity.url === "" ? 'No URL entered' : activity.url}</p>
                             <p>{activity.user_notes === "" ? 'No activity notes' : activity.user_notes}</p>
-                            <GoogleMapReact bootstrapURLKeys={{ key: GOOGLE_API, libraries:['places']}} defaultCenter={{ lat: 10.99835602, lng: 77.01502627 }} defaultZoom={11}>
-                                    <Marker lat={10.99835602} lng={77.01502627} />
+                            <GoogleMapReact bootstrapURLKeys={{ key: GOOGLE_API, libraries:['places']}} defaultCenter={{ lat: activity.address_lat, lng: activity.address_lng }} defaultZoom={11}>
+                                    <Marker lat={activity.address_lat} lng={activity.address_lng} />
                             </GoogleMapReact>
                         </div>}
             </div>

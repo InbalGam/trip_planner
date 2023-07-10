@@ -474,6 +474,8 @@ describe('/activities routes', function () {
                 expect(response.body).to.have.ownProperty('user_id');
                 expect(response.body).to.have.ownProperty('user_notes');
                 expect(response.body).to.have.ownProperty('type');
+                expect(response.body).to.have.ownProperty('address_lat');
+                expect(response.body).to.have.ownProperty('address_lng');
             });
         })
     });
@@ -571,6 +573,8 @@ describe('/activities routes', function () {
                 expect(response.body).to.have.ownProperty('user_id');
                 expect(response.body).to.have.ownProperty('user_notes');
                 expect(response.body).to.have.ownProperty('type');
+                expect(response.body).to.have.ownProperty('address_lat');
+                expect(response.body).to.have.ownProperty('address_lng');
             });
         })
     });
@@ -645,6 +649,8 @@ describe('/activities routes', function () {
                 expect(response.body).to.have.ownProperty('user_id');
                 expect(response.body).to.have.ownProperty('user_notes');
                 expect(response.body).to.have.ownProperty('type');
+                expect(response.body).to.have.ownProperty('address_lat');
+                expect(response.body).to.have.ownProperty('address_lng');
             });
         })
     });
