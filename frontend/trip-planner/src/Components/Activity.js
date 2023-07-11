@@ -67,7 +67,7 @@ function Activity() {
 
                 {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> :
                     showActivity === false ? ''
-                        : <div className='ActivityInfo'>
+                        : <div className='ActivityInfo' data-testid='ActivityInfo'>
                             <h2 className='activityName'>{activity.activity_name}</h2>
                             <p>{dateFormat(new Date(activity.date), "dddd, mmmm dS, yyyy")}</p>
                             <p>{startTime} - {endTime}</p>
