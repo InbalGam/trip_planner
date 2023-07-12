@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import TripAddUpdate from './TripAddUpdate';
 import dateFormat, { masks } from "dateformat";
-import {deleteSpecificTrip} from '../Api';
+import {deleteSpecificTrip, updateTrip} from '../Api';
 import styles from './Styles/TripCard.css';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -17,6 +17,7 @@ export default function TripCard(props) {
   const [showForm, setShowForm] = useState(false);
   const [deleteFailed, setDeleteFailed] = useState(false);
   const navigate = useNavigate();
+  const [updateFailed, setUpdateFailed] = useState(false);
 
   function onClickEdit(e) {
     e.preventDefault();
@@ -37,6 +38,25 @@ export default function TripCard(props) {
           setDeleteFailed(true);
         }
       }
+    } catch (e) {
+      navigate('/error');
+    }
+  };
+
+  async function onTripSubmit(trip) {
+    try {
+      const result = await updateTrip(trip, props.trip.id);
+      if (result.status === 401) {
+        navigate('/login');
+      } else {
+        if (result.status === 200) {
+          props.getUserTrips();
+          setShowForm(false);
+          return result;
+        } else {
+          setUpdateFailed(true);
+        }
+      };
     } catch (e) {
       navigate('/error');
     }
@@ -63,7 +83,8 @@ export default function TripCard(props) {
           {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={(event) => onClickDelete(event)} className='tripCardActionButtons'><DeleteIcon /></Button> : ''}
         </CardActions>
       </Card>
-      {showForm === false ? '' : <TripAddUpdate getUserTrips={props.getUserTrips} setShowForm={setShowForm} trip={props.trip} isTripAdd={false} />}
+      {showForm === false ? '' : <TripAddUpdate trip={props.trip} onTripSubmit={onTripSubmit} />}
+      {updateFailed ? 'Problem updating trip' : ''}
       {deleteFailed === false ? '' : 'Could not delete trip'}
     </>
   );

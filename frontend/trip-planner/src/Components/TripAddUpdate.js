@@ -4,10 +4,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import Email from './EmailAdd';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
-import {insertTrip, getSpecificTrip, updateTrip} from '../Api';
-import { useNavigate } from 'react-router-dom';
 import styles from './Styles/TripAddUpdate.css';
 import SendIcon from '@mui/icons-material/Send';
+import { useNavigate } from 'react-router-dom';
+import {getSpecificTrip} from '../Api';
+
 
 function TripAdd(props) {
     const [country, setCountry] = useState('');
@@ -15,10 +16,7 @@ function TripAdd(props) {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [emails, setEmails] = useState([]);
-    const [insertFailed, setInsertFailed] = useState(false);
     const [fieldsFilled, setFieldsFilled] = useState(false);
-    const [updateFailed, setUpdateFailed] = useState(false);
-    const [trip, setTrip] = useState({});
     const navigate = useNavigate();
 
 
@@ -32,24 +30,6 @@ function TripAdd(props) {
     };
 
 
-    async function insertUserTrip(trip) {
-        try {
-            const result = await insertTrip(trip);
-            if (result.status === 401) {
-                navigate('/login');
-            } else {
-                if (result.status === 200) {
-                    return result;
-                } else {
-                    setInsertFailed(true);
-                }
-            };
-        } catch (e) {
-            navigate('/error');
-        }
-    };
-
-
     async function getATrip(id) {
         try {
             const tripDB = await getSpecificTrip(id);
@@ -57,7 +37,6 @@ function TripAdd(props) {
                 navigate('/login');
             } else {
                 const jsonData = await tripDB.json();
-                setTrip(jsonData);
                 setCountry(options.filter(obj => obj.label === jsonData.country)[0]);
                 setCity(jsonData.city);
                 const emailsDB = jsonData.userData.map(el => el.username);
@@ -72,28 +51,10 @@ function TripAdd(props) {
 
 
     useEffect(() => {
-        if (!props.isTripAdd) {
+        if (props.trip) {
             getATrip(props.trip.id);
         }
     }, []);
-
-
-    async function updateUserTrip(updatedTrip) {
-        try {
-            const result = await updateTrip(updatedTrip, props.trip.id);
-            if (result.status === 401) {
-                navigate('/login');
-            } else {
-                if (result.status === 200) {
-                    return result;
-                } else {
-                    setUpdateFailed(true);
-                }
-            };
-        } catch (e) {
-            navigate('/error');
-        }
-    };
 
 
     async function submitTrip(e) {
@@ -108,18 +69,12 @@ function TripAdd(props) {
                 end_date: endDate,
                 emails: emails
             }
-            if (props.isTripAdd) {
-                await insertUserTrip(newTrip);
-            } else {
-                await updateUserTrip(newTrip);
-            }
-            props.getUserTrips();
+            props.onTripSubmit(newTrip);
             setCity('');
             setCountry('');
             setEmails([]);
             setStartDate(new Date());
             setEndDate(new Date());
-            props.setShowForm(false);
         }
     };
 
@@ -136,8 +91,6 @@ function TripAdd(props) {
             <button type="submit" value="Submit" className="submitButton"><SendIcon/></button>
             <div className="failed">
                 {fieldsFilled ? 'All fields needs to be filled' : ''}
-                {insertFailed ? 'Problem adding trip' : ''}
-                {updateFailed ? 'Problem updating trip' : ''}
             </div>
         </form>
     );

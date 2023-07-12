@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import TripAddUpdate from './TripAddUpdate';
 import TripCard from './TripCard';
-import {getTrips} from '../Api';
+import {getTrips, insertTrip} from '../Api';
 import { useNavigate } from 'react-router-dom';
 import styles from './Styles/TripsList.css';
 import AddIcon from '@mui/icons-material/Add';
@@ -11,6 +11,7 @@ function TripsList() {
     const [trips, setTrips] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const navigate = useNavigate();
+    const [insertFailed, setInsertFailed] = useState(false);
   
 
     async function getUserTrips() {
@@ -37,13 +38,33 @@ function TripsList() {
         setShowForm(!showForm);
     };
 
+
+    async function onTripSubmit(trip) {
+        try {
+            const result = await insertTrip(trip);
+            if (result.status === 401) {
+                navigate('/login');
+            } else {
+                if (result.status === 200) {
+                    getUserTrips();
+                    setShowForm(false);
+                    return result;
+                } else {
+                    setInsertFailed(true);
+                }
+            };
+        } catch (e) {
+            navigate('/error');
+        }
+    };
+
     return (
         <div className="trips_container">
             <div className="trips">
                 <div className="add_trip_container">
                     <button className='add_trip' onClick={showTrip}><AddIcon /></button>
                 </div>
-                {showForm === false ? '' : <TripAddUpdate getUserTrips={getUserTrips} setShowForm={setShowForm} isTripAdd={true} />}
+                {showForm === false ? '' : <TripAddUpdate onTripSubmit={onTripSubmit} />}
                 <h2>Your trips</h2>
                 <div className="userTrips">
                     <ul className="listOfTrips">
@@ -53,6 +74,7 @@ function TripsList() {
                             </li>)}
                     </ul>
                 </div>
+                {insertFailed ? 'Problem adding trip' : ''}
             </div>
         </div>
     );
