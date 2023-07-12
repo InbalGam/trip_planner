@@ -10,7 +10,6 @@ function Comment(props) {
     const navigate = useNavigate();
     const [insertFailed, setInsertFailed] = useState(false);
     const [fieldsFilled, setFieldsFilled] = useState(false);
-    const [updateFailed, setUpdateFailed] = useState(false);
 
     function handleTextChange(e) {
         setComment(e.target.value);
