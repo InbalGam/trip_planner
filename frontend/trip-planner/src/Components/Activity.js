@@ -16,7 +16,6 @@ function Activity() {
     const { tripId, activityId } = useParams();
     const navigate = useNavigate();
     const [showForm, setShowForm] = useState(false);
-    const [showActivity, setShowActivity] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
     const [activity, setActivity] = useState({});
     const [startTime, setStartTime] = useState('');
@@ -54,7 +53,6 @@ function Activity() {
 
     function showActivityForm(e) {
         setShowForm(!showForm);
-        setShowActivity(!showActivity);
     };
 
     return (
@@ -63,11 +61,11 @@ function Activity() {
                 <div className='editActivityDiv'>
                     <button className='activityEdit' onClick={showActivityForm}><EditIcon /></button>
                 </div>
-                {showForm === false ? '' : <ActivityAddUpdate setShowForm={setShowForm} isActivityAdd={false} activityId={activityId} getSpecificActivity={getSpecificActivity} setShowActivity={setShowActivity} />}
+                {showForm === false ? '' : <ActivityAddUpdate setShowForm={setShowForm} isActivityAdd={false} activityId={activityId} getSpecificActivity={getSpecificActivity} />}
 
                 {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> :
-                    showActivity === false ? ''
-                        : <div className='ActivityInfo' data-testid='ActivityInfo'>
+                    showForm === false ?
+                        <div className='ActivityInfo' data-testid='ActivityInfo'>
                             <h2 className='activityName'>{activity.activity_name}</h2>
                             <p>{dateFormat(new Date(activity.date), "dddd, mmmm dS, yyyy")}</p>
                             <p>{startTime} - {endTime}</p>
@@ -77,7 +75,7 @@ function Activity() {
                             <div className='GoogleMap'><GoogleMapReact bootstrapURLKeys={{ key: GOOGLE_API, libraries:['places']}} defaultCenter={{ lat: activity.address_lat, lng: activity.address_lng }} defaultZoom={15} >
                                     <Marker lat={activity.address_lat} lng={activity.address_lng} />
                             </GoogleMapReact></div>
-                        </div>}
+                        </div> : ''}
             </div>
             <div className='comments'>
                 <h3 className='commentsHeadline'>Comments</h3>
