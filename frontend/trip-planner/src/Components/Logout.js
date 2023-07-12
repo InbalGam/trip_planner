@@ -10,6 +10,8 @@ function Logout() {
         const result = await logout();
         if (result.status === 200) {
             navigate('/login?logout=1');
+        } else {
+            navigate('/error');
         }
     };
 
