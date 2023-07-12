@@ -57,6 +57,12 @@
     position: relative;
 }
 
+.activityURL {
+    font-family: 'Raleway', sans-serif !important;
+    text-decoration: none;
+    color: black;
+}
+
 .activityURL:hover {
     text-decoration: underline;
     cursor: pointer;

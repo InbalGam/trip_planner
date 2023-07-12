@@ -70,7 +70,7 @@ function Activity() {
                             <p>{dateFormat(new Date(activity.date), "dddd, mmmm dS, yyyy")}</p>
                             <p>{startTime} - {endTime}</p>
                             <p>{activity.address === "" ? 'No address entered' : activity.address}</p>
-                            <p className='activityURL'>{activity.url === "" ? 'No URL entered' : activity.url}</p>
+                            <p>{activity.url === "" ? 'No URL entered' : <a href={activity.url} className='activityURL'>{activity.url}</a>}</p>
                             <p>{activity.user_notes === "" ? 'No activity notes' : activity.user_notes}</p>
                             <div className='GoogleMap'><GoogleMapReact bootstrapURLKeys={{ key: GOOGLE_API, libraries:['places']}} defaultCenter={{ lat: activity.address_lat, lng: activity.address_lng }} defaultZoom={15} >
                                     <Marker lat={activity.address_lat} lng={activity.address_lng} />
