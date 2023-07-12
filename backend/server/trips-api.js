@@ -93,7 +93,7 @@ async function sharingTrip(req, emails, tripId) {
 
 // Post a new trip
 tripsRouter.post('/trips', async (req, res, next) => {
-    const { country, city, start_date, end_date, emails } = req.body;
+    const { country, city, start_date, end_date, emails, photo } = req.body;
 
     if (!country || !city || !start_date || !end_date || !emails) {
         return res.status(400).json({ msg: 'All fields should be specified' });
@@ -104,7 +104,7 @@ tripsRouter.post('/trips', async (req, res, next) => {
     }
 
     try {
-        const result = await pool.query('insert into trips (country, city, start_date, end_date, created_by) values ($1, $2, $3, $4, $5) returning *;', [country, city, new Date(start_date), new Date(end_date), req.user.id]);
+        const result = await pool.query('insert into trips (country, city, start_date, end_date, created_by, photo) values ($1, $2, $3, $4, $5, $6) returning *;', [country, city, new Date(start_date), new Date(end_date), req.user.id, photo]);
         await sharingTrip(req, emails, result.rows[0].id);
         res.status(200).json(result.rows[0]);
     } catch (e) {
@@ -143,7 +143,7 @@ const checkedTripAuth = async (req, res, next) => {
 
 // Update a specific trip
 tripsRouter.put('/trips/:trip_id', checkedTripAuth, async (req, res, next) => { 
-    const { country, city, start_date, end_date, emails } = req.body;
+    const { country, city, start_date, end_date, emails, photo } = req.body;
 
     if (!country || !city || !start_date || !end_date || !emails) {
         return res.status(400).json({ msg: 'All fields should be specified' });
@@ -154,7 +154,7 @@ tripsRouter.put('/trips/:trip_id', checkedTripAuth, async (req, res, next) => {
     }
 
     try {
-        const result = await pool.query('update trips set country = $2, city = $3, start_date = $4, end_date = $5 where id = $1 returning *;', [req.params.trip_id, country, city, new Date(start_date), new Date(end_date)]);
+        const result = await pool.query('update trips set country = $2, city = $3, start_date = $4, end_date = $5, photo = $6 where id = $1 returning *;', [req.params.trip_id, country, city, new Date(start_date), new Date(end_date), photo]);
         await sharingTrip(req, emails, result.rows[0].id);
         res.status(200).json(result.rows[0]);
     } catch(e) {

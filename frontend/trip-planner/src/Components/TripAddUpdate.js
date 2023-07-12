@@ -19,6 +19,7 @@ function TripAdd(props) {
     const [endDate, setEndDate] = useState(new Date());
     const [emails, setEmails] = useState([]);
     const [fieldsFilled, setFieldsFilled] = useState(false);
+    const [tripPhoto, setTripPhoto] = useState('');
     const navigate = useNavigate();
 
 
@@ -69,7 +70,8 @@ function TripAdd(props) {
                 city: city,
                 start_date: startDate,
                 end_date: endDate,
-                emails: emails
+                emails: emails,
+                photo: tripPhoto
             }
             props.onTripSubmit(newTrip);
             setCity('');
@@ -84,7 +86,7 @@ function TripAdd(props) {
         <form onSubmit={submitTrip} className={'tripForm'}>
             <Select options={options} value={country} onChange={changeHandler} className="countrySelect"/>
             <label for='city'>City</label>
-            <AutoComplete apiKey={GOOGLE_API} value={city} placeholder={'Enter city here'} onChange={handleTextChange} onPlaceSelected={(place) => setCity(place.formatted_address)} options={{fields:['ALL']}}/>
+            <AutoComplete apiKey={GOOGLE_API} value={city} placeholder={'Enter city here'} onChange={handleTextChange} onPlaceSelected={(place) => {setCity(place.formatted_address); setTripPhoto(place.photos[0].getUrl());}} options={{fields:['ALL']}}/>
             <label for='start_date'>Start date</label>
             <DatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat='dd-MMM-yy' className="datePick" />
             <label for='end_date'>End date</label>

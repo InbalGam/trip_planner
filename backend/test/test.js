@@ -141,6 +141,7 @@ describe('/trips routes', function () {
                     expect(trip).to.have.ownProperty('start_date');
                     expect(trip).to.have.ownProperty('end_date');
                     expect(trip).to.have.ownProperty('created_by');
+                    expect(response.body).to.have.ownProperty('photo');
                 });
             });
         })
@@ -195,6 +196,7 @@ describe('/trips routes', function () {
                 expect(response.body).to.have.ownProperty('start_date');
                 expect(response.body).to.have.ownProperty('end_date');
                 expect(response.body).to.have.ownProperty('created_by');
+                expect(response.body).to.have.ownProperty('photo');
             });
         })
     });
@@ -216,6 +218,7 @@ describe('/trips routes', function () {
                 expect(response.body).to.have.ownProperty('start_date');
                 expect(response.body).to.have.ownProperty('end_date');
                 expect(response.body).to.have.ownProperty('created_by');
+                expect(response.body).to.have.ownProperty('photo');
             });
         })
     });
@@ -266,6 +269,7 @@ describe('/trips routes', function () {
                 expect(response.body).to.have.ownProperty('start_date');
                 expect(response.body).to.have.ownProperty('end_date');
                 expect(response.body).to.have.ownProperty('created_by');
+                expect(response.body).to.have.ownProperty('photo');
             });
         })
     });
@@ -351,6 +355,7 @@ describe('/trips routes', function () {
                 expect(response.body).to.have.ownProperty('start_date');
                 expect(response.body).to.have.ownProperty('end_date');
                 expect(response.body).to.have.ownProperty('created_by');
+                expect(response.body).to.have.ownProperty('photo');
             });
         })
     });
