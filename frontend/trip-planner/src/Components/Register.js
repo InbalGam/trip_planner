@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {register} from '../Api';
 import {validateEmail} from '../utils';
-import { Link, useNavigate} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import styles from './Styles/Register.css';
 
 
@@ -13,7 +13,6 @@ function Register() {
     const [validPassword, setValidPassword] = useState(true);
     const [validNickname, setValidNickname] = useState(true);
     const [registerAuth, setRegisterAuth] = useState(false);
-    const [registerSuccess, setRegisterSuccess] = useState(false);
     const[msg, setMsg] = useState('');
     const navigate = useNavigate();
 
@@ -42,7 +41,6 @@ function Register() {
                 const jsonData = await result.json();
                 setMsg(jsonData.msg);
                 if (result.status === 201) {
-                    setRegisterSuccess(!registerSuccess);
                     setUsername('');
                     setPassword('');
                     setNickname('');
@@ -51,7 +49,7 @@ function Register() {
                     setValidUsername(true);
                     navigate('/login?register=1')
                 } else {
-                    setRegisterAuth(!registerAuth);
+                    setRegisterAuth(true);
                 }
             } catch (e) {
                 navigate('/error');
