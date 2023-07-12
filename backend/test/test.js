@@ -141,7 +141,7 @@ describe('/trips routes', function () {
                     expect(trip).to.have.ownProperty('start_date');
                     expect(trip).to.have.ownProperty('end_date');
                     expect(trip).to.have.ownProperty('created_by');
-                    expect(response.body).to.have.ownProperty('photo');
+                    expect(trip).to.have.ownProperty('photo');
                 });
             });
         })
@@ -260,7 +260,7 @@ describe('/trips routes', function () {
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
         .then(() => {
             return agent
-            .get('/trips/34')
+            .get('/trips/58')
             .expect(200)
             .then((response) => {
                 expect(response.body).to.have.ownProperty('id');
@@ -281,7 +281,7 @@ describe('/trips routes', function () {
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
         .then(() => {
             return agent
-            .put('/trips/34')
+            .put('/trips/58')
             .send({country: undefined, city: 'Romecheck', start_date: '2023-05-01', end_date: '2023-05-09', emails: ['nirHALAY@gmail.com']})
             .expect(400)
             .then((response) => {
@@ -297,7 +297,7 @@ describe('/trips routes', function () {
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
         .then(() => {
             return agent
-            .put('/trips/34')
+            .put('/trips/58')
             .send({country: 'Italcheck', city: 'Romecheck', start_date: '2023-35-01', end_date: '2023-05-09', emails: ['nirHALAY@gmail.com']})
             .expect(400)
             .then((response) => {
@@ -345,7 +345,7 @@ describe('/trips routes', function () {
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
         .then(() => {
             return agent
-            .put('/trips/34')
+            .put('/trips/58')
             .send({country: 'Italcheck', city: 'Romecheck', start_date: '2023-07-01', end_date: '2023-07-09', emails: ['nirHALAY@gmail.com']})
             .expect(200)
             .then((response) => {
@@ -397,7 +397,7 @@ describe('/trips routes', function () {
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
         .then(() => {
             return agent
-            .delete('/trips/30')
+            .delete('/trips/37')
             .expect(200)
             .then((response) => {
                 expect(response.body).to.be.deep.equal({msg: 'Deleted trip'});
@@ -416,7 +416,7 @@ describe('/activities routes', function () {
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
         .then(() => {
             return agent
-            .post('/trips/34/activities')
+            .post('/trips/52/activities')
             .send({date: undefined, activity_name: 'just check', address: 'nowhere', url: 'www', start_time: '10:00', end_time: '12:00', user_notes: undefined})
             .expect(400)
             .then((response) => {
@@ -432,7 +432,7 @@ describe('/activities routes', function () {
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
         .then(() => {
             return agent
-            .post('/trips/34/activities')
+            .post('/trips/52/activities')
             .send({date: '2023-06-09', activity_name: 'just check', address: 'nowhere', url: 'www', start_time: '111:00', end_time: '12:00', user_notes: undefined})
             .expect(400)
             .then((response) => {
@@ -448,7 +448,7 @@ describe('/activities routes', function () {
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
         .then(() => {
             return agent
-            .post('/trips/34/activities')
+            .post('/trips/52/activities')
             .send({date: '2023-26-09', activity_name: 'just check', address: 'nowhere', url: 'www', start_time: '11:00', end_time: '12:00', user_notes: undefined})
             .expect(400)
             .then((response) => {
@@ -464,7 +464,7 @@ describe('/activities routes', function () {
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
         .then(() => {
             return agent
-            .post('/trips/34/activities')
+            .post('/trips/52/activities')
             .send({date: '2023-06-09', activity_name: 'just check', address: 'nowhere', url: 'www', start_time: '11:00', end_time: '12:00', user_notes: 'check'})
             .expect(200)
             .then((response) => {
@@ -492,7 +492,7 @@ describe('/activities routes', function () {
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
         .then(() => {
             return agent
-            .get('/trips/39/activities')
+            .get('/trips/239/activities')
             .expect(400)
             .then((response) => {
                 expect(response.body).to.be.deep.equal({msg: 'invalid trip id'});
@@ -507,7 +507,7 @@ describe('/activities routes', function () {
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
         .then(() => {
             return agent
-            .get('/trips/34/activities')  
+            .get('/trips/52/activities')  
         })
         .then((response) => {
             expect(response.body).to.be.an.instanceOf(Array);
@@ -521,10 +521,10 @@ describe('/activities routes', function () {
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
         .then(() => {
             return agent
-            .get('/trips/34/activities')
+            .get('/trips/52/activities')
             .expect(200)
             .then(async (response) => {
-                const results = await pool.query('select * from activities where trip_id =34');
+                const results = await pool.query('select * from activities where trip_id =52');
                 expect(response.body.length).to.be.equal(results.rows.length);
                 response.body.forEach((activity) => {
                     expect(activity).to.have.ownProperty('id');
@@ -537,7 +537,7 @@ describe('/activities routes', function () {
                     expect(activity).to.have.ownProperty('end_time');
                     expect(activity).to.have.ownProperty('user_id');
                     expect(activity).to.have.ownProperty('user_notes');
-                    expect(response.body).to.have.ownProperty('type');
+                    expect(activity).to.have.ownProperty('type');
                 });
             });
         })
@@ -667,7 +667,7 @@ describe('/activities routes', function () {
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
         .then(() => {
             return agent
-            .delete('/trips/34/activities/18')
+            .delete('/trips/46/activities/18')
             .expect(400)
             .then((response) => {
                 expect(response.body).to.be.deep.equal({msg: 'invalid id'});
@@ -682,7 +682,7 @@ describe('/activities routes', function () {
         .send({username: 'inbalG@gmail.com', password: 'inbalGHY'}) // User exist
         .then(() => {
             return agent
-            .delete('/trips/34/activities/11')
+            .delete('/trips/46/activities/13')
             .expect(200)
             .then((response) => {
                 expect(response.body).to.be.deep.equal({msg: 'Deleted activity'});
