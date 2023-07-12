@@ -64,24 +64,26 @@ export default function TripCard(props) {
 
   return (
     <>
-      <Card sx={{ minWidth: 375 }} className='tripCard'>
-        <Link to={`/trips/${props.trip.id}`} className='tripCardLink'>
-          <CardContent>
-            <Typography sx={{ fontSize: 24 }} gutterBottom className='countryName'>
-              {props.trip.country}
-            </Typography>
-            <Typography variant="h5" component="div" className='cityName'>
-              {props.trip.city}
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} className='dates'>
-              {dateFormat(new Date(props.trip.start_date), "mmmm dS, yyyy")} - {dateFormat(new Date(props.trip.end_date), "mmmm dS, yyyy")}
-            </Typography>
-          </CardContent>
-        </Link>
-        <CardActions>
-          {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={onClickEdit} className='tripCardActionButtons'><EditIcon /></Button> : ''}
-          {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={(event) => onClickDelete(event)} className='tripCardActionButtons'><DeleteIcon /></Button> : ''}
-        </CardActions>
+      <Card sx={{ minWidth: 375 }} className='tripCard' style={{ backgroundImage: `url(${props.trip.photo})` }}>
+        <div className={'tripCardOverlay'}>
+          <Link to={`/trips/${props.trip.id}`} className='tripCardLink'>
+            <CardContent>
+              <Typography sx={{ fontSize: 24 }} gutterBottom className='countryName'>
+                {props.trip.country}
+              </Typography>
+              <Typography variant="h5" component="div" className='cityName'>
+                {props.trip.city}
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} className='dates'>
+                {dateFormat(new Date(props.trip.start_date), "mmmm dS, yyyy")} - {dateFormat(new Date(props.trip.end_date), "mmmm dS, yyyy")}
+              </Typography>
+            </CardContent>
+          </Link>
+          <CardActions>
+            {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={onClickEdit} className='tripCardActionButtons'><EditIcon /></Button> : ''}
+            {props.trip.isCreatedByMe === 1 ? <Button size="small" onClick={(event) => onClickDelete(event)} className='tripCardActionButtons'><DeleteIcon /></Button> : ''}
+          </CardActions>
+        </div>
       </Card>
       {showForm === false ? '' : <TripAddUpdate trip={props.trip} onTripSubmit={onTripSubmit} />}
       {updateFailed ? 'Problem updating trip' : ''}

@@ -1,14 +1,17 @@
 .countryName {
     font-family: 'Belanosima', sans-serif !important;
+    color: white;
 }
 
 .cityName {
     font-family: 'Belanosima', sans-serif !important;
+    color: white;
 }
 
 .dates {
     font-family: 'Roboto', sans-serif !important;
     margin-top: 0.5rem !important;
+    color: white;
 }
 
 .tripCardLink {
@@ -17,9 +20,21 @@
 }
 
 .tripCardActionButtons {
-    color: #9f43ac !important;
+    /* color: #9f43ac !important; */
+    color: white !important;
 }
 
 .tripCardActionButtons:hover {
-    background-color: #fbf7ff !important;
+    background-color: #d28ddb !important;
+}
+
+.tripCard {
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.tripCardOverlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
 }
