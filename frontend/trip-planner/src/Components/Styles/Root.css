@@ -13,6 +13,12 @@
     font-weight: bold;
     padding-left: 7rem;
     color: #060565;
+    display: flex;
+    align-items: center;
+}
+
+.luggageIcon {
+    margin-right: 0.5rem;
 }
 
 .nav-links {
