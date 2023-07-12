@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
-import { getSpecificTripActivity } from '../Api';
+import { getSpecificTripActivity, updateTripActivity } from '../Api';
 import ClipLoader from 'react-spinners/ClipLoader';
 import ActivityAddUpdate from './ActivityAddUpdate';
 import dateFormat, { masks } from "dateformat";
@@ -20,7 +20,7 @@ function Activity() {
     const [activity, setActivity] = useState({});
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
-    const [commentsForm, setCommentsForm] = useState(false);
+    const [updateFailed, setUpdateFailed] = useState(false);
 
     const Marker = () => <div><LocationOnIcon className='mapMarker'/></div>;
 
@@ -55,13 +55,32 @@ function Activity() {
         setShowForm(!showForm);
     };
 
+    async function onActivitySubmit(tripId, activity) {
+        try {
+            const result = await updateTripActivity(tripId, activity, activityId);
+            if (result.status === 401) {
+                navigate('/login');
+            } else {
+                if (result.status === 200) {
+                    getSpecificActivity(tripId, activityId);
+                    setShowForm(false);
+                    return result;
+                } else {
+                    setUpdateFailed(true);
+                }
+            };
+        } catch (e) {
+            navigate('/error');
+        }
+    };
+
     return (
         <div className='activityContainer'>
             <div className='activityInfoContainer'>
                 <div className='editActivityDiv'>
                     <button className='activityEdit' onClick={showActivityForm}><EditIcon /></button>
                 </div>
-                {showForm === false ? '' : <ActivityAddUpdate setShowForm={setShowForm} isActivityAdd={false} activityId={activityId} getSpecificActivity={getSpecificActivity} />}
+                {showForm === false ? '' : <ActivityAddUpdate activity={activity} onActivitySubmit={onActivitySubmit} />}
 
                 {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> :
                     showForm === false ?
@@ -76,6 +95,7 @@ function Activity() {
                                     <Marker lat={activity.address_lat} lng={activity.address_lng} />
                             </GoogleMapReact></div>
                         </div> : ''}
+                        {updateFailed ? 'Problem updating activity' : ''}
             </div>
             <div className='comments'>
                 <h3 className='commentsHeadline'>Comments</h3>

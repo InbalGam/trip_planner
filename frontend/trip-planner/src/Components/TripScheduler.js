@@ -3,7 +3,7 @@ import Paper from '@mui/material/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import { Scheduler, DayView, WeekView, Appointments, Toolbar, DateNavigator, AppointmentTooltip, ViewSwitcher } from '@devexpress/dx-react-scheduler-material-ui';
 import { useParams, useNavigate } from 'react-router-dom';
-import {getSpecificTrip, getActivities, deleteSpecificTripActivity} from '../Api';
+import {getSpecificTrip, getActivities, deleteSpecificTripActivity, insertTripActivity} from '../Api';
 import { useState, useEffect } from "react";
 import dateFormat, { masks } from "dateformat";
 import ActivityAddUpdate from './ActivityAddUpdate';
@@ -20,9 +20,9 @@ function TripScheduler() {
     const [isActivities, setIsActivities] = useState(true);
     const [showForm, setShowForm] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const[isActivityAdd, setIsActivityAdd] = useState(false);
     const navigate = useNavigate();
     const [deleteFailed, setDeleteFailed] = useState(false);
+    const [insertFailed, setInsertFailed] = useState(false);
 
 
 
@@ -78,7 +78,6 @@ function TripScheduler() {
 
     function showActivity(e) {
         setShowForm(!showForm);
-        setIsActivityAdd(true);
     };
 
 
@@ -97,6 +96,25 @@ function TripScheduler() {
                 }
             }
             setIsLoading(false);
+        } catch (e) {
+            navigate('/error');
+        }
+    };
+
+    async function onActivitySubmit(tripId, activity) {
+        try {
+            const result = await insertTripActivity(tripId, activity);
+            if (result.status === 401) {
+                navigate('/login');
+            } else {
+                if (result.status === 200) {
+                    getTripActivities(tripId);
+                    setShowForm(false);
+                    return result;
+                } else {
+                    setInsertFailed(true);
+                }
+            };
         } catch (e) {
             navigate('/error');
         }
@@ -128,7 +146,8 @@ function TripScheduler() {
                 </Paper>
                 <div className='addActivityContainer'>
                     <button className='add_activity' onClick={showActivity} ><AddIcon className='addIcon' style={{fontSize: '32px'}}/></button>
-                    {showForm === false ? '' : <ActivityAddUpdate getTripActivities={getTripActivities} setShowForm={setShowForm} isActivityAdd={isActivityAdd} />}
+                    {showForm === false ? '' : <ActivityAddUpdate onActivitySubmit={onActivitySubmit} />}
+                    {insertFailed ? 'Problem adding activity' : ''}
                 </div>
             </div>
         </div>

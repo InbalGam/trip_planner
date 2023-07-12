@@ -1,5 +1,4 @@
-import {insertTripActivity, updateTripActivity, getSpecificTripActivity} from '../Api';
-import { useParams, useNavigate, json } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import { useState,  useEffect } from "react";
 import styles from './Styles/ActivityAddUpdate.css';
@@ -18,10 +17,7 @@ function ActivityAddUpdate(props) {
     const [startValue, setStartValue] = useState('10:00');
     const [endValue, setEndValue] = useState('10:00');
     const [activityDate, setActivityDate] = useState(new Date());
-    const [insertFailed, setInsertFailed] = useState(false);
     const [fieldsFilled, setFieldsFilled] = useState(false);
-    const [updateFailed, setUpdateFailed] = useState(false);
-    const navigate = useNavigate();
     const [activityType, setActivityType] = useState('');
     const [addressLAT, setAddressLAT] = useState('');
     const [addressLNG, setAddressLNG] = useState('');
@@ -45,71 +41,25 @@ function ActivityAddUpdate(props) {
     };
 
 
-    async function insertUserActivity(id, activity) {
-        try {
-            const result = await insertTripActivity(id, activity);
-            if (result.status === 401) {
-                navigate('/login');
-            } else {
-                if (result.status === 200) {
-                    return result;
-                } else {
-                    setInsertFailed(true);
-                }
-            };
-        } catch (e) {
-            navigate('/error');
-        }
-    };
-
-
-    async function getAnActivity(tripId, activityId) {
-        try {
-            const result = await getSpecificTripActivity(tripId, activityId);
-            if (result.status === 401) {
-                navigate('/login');
-            } else {
-                const jsonData = await result.json();
-                setActivityName(jsonData.activity_name);
-                setAddress(jsonData.address);
-                setLink(jsonData.url);
-                setUserNotes(jsonData.user_notes);
-                setStartValue(jsonData.start_time);
-                setEndValue(jsonData.end_time);
-                setActivityDate(new Date(jsonData.date));
-                setActivityType(typeOptions.filter(obj => obj.label === jsonData.type)[0]);
-                setAddressLAT(jsonData.address_lat);
-                setAddressLNG(jsonData.address_lng);
-            };
-        } catch (e) {
-            navigate('/error');
-        }
+    async function setAnActivity(tripActivity) {
+        setActivityName(tripActivity.activity_name);
+        setAddress(tripActivity.address);
+        setLink(tripActivity.url);
+        setUserNotes(tripActivity.user_notes);
+        setStartValue(tripActivity.start_time);
+        setEndValue(tripActivity.end_time);
+        setActivityDate(new Date(tripActivity.date));
+        setActivityType(typeOptions.filter(obj => obj.label === tripActivity.type)[0]);
+        setAddressLAT(tripActivity.address_lat);
+        setAddressLNG(tripActivity.address_lng);
     };
 
 
     useEffect(() => {
-        if (!props.isActivityAdd) {
-            getAnActivity(tripId, props.activityId);
+        if (props.activity) {
+            setAnActivity(props.activity);
         }
     }, []);
-
-    async function updateUserActivity(tripId, activity, activityId) {
-        try {
-            const result = await updateTripActivity(tripId, activity, activityId);
-            if (result.status === 401) {
-                navigate('/login');
-            } else {
-                if (result.status === 200) {
-                    return result;
-                } else {
-                    setInsertFailed(true);
-                    setUpdateFailed(true);
-                }
-            };
-        } catch (e) {
-            navigate('/error');
-        }
-    };
 
 
     async function submitActivity(e) {
@@ -130,15 +80,8 @@ function ActivityAddUpdate(props) {
                 address_lat: addressLAT,
                 address_lng: addressLNG
             };
-            if (props.isActivityAdd) {
-                await insertUserActivity(tripId, newActivity);
-                props.getTripActivities(tripId);
-                props.setShowForm(false);
-            } else {
-                await updateUserActivity(tripId, newActivity, props.activityId);
-                props.getSpecificActivity(tripId, props.activityId);
-                props.setShowForm(false);
-            }
+            props.onActivitySubmit(tripId, newActivity);
+            
             setActivityDate(new Date());
             setActivityName('');
             setAddress('');
@@ -175,8 +118,6 @@ function ActivityAddUpdate(props) {
                 <button type="submit" value="Submit" className="submitButton"><SendIcon/></button>
                 <div className="failed">
                     {fieldsFilled ? 'All fields needs to be filled' : ''}
-                    {insertFailed ? 'Problem adding activity' : ''}
-                    {updateFailed ? 'Problem updating activity' : ''}
                 </div>
             </div>
         </form>
