@@ -39,6 +39,7 @@ function Login() {
         <div className={'login_container'}>
             <p className={'messages'}>{searchParams.get("logout") ? 'Succefully logged out' : ''}</p>
             <p className={'messages'}>{searchParams.get("register") ? 'Succefully registered, you can log in' : ''}</p>
+            <h1 className='loginH1'>The Trip Planner</h1>
             <p className={'loginHeadline'}>Log in below</p>
             <form onSubmit={submitLogin} className={'loginForm'}>
                 <label for='username'>Username</label>

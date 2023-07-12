@@ -10,6 +10,13 @@
     font-weight: bold;
 }
 
+.loginH1 {
+    font-family: 'Raleway', sans-serif !important;
+    font-size: 2rem;
+    color: #060565;
+    margin-top: 1.5rem;
+}
+
 .loginHeadline {
     margin-top: 3rem;
     font-weight: bold;
