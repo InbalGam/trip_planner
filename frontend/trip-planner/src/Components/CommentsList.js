@@ -2,7 +2,7 @@ import { getComments, updateActivityComment, deleteActivityComment } from '../Ap
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import ClipLoader from 'react-spinners/ClipLoader';
-import Comment from './Comment';
+import CommentAdd from './CommentAdd';
 import AddIcon from '@mui/icons-material/Add';
 import styles from './Styles/CommentsList.css';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -68,7 +68,7 @@ function CommentsList() {
             {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> :
             <div className='CommentsContainer'>
                 <button onClick={addComment} className='addComment' ><AddIcon/></button>
-                {showForm === false ? '' : <Comment setShowForm={setShowForm} getActivityComments={getActivityComments} />}
+                {showForm === false ? '' : <CommentAdd setShowForm={setShowForm} getActivityComments={getActivityComments} />}
                 <ul>
                     {comments ? comments.map((el, ind) => 
                         <li key={ind}>

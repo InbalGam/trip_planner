@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import styles from './Styles/Comment.css';
 import SendIcon from '@mui/icons-material/Send';
 
-function Comment(props) {
+function CommentAdd(props) {
     const [comment, setComment] = useState('');
     const { tripId, activityId } = useParams();
     const navigate = useNavigate();
@@ -53,4 +53,4 @@ function Comment(props) {
     );
 };
 
-export default Comment;
+export default CommentAdd;
