@@ -8,6 +8,7 @@ import Activity from './Components/Activity';
 import ErrorPage from "./Components/ErrorPage";
 import Register from "./Components/Register";
 import styles from './Components/Styles/App.css';
+import Home from "./Components/Home";
 
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
   const router = createBrowserRouter(createRoutesFromElements(
     <Route path='/' >
       <Route path='/' element={ <Root /> } >
-        <Route exact path="/" element={<Navigate to="/trips" />} />
+        <Route exact path="/" element={<Home />} />
         <Route path='trips' element={ <TripsList/> } />
         <Route path='trips/:tripId' element={ <TripScheduler/> } />
         <Route path='trips/:tripId/activities/:activityId' element={ <Activity/> } />
