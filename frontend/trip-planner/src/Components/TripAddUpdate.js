@@ -8,6 +8,8 @@ import styles from './Styles/TripAddUpdate.css';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
 import {getSpecificTrip} from '../Api';
+import AutoComplete from 'react-google-autocomplete';
+import {GOOGLE_API} from '../apiKey';
 
 
 function TripAdd(props) {
@@ -82,7 +84,7 @@ function TripAdd(props) {
         <form onSubmit={submitTrip} className={'tripForm'}>
             <Select options={options} value={country} onChange={changeHandler} className="countrySelect"/>
             <label for='city'>City</label>
-            <input id='city' type='text' name='city' value={city} placeholder={'Enter city here'} onChange={handleTextChange} className="city_input"/>
+            <AutoComplete apiKey={GOOGLE_API} value={city} placeholder={'Enter city here'} onChange={handleTextChange} onPlaceSelected={(place) => setCity(place.formatted_address)} options={{fields:['ALL']}}/>
             <label for='start_date'>Start date</label>
             <DatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat='dd-MMM-yy' className="datePick" />
             <label for='end_date'>End date</label>
