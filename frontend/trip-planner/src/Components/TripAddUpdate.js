@@ -46,6 +46,7 @@ function TripAdd(props) {
                 setEmails(emailsDB);
                 setStartDate(new Date(jsonData.start_date));
                 setEndDate(new Date(jsonData.end_date));
+                setTripPhoto(jsonData.photo);
             };
         } catch (e) {
             navigate('/error');
