@@ -18,6 +18,10 @@ function Logout() {
     useEffect(() => {
         loggingOut();
     }, []);
+
+    return (
+        <div></div>
+    );
 };
 
 export default Logout;
