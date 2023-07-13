@@ -51,7 +51,7 @@ function TripsList() {
                 navigate('/login');
             } else {
                 if (result.status === 200) {
-                    getUserTrips();
+                    await getUserTrips();
                     setShowForm(false);
                     setIsLoading(false);
                     return result;

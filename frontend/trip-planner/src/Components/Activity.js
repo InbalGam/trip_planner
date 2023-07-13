@@ -63,7 +63,7 @@ function Activity() {
                 navigate('/login');
             } else {
                 if (result.status === 200) {
-                    getSpecificActivity(tripId, activityId);
+                    await getSpecificActivity(tripId, activityId);
                     setShowForm(false);
                     setIsLoading(false);
                     return result;

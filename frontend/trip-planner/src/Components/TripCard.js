@@ -35,7 +35,7 @@ export default function TripCard(props) {
       } else {
         if (result.status === 200) {
           setDeleteFailed(false);
-          props.getUserTrips();
+          await props.getUserTrips();
           props.setIsLoading(false);
         } else {
           setDeleteFailed(true);
@@ -55,7 +55,7 @@ export default function TripCard(props) {
         navigate('/login');
       } else {
         if (result.status === 200) {
-          props.getUserTrips();
+          await props.getUserTrips();
           setShowForm(false);
           props.setIsLoading(false);
           return result;

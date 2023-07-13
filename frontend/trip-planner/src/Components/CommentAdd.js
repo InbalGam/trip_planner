@@ -32,7 +32,7 @@ function CommentAdd(props) {
             } else {
                 if (result.status === 200) {
                     props.setShowForm(false);
-                    props.getActivityComments(tripId, activityId);
+                    await props.getActivityComments(tripId, activityId);
                     props.setIsLoading(false);
                     return result;
                 } else {

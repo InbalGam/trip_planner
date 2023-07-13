@@ -53,7 +53,7 @@ function CommentsList() {
             } else {
                 if (result.status === 200) {
                     setDeleteFailed(false);
-                    getActivityComments(tripId, activityId);
+                    await getActivityComments(tripId, activityId);
                     setIsLoading(false);
                 } else {
                     setDeleteFailed(true);

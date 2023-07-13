@@ -88,13 +88,14 @@ function TripScheduler() {
                 navigate('/login');
               } else {
                 if (result.status === 200) {
-                  getTripActivities(tripId);
+                  await getTripActivities(tripId);
                   setDeleteFailed(false);
+                  setIsLoading(false);
                 } else {
                   setDeleteFailed(true);
+                  setIsLoading(false);
                 }
-            }
-            setIsLoading(false);
+            } 
         } catch (e) {
             navigate('/error');
         }
