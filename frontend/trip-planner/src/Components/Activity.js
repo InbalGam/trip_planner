@@ -8,7 +8,7 @@ import CommentsList from './CommentsList';
 import styles from './Styles/Activity.css';
 import EditIcon from '@mui/icons-material/Edit';
 import GoogleMapReact from 'google-map-react';
-import {GOOGLE_API} from '../apiKey';
+import {GOOGLE_API} from '../../apiKey';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 

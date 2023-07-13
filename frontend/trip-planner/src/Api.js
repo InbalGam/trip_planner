@@ -1,5 +1,5 @@
 import fetch from 'cross-fetch';
-import {baseURL} from './apiKey';
+import {baseURL} from '../apiKey';
 
 
 // Auth
