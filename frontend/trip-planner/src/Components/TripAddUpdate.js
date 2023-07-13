@@ -9,7 +9,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
 import {getSpecificTrip} from '../Api';
 import AutoComplete from 'react-google-autocomplete';
-import {GOOGLE_API} from '../../apiKey';
+import {GOOGLE_API} from '../apiKey';
 
 
 function TripAdd(props) {

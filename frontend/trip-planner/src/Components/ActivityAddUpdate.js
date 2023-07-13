@@ -5,7 +5,7 @@ import styles from './Styles/ActivityAddUpdate.css';
 import Select from 'react-select';
 import SendIcon from '@mui/icons-material/Send';
 import AutoComplete from 'react-google-autocomplete';
-import {GOOGLE_API} from '../../apiKey';
+import {GOOGLE_API} from '../apiKey';
 
 
 function ActivityAddUpdate(props) {
