@@ -62,7 +62,7 @@ function ActivityAddUpdate(props) {
     }, []);
 
 
-    async function submitActivity(e) {
+    function submitActivity(e) {
         console.log(activityType.label);
         e.preventDefault();
         if (!activityDate || !activityName || !startValue || !endValue) {

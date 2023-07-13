@@ -103,16 +103,19 @@ function TripScheduler() {
 
     async function onActivitySubmit(tripId, activity) {
         try {
+            setIsLoading(true);
+            setShowForm(false);
             const result = await insertTripActivity(tripId, activity);
             if (result.status === 401) {
                 navigate('/login');
             } else {
                 if (result.status === 200) {
-                    getTripActivities(tripId);
-                    setShowForm(false);
+                    await getTripActivities(tripId);
+                    setIsLoading(false);
                     return result;
                 } else {
                     setInsertFailed(true);
+                    setIsLoading(false);
                 }
             };
         } catch (e) {

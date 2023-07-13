@@ -58,13 +58,13 @@ function Activity() {
     async function onActivitySubmit(tripId, activity) {
         try {
             setIsLoading(true);
+            setShowForm(false);
             const result = await updateTripActivity(tripId, activity, activityId);
             if (result.status === 401) {
                 navigate('/login');
             } else {
                 if (result.status === 200) {
                     await getSpecificActivity(tripId, activityId);
-                    setShowForm(false);
                     setIsLoading(false);
                     return result;
                 } else {
