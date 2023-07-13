@@ -83,9 +83,7 @@ function Activity() {
                 <div className='editActivityDiv'>
                     <button className='activityEdit' onClick={showActivityForm}><EditIcon /></button>
                 </div>
-                {showForm === false ? '' : <ActivityAddUpdate activity={activity} onActivitySubmit={onActivitySubmit} />}
-
-                {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> :
+                {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className='submitLoader'/> :
                     showForm === false ?
                         <div className='ActivityInfo' data-testid='ActivityInfo'>
                             <h2 className='activityName'>{activity.activity_name}</h2>
@@ -97,7 +95,7 @@ function Activity() {
                             <div className='GoogleMap'><GoogleMapReact bootstrapURLKeys={{ key: GOOGLE_API, libraries:['places']}} defaultCenter={{ lat: activity.address_lat, lng: activity.address_lng }} defaultZoom={15} >
                                     <Marker lat={activity.address_lat} lng={activity.address_lng} />
                             </GoogleMapReact></div>
-                        </div> : ''}
+                        </div> : <ActivityAddUpdate activity={activity} onActivitySubmit={onActivitySubmit} />}
                         {updateFailed ? 'Problem updating activity' : ''}
             </div>
             <div className='comments'>
