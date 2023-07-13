@@ -19,9 +19,19 @@
     text-decoration: none;
 }
 
+.tripCardOverlay {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
 .tripCardActionButtons {
     /* color: #9f43ac !important; */
     color: white !important;
+    align-self: flex-end;
 }
 
 .tripCardActionButtons:hover {
@@ -31,10 +41,6 @@
 .tripCard {
     background-size: cover;
     background-repeat: no-repeat;
-}
-
-.tripCardOverlay {
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.25);
+    width: 23.5rem;
+    height: 240px;
 }
