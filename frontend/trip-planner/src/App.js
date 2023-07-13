@@ -16,12 +16,12 @@ function App() {
   const router = createBrowserRouter(createRoutesFromElements(
     <Route path='/' >
       <Route path='/' element={ <Root /> } >
-        <Route exact path="/" element={<Home />} />
         <Route path='trips' element={ <TripsList/> } />
         <Route path='trips/:tripId' element={ <TripScheduler/> } />
         <Route path='trips/:tripId/activities/:activityId' element={ <Activity/> } />
         <Route path='error' element={ <ErrorPage/> } />
       </Route>
+      <Route exact path="/" element={<Home />} />
       <Route path='logout' element={ <Logout/> } />
       <Route path='login' element={ <Login/> } />
       <Route path='register' element={ <Register/> } />

@@ -26,7 +26,7 @@ function Logout() {
 
     return (
         <div>
-            <ClipLoader color={'#3c0c21'} size={150} className='submitLoader' />
+            <ClipLoader color={'#3c0c21'} size={150} className='loader' />
         </div>
     );
 };
