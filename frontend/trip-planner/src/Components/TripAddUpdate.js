@@ -35,7 +35,6 @@ function TripAdd(props) {
 
     async function getATrip(id) {
         try {
-            props.setIsLoading(true);
             const tripDB = await getSpecificTrip(id);
             if (tripDB.status === 401) {
                 navigate('/login');
@@ -48,7 +47,6 @@ function TripAdd(props) {
                 setStartDate(new Date(jsonData.start_date));
                 setEndDate(new Date(jsonData.end_date));
                 setTripPhoto(jsonData.photo);
-                props.setIsLoading(false);
             };
         } catch (e) {
             navigate('/error');

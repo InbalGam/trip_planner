@@ -92,7 +92,7 @@ export default function TripCard(props) {
           </CardActions>
         </div>
       </Card>
-      {showForm === false ? '' : <TripAddUpdate trip={props.trip} onTripSubmit={onTripSubmit} setIsLoading={props.setIsLoading} />}
+      {showForm === false ? '' : <TripAddUpdate trip={props.trip} onTripSubmit={onTripSubmit} />}
       {updateFailed ? 'Problem updating trip' : ''}
       {deleteFailed === false ? '' : 'Could not delete trip'}
     </>
