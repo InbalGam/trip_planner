@@ -91,7 +91,7 @@ function TripAdd(props) {
             <label for='start_date'>Start date</label>
             <DatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat='dd-MMM-yy' className="datePick" />
             <label for='end_date'>End date</label>
-            <DatePicker selected={endDate} onChange={date => setEndDate(date)} dateFormat='dd-MMM-yy' className="datePick" />
+            <DatePicker selected={endDate} onChange={date => setEndDate(date)} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} dateFormat='dd-MMM-yy' className="datePick" />
             <Email email={emails} emails={emails} setEmails={setEmails} className='emails'/>
             <button type="submit" value="Submit" className="submitButton"><SendIcon/></button>
             <div className="failed">
