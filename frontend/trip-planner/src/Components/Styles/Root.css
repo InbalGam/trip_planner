@@ -56,5 +56,14 @@
 @media only screen and (max-width: 550px) {
     .nav-bar p {
         padding-left: 2rem;
+        font-size: 1rem;
+    }
+
+    .nav-links .tripsLink {
+        font-size: 0.6rem;
+    }
+
+    .nav-links .logoutLink {
+        font-size: 0.6rem;
     }
 }
