@@ -9,6 +9,7 @@ const pool = new Pool({
   database: process.env.DB || 'trip_planner',
   password: process.env.DB_PASS,
   port: process.env.DB_PORT,
+  ssl: true
 });
 
 
