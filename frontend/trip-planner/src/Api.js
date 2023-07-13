@@ -1,7 +1,6 @@
 import fetch from 'cross-fetch';
+import {baseURL} from './apiKey';
 
-
-const baseURL = 'http://localhost:4001';
 
 // Auth
 async function register(username, password, nickname) {
