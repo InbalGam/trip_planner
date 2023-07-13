@@ -57,7 +57,8 @@ passport.use(
       return done(null, results.rows[0]);
     }
     catch (e) {
-      done(err);
+      console.log(e);
+      done(e);
     }
   })
 );
