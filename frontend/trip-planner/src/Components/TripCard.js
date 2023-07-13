@@ -50,13 +50,13 @@ export default function TripCard(props) {
   async function onTripSubmit(trip) {
     try {
       props.setIsLoading(true);
+      setShowForm(false);
       const result = await updateTrip(trip, props.trip.id);
       if (result.status === 401) {
         navigate('/login');
       } else {
         if (result.status === 200) {
           await props.getUserTrips();
-          setShowForm(false);
           props.setIsLoading(false);
           return result;
         } else {

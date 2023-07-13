@@ -46,13 +46,13 @@ function TripsList() {
     async function onTripSubmit(trip) {
         try {
             setIsLoading(true);
+            setShowForm(false);
             const result = await insertTrip(trip);
             if (result.status === 401) {
                 navigate('/login');
             } else {
                 if (result.status === 200) {
                     await getUserTrips();
-                    setShowForm(false);
                     setIsLoading(false);
                     return result;
                 } else {

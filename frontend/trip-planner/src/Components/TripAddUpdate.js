@@ -61,7 +61,7 @@ function TripAdd(props) {
     }, []);
 
 
-    async function submitTrip(e) {
+    function submitTrip(e) {
         e.preventDefault();
         if (!country.label || !city || !startDate || !endDate || !emails) {
             setFieldsFilled(true);
