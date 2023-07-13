@@ -13,6 +13,7 @@ import styles from './Styles/TripCard.css';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+
 export default function TripCard(props) {
   const [showForm, setShowForm] = useState(false);
   const [deleteFailed, setDeleteFailed] = useState(false);
@@ -27,6 +28,7 @@ export default function TripCard(props) {
   async function onClickDelete(event) {
     event.preventDefault();
     try {
+      props.setIsLoading(true);
       const result = await deleteSpecificTrip(props.trip.id);
       if (result.status === 401) {
         navigate('/login');
@@ -34,8 +36,10 @@ export default function TripCard(props) {
         if (result.status === 200) {
           setDeleteFailed(false);
           props.getUserTrips();
+          props.setIsLoading(false);
         } else {
           setDeleteFailed(true);
+          props.setIsLoading(false);
         }
       }
     } catch (e) {
@@ -45,6 +49,7 @@ export default function TripCard(props) {
 
   async function onTripSubmit(trip) {
     try {
+      props.setIsLoading(true);
       const result = await updateTrip(trip, props.trip.id);
       if (result.status === 401) {
         navigate('/login');
@@ -52,9 +57,11 @@ export default function TripCard(props) {
         if (result.status === 200) {
           props.getUserTrips();
           setShowForm(false);
+          props.setIsLoading(false);
           return result;
         } else {
           setUpdateFailed(true);
+          props.setIsLoading(false);
         }
       };
     } catch (e) {
@@ -85,7 +92,7 @@ export default function TripCard(props) {
           </CardActions>
         </div>
       </Card>
-      {showForm === false ? '' : <TripAddUpdate trip={props.trip} onTripSubmit={onTripSubmit} />}
+      {showForm === false ? '' : <TripAddUpdate trip={props.trip} onTripSubmit={onTripSubmit} setIsLoading={props.setIsLoading} />}
       {updateFailed ? 'Problem updating trip' : ''}
       {deleteFailed === false ? '' : 'Could not delete trip'}
     </>

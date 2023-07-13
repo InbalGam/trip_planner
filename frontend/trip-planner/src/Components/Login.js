@@ -4,6 +4,7 @@ import {login} from '../Api';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import styles from './Styles/Login.css';
 import LuggageIcon from '@mui/icons-material/Luggage';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 
 function Login() {
@@ -12,6 +13,7 @@ function Login() {
     const [authFailed, setAuthFailed] = useState(false);
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
+    const [isLoading, setIsLoading] = useState(false);
 
     function handleUsernameChange(e) {
         setUsername(e.target.value);
@@ -22,14 +24,17 @@ function Login() {
     };
 
     async function submitLogin(e) {
+        setIsLoading(true);
         e.preventDefault();
         setAuthFailed(false);
         try {
             const result = await login(username, password);
             if (result === true) {
                 navigate('/trips');
+                setIsLoading(false);
             } else {
                 setAuthFailed(true);
+                setIsLoading(false);
             }
         } catch (e) {
             navigate('/error');
@@ -47,7 +52,7 @@ function Login() {
                 <input id='username' type='text' name='username' value={username} placeholder={'username'} onChange={handleUsernameChange} />
                 <label for='password'>Password</label>
                 <input id='password' type='password' name='password' value={password} placeholder={'password'} onChange={handlePasswordChange} />
-                <button type="submit" value="Submit">Submit</button>
+                {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className='submitLoader'/> : <button type="submit" value="Submit">Submit</button>}
             </form>
             <div className={'authStatus'}>
                 {authFailed ? 'Username or Password are incorrect, try again' : ''}

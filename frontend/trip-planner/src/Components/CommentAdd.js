@@ -25,6 +25,7 @@ function CommentAdd(props) {
             const newComment = {
                 comment: comment
             };
+            props.setIsLoading(true);
             const result = await insertActivityComment(tripId, activityId, newComment);
             if (result.status === 401) {
                 navigate('/login');
@@ -32,9 +33,11 @@ function CommentAdd(props) {
                 if (result.status === 200) {
                     props.setShowForm(false);
                     props.getActivityComments(tripId, activityId);
+                    props.setIsLoading(false);
                     return result;
                 } else {
                     setInsertFailed(true);
+                    props.setIsLoading(false);
                 }
             }
         } catch (e) {

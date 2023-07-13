@@ -3,6 +3,7 @@ import {register} from '../Api';
 import {validateEmail} from '../utils';
 import { useNavigate} from 'react-router-dom';
 import styles from './Styles/Register.css';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 
 function Register() {
@@ -13,6 +14,7 @@ function Register() {
     const [validPassword, setValidPassword] = useState(true);
     const [validNickname, setValidNickname] = useState(true);
     const [registerAuth, setRegisterAuth] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const[msg, setMsg] = useState('');
     const navigate = useNavigate();
 
@@ -37,6 +39,7 @@ function Register() {
         
         if ((password.length >= 8) && (nickname.length >= 3) && (validateEmail(username))) {
             try {
+                setIsLoading(true);
                 const result = await register(username, password, nickname);
                 const jsonData = await result.json();
                 setMsg(jsonData.msg);
@@ -47,9 +50,11 @@ function Register() {
                     setValidNickname(true);
                     setValidPassword(true);
                     setValidUsername(true);
-                    navigate('/login?register=1')
+                    navigate('/login?register=1');
+                    setIsLoading(false);
                 } else {
                     setRegisterAuth(true);
+                    setIsLoading(false);
                 }
             } catch (e) {
                 navigate('/error');
@@ -72,7 +77,7 @@ function Register() {
                 <label htmlFor='nickname'>Nickname-</label>
                 <input id='nickname' type='text' name='nickname' value={nickname} placeholder={'Enter your nickname here'} onChange={handleNicknameChange} />
                 {validNickname ? '' : 'Your nickname must be at least 3 characters'}
-                <button type="submit" value="Submit" className="submitButton">Submit</button>
+                {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className='submitLoader'/> : <button type="submit" value="Submit" className="submitButton">Submit</button>}
                 {registerAuth ? 'Could not register' : ''}
                 {msg ? msg : ''}
             </form>

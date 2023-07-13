@@ -83,6 +83,11 @@
 }
 
 
+.submitLoader {
+    align-self: center;
+}
+
+
 @media only screen and (max-width: 550px) {
     .login_container {
         margin-top: 50%;

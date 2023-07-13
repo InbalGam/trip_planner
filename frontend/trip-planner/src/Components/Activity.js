@@ -57,6 +57,7 @@ function Activity() {
 
     async function onActivitySubmit(tripId, activity) {
         try {
+            setIsLoading(true);
             const result = await updateTripActivity(tripId, activity, activityId);
             if (result.status === 401) {
                 navigate('/login');
@@ -64,9 +65,11 @@ function Activity() {
                 if (result.status === 200) {
                     getSpecificActivity(tripId, activityId);
                     setShowForm(false);
+                    setIsLoading(false);
                     return result;
                 } else {
                     setUpdateFailed(true);
+                    setIsLoading(false);
                 }
             };
         } catch (e) {

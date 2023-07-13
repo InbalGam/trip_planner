@@ -46,6 +46,7 @@ function CommentsList() {
 
     async function onClickDelete(commentId) {
         try {
+            setIsLoading(true);
             const result = await deleteActivityComment(tripId, activityId, commentId);
             if (result.status === 401) {
                 navigate('/login');
@@ -53,8 +54,10 @@ function CommentsList() {
                 if (result.status === 200) {
                     setDeleteFailed(false);
                     getActivityComments(tripId, activityId);
+                    setIsLoading(false);
                 } else {
                     setDeleteFailed(true);
+                    setIsLoading(false);
                 }
             }
         } catch (e) {
@@ -68,7 +71,7 @@ function CommentsList() {
             {isLoading ? <ClipLoader color={'#3c0c21'} size={150} /> :
             <div className='CommentsContainer'>
                 <button onClick={addComment} className='addComment' ><AddIcon/></button>
-                {showForm === false ? '' : <CommentAdd setShowForm={setShowForm} getActivityComments={getActivityComments} />}
+                {showForm === false ? '' : <CommentAdd setShowForm={setShowForm} getActivityComments={getActivityComments} setIsLoading={setIsLoading} />}
                 <ul>
                     {comments ? comments.map((el, ind) => 
                         <li key={ind}>
