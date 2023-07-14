@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 
 
 // middlewares for authentication
-app.set('trust proxy', 1);
+//app.set('trust proxy', 1);
 app.use(
   session({
     secret: "f4z4gs$Gcg",
