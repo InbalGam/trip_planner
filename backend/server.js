@@ -28,13 +28,14 @@ app.use(bodyParser.json());
 
 
 // middlewares for authentication
-app.set('trust proxy', 1);
+//app.set('trust proxy', 1);
 app.use(
   session({
     secret: "f4z4gs$Gcg",
     cookie: { maxAge: 300000000, httpOnly: false, secure: true, sameSite: 'none' },
     saveUninitialized: true,
-    resave: true,
+    resave: true, 
+    proxy: true,
     store,
   })
 );
