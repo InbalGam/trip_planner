@@ -81,10 +81,10 @@ tripsRouter.get('/trips', async (req, res, next) => {
 async function sharingTrip(req, emails, tripId) {
     let userIds = [[tripId, req.user.id]];
     if (emails.length > 0) {
-        const ids = await pool.query('select id from users where username in ($1)', [emails.join(',')]);
+        const ids = await pool.query('select id from users where username = ANY ($1);', [emails]);
         if (ids.rows.length > 0) {
             const idsTrip = ids.rows.map(i => [tripId, i.id]);
-            userIds.push(idsTrip);
+            userIds.push(...idsTrip);
         }
     }
     await pool.query('delete from trips_shared where trip_id = $1;', [tripId]);
