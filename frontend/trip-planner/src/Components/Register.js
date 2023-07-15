@@ -77,7 +77,7 @@ function Register() {
                 <label htmlFor='nickname'>Nickname-</label>
                 <input id='nickname' type='text' name='nickname' value={nickname} placeholder={'Enter your nickname here'} onChange={handleNicknameChange} />
                 {validNickname ? '' : 'Your nickname must be at least 3 characters'}
-                {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className='submitLoader'/> : <button type="submit" value="Submit" className="submitButton">Submit</button>}
+                {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className='submitLoader'/> : <button type="submit" value="Submit" className="submitButton">Register</button>}
                 {registerAuth ? 'Could not register' : ''}
                 {msg ? msg : ''}
             </form>

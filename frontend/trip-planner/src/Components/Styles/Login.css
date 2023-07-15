@@ -48,11 +48,12 @@
     box-sizing: border-box;
     box-shadow: 2px 1px -1px rgba(0,0,0,0.2);
     font-weight: bold;
-    background-color: #f7cbe8;
+    background-color: #650343;
+    padding: 0.7rem;
 }
 
 .loginForm button:hover {
-    background-color: #c5a1b9;
+    background-color: #a7056e;
     cursor: pointer;
 }
 
