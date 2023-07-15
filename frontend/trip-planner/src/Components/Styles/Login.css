@@ -50,6 +50,7 @@
     font-weight: bold;
     background-color: #650343;
     padding: 0.7rem;
+    color: white;
 }
 
 .loginForm button:hover {
