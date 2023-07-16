@@ -63,7 +63,6 @@ function ActivityAddUpdate(props) {
 
 
     function submitActivity(e) {
-        console.log(activityType.label);
         e.preventDefault();
         if (!activityDate || !activityName || !startValue || !endValue) {
             setFieldsFilled(true);

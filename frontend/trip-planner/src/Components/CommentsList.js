@@ -25,7 +25,6 @@ function CommentsList() {
                 navigate('/login');
             } else {
                 const jsonData = await result.json();
-                console.log(jsonData);
                 setComments(jsonData);
                 setIsLoading(false);
             }
