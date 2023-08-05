@@ -72,7 +72,7 @@ function TripsList() {
                 </div>
                 {showForm === false ? '' : <TripAddUpdate onTripSubmit={onTripSubmit} />}
                 <h2>Your trips</h2>
-                {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className="loader"/> : <div className="userTrips">
+                {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className="loader" data-testid="loader"/> : <div className="userTrips">
                     <ul className="listOfTrips">
                         {trips.map((trip, ind) =>
                             <li key={ind}>

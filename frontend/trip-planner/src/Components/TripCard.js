@@ -75,10 +75,10 @@ export default function TripCard(props) {
         <div className={'tripCardOverlay'}>
           <Link to={`/trips/${props.trip.id}`} className='tripCardLink'>
             <CardContent>
-              <Typography sx={{ fontSize: 24 }} gutterBottom className='countryName'>
+              <Typography sx={{ fontSize: 24 }} gutterBottom className='countryName' data-testid="countryName">
                 {props.trip.country}
               </Typography>
-              <Typography variant="h5" component="div" className='cityName'>
+              <Typography variant="h5" component="div" className='cityName' data-testid="cityName">
                 {props.trip.city}
               </Typography>
               <Typography sx={{ mb: 1.5 }} className='dates'>
