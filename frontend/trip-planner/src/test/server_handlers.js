@@ -39,6 +39,20 @@ const handlers = [
         }
     ]))
   }),
+  rest.post('/trips', async (req, res, ctx) => {
+    const trip = await req.json();
+    // do whatever other things you need to do with this shopping cart
+    return res(ctx.json({
+      "id": 108,
+      "country": trip.country,
+      "city": trip.city,
+      "start_date": trip.startDate,
+      "end_date": trip.endDate,
+      "created_by": 17,
+      "photo": null,
+      "isCreatedByMe": 1,
+      "emails": []
+  }))}),
   rest.get(`${baseURL}/trips/32/activities/8`, async (req, res, ctx) => {
     return res(ctx.json(
       {

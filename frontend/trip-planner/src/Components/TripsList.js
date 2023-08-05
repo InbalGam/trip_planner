@@ -68,7 +68,7 @@ function TripsList() {
         <div className="trips_container">
             <div className="trips">
                 <div className="add_trip_container">
-                    <button className='add_trip' onClick={showTrip}><AddIcon /></button>
+                    <button className='add_trip' onClick={showTrip}><AddIcon data-testid="addIcon"/></button>
                 </div>
                 {showForm === false ? '' : <TripAddUpdate onTripSubmit={onTripSubmit} />}
                 <h2>Your trips</h2>

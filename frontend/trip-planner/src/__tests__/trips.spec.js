@@ -3,10 +3,12 @@ import {
   render,
   screen,
   waitForElementToBeRemoved,
-  within
+  within, waitFor, act
 } from '@testing-library/react';
 import TripsList from "../Components/TripsList";
 import { MemoryRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
+import selectEvent from 'react-select-event';
 
 // Learn more: https://kentcdodds.com/blog/stop-mocking-fetch
 import {server} from '../test/server'
@@ -32,4 +34,49 @@ test('get trips', async () => {
   });
   expect(resultsCountryName).toEqual(['ItalyDummy', 'Algeria', 'Italy']);
   expect(resultsCity).toEqual(['rome', 'Naples, Metropolitan City of Naples, Italy', 'Napoli']);
+});
+
+
+test('click to open trip form', async () => {
+
+  render(<MemoryRouter initialEntries={['/trips']}><TripsList /> </MemoryRouter>);
+
+  await waitForElementToBeRemoved(() => screen.getByTestId('loader'));
+
+  act(() => { //everything that changes state should be in act
+    userEvent.click(screen.getByTestId('addIcon'));
+  });
+  
+  await waitFor(() => {
+    expect(screen.getByTestId('tripForm')).toBeInTheDocument();
+  })
+});
+
+
+test('post trip', async () => {
+
+  render(<MemoryRouter initialEntries={['/trips']}><TripsList /> </MemoryRouter>);
+
+  await waitForElementToBeRemoved(() => screen.getByTestId('loader'));
+
+  act(() => {
+    userEvent.click(screen.getByTestId('addIcon'));
+  });
+  
+  await waitFor(() => {
+    expect(screen.getByTestId('tripForm')).toBeInTheDocument();
+  });
+
+  act(() => {
+    selectEvent.select(screen.getByLabelText('Select Country'), ['Germany'])
+  });
+
+  act(() => {
+    userEvent.type(screen.getByTestId('city'), 'Berlin');
+  });
+
+  act(() => {
+    userEvent.click(screen.getByTestId('submit'));
+  });
+
 });

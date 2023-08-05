@@ -63,5 +63,8 @@
     "transformIgnorePatterns": [
       "node_modules/dateFormat"
     ]
+  },
+  "devDependencies": {
+    "react-select-event": "^5.5.1"
   }
 }
