@@ -67,9 +67,7 @@ test('post trip', async () => {
     expect(screen.getByTestId('tripForm')).toBeInTheDocument();
   });
 
-  act(() => {
-    selectEvent.select(screen.getByLabelText('Select Country'), ['Germany'])
-  });
+  await selectEvent.select(screen.getByLabelText('Select Country'), 'Germany');
 
   act(() => {
     userEvent.type(screen.getByTestId('city'), 'Berlin');

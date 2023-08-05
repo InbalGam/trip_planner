@@ -39,7 +39,7 @@ const handlers = [
         }
     ]))
   }),
-  rest.post('/trips', async (req, res, ctx) => {
+  rest.post(`${baseURL}/trips`, async (req, res, ctx) => {
     const trip = await req.json();
     // do whatever other things you need to do with this shopping cart
     return res(ctx.json({
