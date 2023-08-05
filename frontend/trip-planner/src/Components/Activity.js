@@ -83,13 +83,13 @@ function Activity() {
                 <div className='editActivityDiv'>
                     <button className='activityEdit' onClick={showActivityForm}><EditIcon /></button>
                 </div>
-                {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className='submitLoader'/> :
+                {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className='submitLoader' data-testid="loader"/> :
                     showForm === false ?
-                        <div className='ActivityInfo' data-testid='ActivityInfo'>
-                            <h2 className='activityName'>{activity.activity_name}</h2>
+                        <div className='ActivityInfo'>
+                            <h2 className='activityName' data-testid='activityName'>{activity.activity_name}</h2>
                             <p>{dateFormat(new Date(activity.date), "dddd, mmmm dS, yyyy")}</p>
                             <p>{startTime} - {endTime}</p>
-                            <p>{activity.address === "" ? 'No address entered' : activity.address}</p>
+                            <p data-testid='address'>{activity.address === "" ? 'No address entered' : activity.address}</p>
                             <p>{activity.url === "" ? 'No URL entered' : <a href={activity.url} className='activityURL'>{activity.url}</a>}</p>
                             <p>{activity.user_notes === "" ? 'No activity notes' : activity.user_notes}</p>
                             <div className='GoogleMap'><GoogleMapReact bootstrapURLKeys={{ key: GOOGLE_API, libraries:['places']}} defaultCenter={{ lat: activity.address_lat, lng: activity.address_lng }} defaultZoom={15} >

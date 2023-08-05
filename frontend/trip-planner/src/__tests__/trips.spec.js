@@ -32,4 +32,4 @@ test('get trips', async () => {
   });
   expect(resultsCountryName).toEqual(['ItalyDummy', 'Algeria', 'Italy']);
   expect(resultsCity).toEqual(['rome', 'Naples, Metropolitan City of Naples, Italy', 'Napoli']);
-})
+});
