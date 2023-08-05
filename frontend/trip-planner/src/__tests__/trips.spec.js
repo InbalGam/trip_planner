@@ -9,9 +9,11 @@ import TripsList from "../Components/TripsList";
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import selectEvent from 'react-select-event';
+import {jest} from '@jest/globals';;
+import {baseURL} from '../apiKey';
 
 // Learn more: https://kentcdodds.com/blog/stop-mocking-fetch
-import {server} from '../test/server'
+import {server, waitForRequest} from '../test/server'
 
 
 beforeAll(() => server.listen())
@@ -73,8 +75,20 @@ test('post trip', async () => {
     userEvent.type(screen.getByTestId('city'), 'Berlin');
   });
 
+
+  const pendingRequest = waitForRequest('POST', `${baseURL}/trips`);
   act(() => {
     userEvent.click(screen.getByTestId('submit'));
   });
+
+
+  const request = await pendingRequest;
+  const jsonData = await request.json();
+  expect(jsonData).toMatchObject({
+    "country": 'Germany',
+    "city": 'Berlin',
+    "photo": '',
+    "emails": []
+});
 
 });
