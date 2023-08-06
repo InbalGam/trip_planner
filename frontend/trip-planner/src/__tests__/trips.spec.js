@@ -9,7 +9,7 @@ import TripsList from "../Components/TripsList";
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import selectEvent from 'react-select-event';
-import {jest} from '@jest/globals';;
+import {jest} from '@jest/globals';
 import {baseURL} from '../apiKey';
 
 // Learn more: https://kentcdodds.com/blog/stop-mocking-fetch
