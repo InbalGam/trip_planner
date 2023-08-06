@@ -72,7 +72,51 @@ const handlers = [
       }))
   }),
   rest.get(`${baseURL}/trips/32/activities/8/comments`, async (req, res, ctx) => {
-    return res(ctx.json([]))})
+    return res(ctx.json([]))}),
+  rest.get(`${baseURL}/trips/32`, async (req, res, ctx) => {
+      return res(ctx.json({
+        "id": 32,
+        "country": "ItalyDummy",
+        "city": "rome",
+        "start_date": "2023-05-15T21:00:00.000Z",
+        "end_date": "2023-05-21T21:00:00.000Z",
+        "created_by": 17,
+        "photo": null,
+        "userData": []
+    }))}),
+  rest.get(`${baseURL}/trips/32/activities`, async (req, res, ctx) => {
+        return res(ctx.json([{
+          "id": 10,
+          "date": "2023-04-30T21:00:00.000Z",
+          "trip_id": 32,
+          "activity_name": "blubli",
+          "address": "ddsds",
+          "url": "www.ggg.com",
+          "start_time": "08:00:00",
+          "end_time": "13:00:00",
+          "user_id": 17,
+          "user_notes": "No notes",
+          "type": null,
+          "address_lat": null,
+          "address_lng": null
+      }]))}),
+  rest.post(`${baseURL}/trips/32/activities`, async (req, res, ctx) => {
+      const activity = await req.json();
+      return res(ctx.json({
+        "id": 106,
+        "date": activity.date,
+        "trip_id": 32,
+        "activity_name": activity.name,
+        "address": activity.address,
+        "url": activity.url,
+        "start_time": activity.startTime,
+        "end_time": activity.endTime,
+        "user_id": 17,
+        "user_notes": activity.notes,
+        "type": activity.type,
+        "address_lat": '',
+        "address_lng": ''
+    }))})
 ]
 
 export {handlers}

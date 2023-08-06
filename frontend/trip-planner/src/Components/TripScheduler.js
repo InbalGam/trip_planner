@@ -131,7 +131,7 @@ function TripScheduler() {
 
     return (
         <div className='schedulerLoaderContainder'>
-            {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className='loader' /> : ''}
+            {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className='loader' data-testid="loader"/> : ''}
             <div className='schedulerContainder'>
                 {deleteFailed === false ? '' : 'Could not delete activity'}
                 <Paper className='paper'>
@@ -148,7 +148,7 @@ function TripScheduler() {
                     </Scheduler>
                 </Paper>
                 <div className='addActivityContainer'>
-                    <button className='add_activity' onClick={showActivity} ><AddIcon className='addIcon' style={{fontSize: '32px'}}/></button>
+                    <button className='add_activity' onClick={showActivity} ><AddIcon className='addIcon' data-testid="addIcon" style={{fontSize: '32px'}}/></button>
                     {showForm === false ? '' : <ActivityAddUpdate onActivitySubmit={onActivitySubmit} />}
                     {insertFailed ? 'Problem adding activity' : ''}
                 </div>

@@ -95,13 +95,14 @@ function ActivityAddUpdate(props) {
     };
 
     return (
-        <form onSubmit={submitActivity} className='activityForm'>
+        <form onSubmit={submitActivity} className='activityForm' data-testid="activityForm">
             <div className='activityFormDiv1'>
-                <input id='activity_name' type='text' name='activity_name' value={activityName} placeholder={'Enter activity name here'} onChange={handleTextChange} />
-                <Select options={typeOptions} value={activityType} onChange={changeHandler} placeholder='select activity type' className="selectActivityType"/>
+                <input id='activity_name' type='text' name='activity_name' value={activityName} placeholder={'Enter activity name here'} onChange={handleTextChange} data-testid="activityName"/>
+                <label htmlFor='selectType'>Select Activity Type</label>
+                <Select options={typeOptions} value={activityType} onChange={changeHandler} placeholder='select activity type' className="selectActivityType" inputId='selectType' name='selectType'/>
                 <AutoComplete apiKey={GOOGLE_API} value={address} placeholder={'Enter address here'} onChange={handleAddressChange} 
-                    onPlaceSelected={(place) => {setAddress(place.formatted_address); setAddressLAT(place.geometry.location.lat()); setAddressLNG(place.geometry.location.lng());}} options={{types: [], fields:['ALL']}}/>
-                <input id='link' type='text' name='link' value={link} placeholder={'Enter link here'} onChange={handleLinkChange} />
+                    onPlaceSelected={(place) => {setAddress(place.formatted_address); setAddressLAT(place.geometry.location.lat()); setAddressLNG(place.geometry.location.lng());}} options={{types: [], fields:['ALL']}} data-testid="activityAddress"/>
+                <input id='link' type='text' name='link' value={link} placeholder={'Enter link here'} onChange={handleLinkChange} data-testid="activityURL"/>
             </div>
             <div className='activityFormDiv2'>
                 <label htmlFor='activity_date'>Activity date</label>
@@ -114,7 +115,7 @@ function ActivityAddUpdate(props) {
             <div className='activityFormDiv3'>
                 <label htmlFor='user_notes'>Notes</label>
                 <textarea id='user_notes' name="user_notes" rows="5" cols="33" value={userNotes} onChange={(e) => setUserNotes(e.target.value)}>Enter notes here</textarea>
-                <button type="submit" value="Submit" className="submitButton"><SendIcon/></button>
+                <button type="submit" value="Submit" className="submitButton"><SendIcon data-testid="submit"/></button>
                 <div className="failed">
                     {fieldsFilled ? 'All fields needs to be filled' : ''}
                 </div>
