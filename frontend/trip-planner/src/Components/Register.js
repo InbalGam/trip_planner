@@ -12,6 +12,7 @@ import googleIconImageSrc from "./Styles/images/google-icon.png";
 import * as rst from './Styles/RegisterStyles';
 import {baseURL} from '../apiKey';
 import signupImg from './Styles/images/clarisse-meyer-d6pLNFVZt_4-unsplash.jpg';
+import AnimationRevealPage from "./helpers/AnimationRevealPage.js";
 
 
 function Register({
@@ -79,6 +80,7 @@ function Register({
 
 
     return (
+    <AnimationRevealPage>
         <rst.Container>
             <rst.Content>
                 <rst.MainContainer>
@@ -129,6 +131,7 @@ function Register({
                 </rst.IllustrationContainer>
             </rst.Content>
         </rst.Container>
+    </AnimationRevealPage>
     );
 };
 
