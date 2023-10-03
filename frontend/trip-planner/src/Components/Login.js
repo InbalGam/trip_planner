@@ -113,7 +113,7 @@ function Login({
                         </lst.MainContent>
                     </lst.MainContainer>
                     <lst.IllustrationContainer>
-                        <lst.IllustrationImage imageSrc={illustrationImageSrc} />
+                        <lst.IllustrationImage imageSrc={illustrationImageSrc} aria-label="Photo by Marissa Grootes"/>
                     </lst.IllustrationContainer>
                 </lst.Content>
             </lst.Container>
