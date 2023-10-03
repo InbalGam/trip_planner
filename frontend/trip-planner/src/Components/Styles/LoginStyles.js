@@ -44,6 +44,10 @@ const IllustrationImage = styled.div`
   ${tw`m-12 xl:m-16 w-full max-w-sm bg-contain bg-center bg-no-repeat`}
 `;
 
+const p = tw.p`mt-4`;
+
+const SignUpP = tw.p`mt-8 text-sm text-gray-600 text-center`;
+const SignUpA = tw.a`border-b border-gray-500 border-dotted`;
 
 export {Container, Content, MainContainer, LogoLink, LogoImage, MainContent, Heading, FormContainer, SocialButtonsContainer, SocialButton,
-        DividerTextContainer, DividerText, Form, Input, SubmitButton, IllustrationContainer, IllustrationImage};
+        DividerTextContainer, DividerText, Form, Input, SubmitButton, IllustrationContainer, IllustrationImage, p, SignUpP, SignUpA};

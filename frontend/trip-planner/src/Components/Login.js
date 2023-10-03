@@ -68,8 +68,8 @@ function Login({
                     <lst.MainContainer>
                         <lst.MainContent>
                             <lst.Heading>{'Sign In To The Trip Planner'}</lst.Heading>
-                            <p className='mt-4'>{searchParams.get("logout") ? <Alert severity="success">Succefully logged out</Alert> : ''}</p>
-                            <p className='mt-4'>{searchParams.get("register") ? <Alert severity="success">Succefully registered, you can log in</Alert> : ''}</p>
+                            <lst.p>{searchParams.get("logout") ? <Alert severity="success">Succefully logged out</Alert> : ''}</lst.p>
+                            <lst.p>{searchParams.get("register") ? <Alert severity="success">Succefully registered, you can log in</Alert> : ''}</lst.p>
                             <lst.FormContainer>
                                 <lst.SocialButtonsContainer>
                                     {socialButtons.map((socialButton, index) => (
@@ -93,18 +93,18 @@ function Login({
                                         <span className="text">{submitButtonText}</span>
                                     </lst.SubmitButton>}
                                 </lst.Form>
-                                <p className="mt-6 text-xs text-gray-600 text-center">
-                                    {authFailed ? <Alert severity="warning">Username or Password are incorrect, try again</Alert> : ''}
-                                    {/* <a href={forgotPasswordUrl} tw="border-b border-gray-500 border-dotted">
+                                <lst.p>{authFailed ? <Alert severity="warning">Username or Password are incorrect, try again</Alert> : ''}</lst.p>
+                                {/* <p tw="mt-6 text-xs text-gray-600 text-center">
+                                    <a href={forgotPasswordUrl} tw="border-b border-gray-500 border-dotted">
                                         Forgot Password ?
-                                    </a> */}
-                                </p>
-                                <p className="mt-8 text-sm text-gray-600 text-center">
-                                    Dont have an account?{" "}
-                                    <a href={signupUrl} className="border-b border-gray-500 border-dotted">
-                                        Sign Up
                                     </a>
-                                </p>
+                                </p> */}
+                                <lst.SignUpP>
+                                    Dont have an account?{" "}
+                                    <lst.SignUpA href={signupUrl} tw="border-b border-gray-500 border-dotted">
+                                        Sign Up
+                                    </lst.SignUpA>
+                                </lst.SignUpP>
                             </lst.FormContainer>
                         </lst.MainContent>
                     </lst.MainContainer>
@@ -114,24 +114,6 @@ function Login({
                 </lst.Content>
             </lst.Container>
         </AnimationRevealPage>
-        // <div className={'login_container'}>
-        //     <p className={'messages'}>{searchParams.get("logout") ? 'Succefully logged out' : ''}</p>
-        //     <p className={'messages'}>{searchParams.get("register") ? 'Succefully registered, you can log in' : ''}</p>
-        //     <h1 className='loginH1'><LuggageIcon /> The Trip Planner</h1>
-        //     <p className={'loginHeadline'}>Log in below</p>
-        //     <form onSubmit={submitLogin} className={'loginForm'}>
-        //         <label for='username'>Username</label>
-        //         <input id='username' type='text' name='username' value={username} placeholder={'username'} onChange={handleUsernameChange} />
-        //         <label for='password'>Password</label>
-        //         <input id='password' type='password' name='password' value={password} placeholder={'password'} onChange={handlePasswordChange} />
-        //         {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className='submitLoader'/> : <button type="submit" value="Submit">Log in</button>}
-        //     </form>
-        //     <div className={'authStatus'}>
-        //         {authFailed ? 'Username or Password are incorrect, try again' : ''}
-        //     </div>
-        //     <p className={'registrationHeadline'}>Not registered yet?</p>
-        //     <Link to='/register' className={'registrationLink'} >Register here</Link>
-        // </div>
     );
 };
 
