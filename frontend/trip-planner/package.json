@@ -17,6 +17,8 @@
     "@testing-library/user-event": "^13.5.0",
     "cross-fetch": "^3.1.6",
     "dateformat": "^5.0.3",
+    "feather-icons": "^4.29.1",
+    "framer-motion": "^10.16.4",
     "google-map-react": "^2.2.1",
     "jest": "^27.5.1",
     "msw": "^1.2.3",
@@ -33,6 +35,8 @@
     "react-select-country-list": "^2.2.3",
     "react-spinners": "^0.13.8",
     "react-test-renderer": "^18.2.0",
+    "styled-components": "^6.0.8",
+    "twin.macro": "^3.4.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
