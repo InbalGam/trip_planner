@@ -28,7 +28,7 @@ const DividerTextContainer = tw.div`my-12 border-b text-center relative`;
 const DividerText = tw.div`leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform -translate-y-1/2 absolute inset-x-0 top-1/2 bg-transparent`;
 
 const Form = tw.form`mx-auto max-w-xs`;
-const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5 first:mt-0`;
+const Input = tw.input`w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm  focus:border-gray-400 focus:bg-white mt-5 first:mt-0`;
 const SubmitButton = styled.button`
   ${tw`mt-5 tracking-wide font-semibold bg-primary-500 text-gray-100 w-full py-4 rounded-lg hover:bg-primary-900 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none`}
   .icon {
@@ -43,9 +43,8 @@ const IllustrationImage = styled.div`
   ${props => `background-image: url("${props.imageSrc}");`}
   ${tw`sm:rounded-lg my-16 bg-cover bg-center bg-no-repeat md:w-10/12 w-10/12 p-0`}
 `;
-//${tw`hidden md:flex justify-center sm:rounded-lg flex-1 md:w-10/12 m-16 w-6/12 bg-cover bg-center bg-no-repeat`}
 
-const LoaderContainer = tw.div`sm:rounded-r-lg flex-1 text-center hidden lg:flex justify-center`;
+const LoaderContainer = tw.div`sm:rounded-r-lg flex-1 text-center hidden lg:flex justify-center mt-4`;
 
 export {Container, Content, MainContainer, LogoLink, LogoImage, MainContent, Heading, FormContainer, SocialButtonsContainer, SocialButton,
         DividerTextContainer, DividerText, Form, Input, SubmitButton, IllustrationContainer, IllustrationImage, LoaderContainer};
