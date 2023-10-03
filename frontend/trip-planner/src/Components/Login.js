@@ -64,7 +64,7 @@ function Login({
     };
 
     return (
-        <AnimationRevealPage className='iframe#webpack-dev-server-client-overlay{display:none!important}'>
+        <AnimationRevealPage>
             <lst.Container>
                 <lst.Content>
                     <lst.MainContainer>
