@@ -1,14 +1,14 @@
 import tw from "twin.macro";
 import styled from "styled-components";
 
-const Container = tw.div`relative min-h-screen bg-primary-900 text-white font-medium flex justify-center -m-8`;
-const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1`;
-const MainContainer = tw.div`lg:w-1/2 xl:w-5/12 p-6 sm:p-12`;
+const Container = tw.div`relative min-h-screen bg-purple-300 text-white font-medium flex justify-center -m-8`;
+const Content = tw.div`max-w-screen-xl m-0 sm:mx-20 sm:my-16 bg-white text-gray-900 shadow sm:rounded-lg flex justify-center flex-1 md:flex-col lg:flex-row`;
+const MainContainer = tw.div`lg:w-1/2 xl:w-5/12 p-6 sm:p-12 self-center`;
 const LogoLink = tw.a``;
 const LogoImage = tw.img`h-12 mx-auto`;
 const MainContent = tw.div`mt-12 flex flex-col items-center`;
 const Heading = tw.h1`text-2xl xl:text-3xl font-extrabold`;
-const FormContainer = tw.div`w-full flex-1 mt-8`;
+const FormContainer = tw.div`flex-1 mt-8`;
 
 const SocialButtonsContainer = tw.div`flex flex-col items-center`;
 const SocialButton = styled.a`
@@ -38,16 +38,14 @@ const SubmitButton = styled.button`
     ${tw`ml-3`}
   }
 `;
-const IllustrationContainer = tw.div`sm:rounded-r-lg flex-1 bg-purple-100 text-center hidden lg:flex justify-center`;
+const IllustrationContainer = tw.div`sm:rounded-r-lg flex-1 bg-purple-100 text-center hidden md:flex justify-center`;
 const IllustrationImage = styled.div`
   ${props => `background-image: url("${props.imageSrc}");`}
-  ${tw`m-12 xl:m-16 w-full max-w-sm bg-contain bg-center bg-no-repeat`}
+  ${tw`sm:rounded-lg my-16 bg-cover bg-center bg-no-repeat md:w-10/12 w-10/12 p-0`}
 `;
+//${tw`hidden md:flex justify-center sm:rounded-lg flex-1 md:w-10/12 m-16 w-6/12 bg-cover bg-center bg-no-repeat`}
 
-const p = tw.p`mt-4`;
-
-const SignUpP = tw.p`mt-8 text-sm text-gray-600 text-center`;
-const SignUpA = tw.a`border-b border-gray-500 border-dotted`;
+const LoaderContainer = tw.div`sm:rounded-r-lg flex-1 text-center hidden lg:flex justify-center`;
 
 export {Container, Content, MainContainer, LogoLink, LogoImage, MainContent, Heading, FormContainer, SocialButtonsContainer, SocialButton,
-        DividerTextContainer, DividerText, Form, Input, SubmitButton, IllustrationContainer, IllustrationImage, p, SignUpP, SignUpA};
+        DividerTextContainer, DividerText, Form, Input, SubmitButton, IllustrationContainer, IllustrationImage, LoaderContainer};

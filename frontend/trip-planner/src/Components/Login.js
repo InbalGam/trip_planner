@@ -13,6 +13,8 @@ import { ReactComponent as LoginIcon } from "feather-icons/dist/icons/log-in.svg
 import {baseURL} from '../apiKey';
 import Alert from '@mui/material/Alert';
 //import { Container as ContainerBase } from "./helpers/Layouts";
+import tw from "twin.macro";
+import {css} from "styled-components/macro"; //eslint-disable-line
 
 
 function Login({
@@ -68,8 +70,8 @@ function Login({
                     <lst.MainContainer>
                         <lst.MainContent>
                             <lst.Heading>{'Sign In To The Trip Planner'}</lst.Heading>
-                            <lst.p>{searchParams.get("logout") ? <Alert severity="success">Succefully logged out</Alert> : ''}</lst.p>
-                            <lst.p>{searchParams.get("register") ? <Alert severity="success">Succefully registered, you can log in</Alert> : ''}</lst.p>
+                            <p tw="mt-4">{searchParams.get("logout") ? <Alert severity="success">Succefully logged out</Alert> : ''}</p>
+                            <p tw="mt-4">{searchParams.get("register") ? <Alert severity="success">Succefully registered, you can log in</Alert> : ''}</p>
                             <lst.FormContainer>
                                 <lst.SocialButtonsContainer>
                                     {socialButtons.map((socialButton, index) => (
@@ -87,24 +89,26 @@ function Login({
                                 <lst.Form onSubmit={submitLogin}>
                                     <lst.Input type="email" placeholder="Email" value={username} onChange={handleUsernameChange}/>
                                     <lst.Input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
-                                    {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className='submitLoader'/> :
-                                    <lst.SubmitButton type="submit">
-                                        <SubmitButtonIcon className="icon" />
-                                        <span className="text">{submitButtonText}</span>
-                                    </lst.SubmitButton>}
+                                    <lst.LoaderContainer>
+                                        {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className='submitLoader'/> :
+                                        <lst.SubmitButton type="submit">
+                                            <SubmitButtonIcon className="icon" />
+                                            <span className="text">{submitButtonText}</span>
+                                        </lst.SubmitButton>}
+                                    </lst.LoaderContainer>
                                 </lst.Form>
-                                <lst.p>{authFailed ? <Alert severity="warning">Username or Password are incorrect, try again</Alert> : ''}</lst.p>
+                                <p tw="mt-4">{authFailed ? <Alert severity="warning">Username or Password are incorrect, try again</Alert> : ''}</p>
                                 {/* <p tw="mt-6 text-xs text-gray-600 text-center">
                                     <a href={forgotPasswordUrl} tw="border-b border-gray-500 border-dotted">
                                         Forgot Password ?
                                     </a>
                                 </p> */}
-                                <lst.SignUpP>
+                                <p tw="mt-8 text-sm text-gray-600 text-center">
                                     Dont have an account?{" "}
-                                    <lst.SignUpA href={signupUrl} tw="border-b border-gray-500 border-dotted">
+                                    <a href={signupUrl} tw="border-b border-gray-500 border-dotted">
                                         Sign Up
-                                    </lst.SignUpA>
-                                </lst.SignUpP>
+                                    </a>
+                                </p>
                             </lst.FormContainer>
                         </lst.MainContent>
                     </lst.MainContainer>
