@@ -3,9 +3,15 @@ import TripAddUpdate from './TripAddUpdate';
 import TripCard from './TripCard';
 import {getTrips, insertTrip} from '../Api';
 import { useNavigate } from 'react-router-dom';
-import styles from './Styles/TripsList.css';
+//import styles from './Styles/TripsList.css';
 import AddIcon from '@mui/icons-material/Add';
 import ClipLoader from 'react-spinners/ClipLoader';
+import Alert from '@mui/material/Alert';
+
+import { Container, ContentWithPaddingXl } from "./helpers/Misc";
+import tw from "twin.macro";
+import { css } from "styled-components/macro";
+import * as tpst from './Styles/TripsListStyles.js';
 
 
 function TripsList() {
@@ -15,6 +21,11 @@ function TripsList() {
     const [insertFailed, setInsertFailed] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
   
+    const [visible, setVisible] = useState(7);
+    const onLoadMoreClick = () => {
+        setVisible(v => v + 6);
+    };
+
 
     async function getUserTrips() {
         try {
@@ -65,24 +76,31 @@ function TripsList() {
     };
 
     return (
-        <div className="trips_container">
-            <div className="trips">
-                <div className="add_trip_container">
-                    <button className='add_trip' onClick={showTrip}><AddIcon data-testid="addIcon"/></button>
-                </div>
-                {showForm === false ? '' : <TripAddUpdate onTripSubmit={onTripSubmit} />}
-                <h2>Your trips</h2>
-                {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className="loader" data-testid="loader"/> : <div className="userTrips">
-                    <ul className="listOfTrips">
-                        {trips.map((trip, ind) =>
-                            <li key={ind}>
-                                <TripCard trip={trip} getUserTrips={getUserTrips} setShowForm={setShowForm} setIsLoading={setIsLoading} />
-                            </li>)}
-                    </ul>
-                </div> }
-                {insertFailed ? 'Problem adding trip' : ''}
-            </div>
-        </div>
+        <Container>
+            <tpst.ButtonContainer>
+                <tpst.LoadMoreButton onClick={showTrip}><AddIcon data-testid="addIcon"/></tpst.LoadMoreButton>
+            </tpst.ButtonContainer>
+            {showForm === false ? '' : <TripAddUpdate onTripSubmit={onTripSubmit} />}
+            {insertFailed ? <Alert severity="warning">Problem adding trip</Alert> : ''}
+            <ContentWithPaddingXl>
+                <tpst.HeadingRow>
+                    <tpst.Heading>{'Your Trips'}</tpst.Heading>
+                </tpst.HeadingRow>
+                {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className="loader" data-testid="loader"/> :
+                <tpst.Posts>
+                    {trips.slice(0, visible).map((trip, index) => (
+                        <tpst.PostContainer key={index} featured={false}>
+                            <TripCard trip={trip} getUserTrips={getUserTrips} setShowForm={setShowForm} setIsLoading={setIsLoading} />
+                        </tpst.PostContainer>
+                    ))}
+                </tpst.Posts>}
+                {visible < trips.length && (
+                    <tpst.ButtonContainer>
+                        <tpst.LoadMoreButton onClick={onLoadMoreClick}>Load More</tpst.LoadMoreButton>
+                    </tpst.ButtonContainer>
+                )}
+            </ContentWithPaddingXl>
+        </Container>
     );
 };
 
