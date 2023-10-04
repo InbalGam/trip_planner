@@ -1,18 +1,12 @@
 import {  Outlet, NavLink } from "react-router-dom";
 import styles from './Styles/Root.css';
-import LuggageIcon from '@mui/icons-material/Luggage';
+import Header from "./Header";
 
 
 function Root() {
     return (
         <div>
-            <div className='nav-bar'>
-                <p><LuggageIcon className="luggageIcon"/> The Trip Planner</p>
-                <div className='nav-links'>
-                    <NavLink to='/trips' className='tripsLink'>Trips</NavLink>
-                    <NavLink to='/logout' className='logoutLink'>Log out</NavLink>
-                </div>
-            </div>
+            <Header/>
             <Outlet />
         </div>
     );
