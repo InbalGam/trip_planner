@@ -4,7 +4,7 @@ import tw from "twin.macro";
 
 const Header = tw.header`
   flex justify-between items-center
-  max-w-screen-xl mx-auto
+  max-w-screen-xl mx-auto mt-4
 `;
 
 export const NavLinks = tw.div`inline-block`;
