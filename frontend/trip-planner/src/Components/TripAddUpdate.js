@@ -105,6 +105,7 @@ function TripAdd(props) {
                 <SendIcon className="icon" />
                 {/* <span className="text">{'Submit'}</span> */}
             </tst.SubmitButton>
+            {fieldsFilled ? <Alert severity="warning">All fields needs to be filled</Alert> : ''}
         </tst.Form>
         // <form onSubmit={submitTrip} className={'tripForm'} data-testid="tripForm">
         //     <label htmlFor='selectCountry'>Select Country</label>
