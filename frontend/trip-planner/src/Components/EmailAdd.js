@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { ReactMultiEmail, isEmail } from 'react-multi-email';
 import 'react-multi-email/dist/style.css';
+import tw from "twin.macro";
+import {css} from "styled-components/macro"; //eslint-disable-line
 
 function Email(props) {
   const [focused, setFocused] = useState(false);
 
   return (
     <div className='emails'>
-      <h3 className="addEmailHeadline">Share trip</h3>
+      <h3 className="addEmailHeadline" tw="mt-4">Share trip</h3>
       <ReactMultiEmail
         placeholder='Input email'
         emails={props.emails}

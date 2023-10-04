@@ -4,12 +4,17 @@ import "react-datepicker/dist/react-datepicker.css";
 import Email from './EmailAdd';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
-import styles from './Styles/TripAddUpdate.css';
+//import styles from './Styles/TripAddUpdate.css';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
 import {getSpecificTrip} from '../Api';
 import AutoComplete from 'react-google-autocomplete';
 import {GOOGLE_API} from '../apiKey';
+import Alert from '@mui/material/Alert';
+
+import * as tst from './Styles/TripAddUpdateStyles';
+import tw from "twin.macro";
+import {css} from "styled-components/macro"; //eslint-disable-line
 
 
 function TripAdd(props) {
@@ -84,21 +89,38 @@ function TripAdd(props) {
     };
 
     return (
-        <form onSubmit={submitTrip} className={'tripForm'} data-testid="tripForm">
-            <label htmlFor='selectCountry'>Select Country</label>
-            <Select options={options} value={country} onChange={changeHandler} className="countrySelect" data-testid="selectCountry" inputId='selectCountry' name='selectCountry'/>
-            <label htmlFor='city'>City</label>
+        <tst.Form onSubmit={submitTrip} data-testid="tripForm">
+            <Select options={options} value={country} onChange={changeHandler} className="countrySelect" data-testid="selectCountry" inputId='selectCountry' name='selectCountry' placeholder="Select Country" tw="mb-4"/>
             <AutoComplete apiKey={GOOGLE_API} value={city} placeholder={'Enter city here'} onChange={handleTextChange} onPlaceSelected={(place) => {setCity(place.formatted_address); setTripPhoto(place.photos[0].getUrl());}} options={{fields:['ALL']}} data-testid="city"/>
-            <label htmlFor='start_date'>Start date</label>
-            <DatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat='dd-MMM-yy' className="datePick"/>
-            <label htmlFor='end_date'>End date</label>
-            <DatePicker selected={endDate} onChange={date => setEndDate(date)} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} dateFormat='dd-MMM-yy' className="datePick" />
-            <Email email={emails} emails={emails} setEmails={setEmails} className='emails'/>
-            <button type="submit" value="Submit" className="submitButton"><SendIcon data-testid="submit"/></button>
-            <div className="failed">
-                {fieldsFilled ? 'All fields needs to be filled' : ''}
+            <div tw="mt-4">
+                <label htmlFor='start_date' >Start date</label>
+                <DatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat='dd-MMM-yy' className="datePick" />
             </div>
-        </form>
+            <div tw="mt-4">
+                <label htmlFor='end_date'>End date</label>
+                <DatePicker selected={endDate} onChange={date => setEndDate(date)} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} dateFormat='dd-MMM-yy' className="datePick" />
+            </div>
+            <Email email={emails} emails={emails} setEmails={setEmails} className='emails' />
+            <tst.SubmitButton type="submit">
+                <SendIcon className="icon" />
+                {/* <span className="text">{'Submit'}</span> */}
+            </tst.SubmitButton>
+        </tst.Form>
+        // <form onSubmit={submitTrip} className={'tripForm'} data-testid="tripForm">
+        //     <label htmlFor='selectCountry'>Select Country</label>
+        //     <Select options={options} value={country} onChange={changeHandler} className="countrySelect" data-testid="selectCountry" inputId='selectCountry' name='selectCountry'/>
+        //     <label htmlFor='city'>City</label>
+        //     <AutoComplete apiKey={GOOGLE_API} value={city} placeholder={'Enter city here'} onChange={handleTextChange} onPlaceSelected={(place) => {setCity(place.formatted_address); setTripPhoto(place.photos[0].getUrl());}} options={{fields:['ALL']}} data-testid="city"/>
+        //     <label htmlFor='start_date'>Start date</label>
+        //     <DatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat='dd-MMM-yy' className="datePick"/>
+        //     <label htmlFor='end_date'>End date</label>
+        //     <DatePicker selected={endDate} onChange={date => setEndDate(date)} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} dateFormat='dd-MMM-yy' className="datePick" />
+        //     <Email email={emails} emails={emails} setEmails={setEmails} className='emails'/>
+        //     <button type="submit" value="Submit" className="submitButton"><SendIcon data-testid="submit"/></button>
+        //     <div className="failed">
+        //         {fieldsFilled ? 'All fields needs to be filled' : ''}
+        //     </div>
+        // </form>
     );
 };
 
