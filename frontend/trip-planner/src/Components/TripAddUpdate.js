@@ -107,21 +107,6 @@ function TripAdd(props) {
             </tst.SubmitButton>
             {fieldsFilled ? <Alert severity="warning">All fields needs to be filled</Alert> : ''}
         </tst.Form>
-        // <form onSubmit={submitTrip} className={'tripForm'} data-testid="tripForm">
-        //     <label htmlFor='selectCountry'>Select Country</label>
-        //     <Select options={options} value={country} onChange={changeHandler} className="countrySelect" data-testid="selectCountry" inputId='selectCountry' name='selectCountry'/>
-        //     <label htmlFor='city'>City</label>
-        //     <AutoComplete apiKey={GOOGLE_API} value={city} placeholder={'Enter city here'} onChange={handleTextChange} onPlaceSelected={(place) => {setCity(place.formatted_address); setTripPhoto(place.photos[0].getUrl());}} options={{fields:['ALL']}} data-testid="city"/>
-        //     <label htmlFor='start_date'>Start date</label>
-        //     <DatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat='dd-MMM-yy' className="datePick"/>
-        //     <label htmlFor='end_date'>End date</label>
-        //     <DatePicker selected={endDate} onChange={date => setEndDate(date)} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} dateFormat='dd-MMM-yy' className="datePick" />
-        //     <Email email={emails} emails={emails} setEmails={setEmails} className='emails'/>
-        //     <button type="submit" value="Submit" className="submitButton"><SendIcon data-testid="submit"/></button>
-        //     <div className="failed">
-        //         {fieldsFilled ? 'All fields needs to be filled' : ''}
-        //     </div>
-        // </form>
     );
 };
 
