@@ -77,23 +77,25 @@ function TripsList() {
 
     return (
         <Container>
-            <tpst.ButtonContainer>
-                <tpst.LoadMoreButton onClick={showTrip}><AddIcon data-testid="addIcon"/></tpst.LoadMoreButton>
-            </tpst.ButtonContainer>
-            {showForm === false ? '' : <TripAddUpdate onTripSubmit={onTripSubmit} />}
-            {insertFailed ? <Alert severity="warning">Problem adding trip</Alert> : ''}
             <ContentWithPaddingXl>
+                <tpst.ButtonContainer>
+                    <tpst.LoadMoreButton onClick={showTrip}><AddIcon data-testid="addIcon" /></tpst.LoadMoreButton>
+                </tpst.ButtonContainer>
+                <div tw="flex justify-center mt-4">
+                    {showForm === false ? '' : <TripAddUpdate onTripSubmit={onTripSubmit} />}
+                    {insertFailed ? <Alert severity="warning">Problem adding trip</Alert> : ''}
+                </div>
                 <tpst.HeadingRow>
                     <tpst.Heading>{'Your Trips'}</tpst.Heading>
                 </tpst.HeadingRow>
-                {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className="loader" data-testid="loader"/> :
-                <tpst.Posts>
-                    {trips.slice(0, visible).map((trip, index) => (
-                        <tpst.PostContainer key={index} featured={false}>
-                            <TripCard trip={trip} getUserTrips={getUserTrips} setShowForm={setShowForm} setIsLoading={setIsLoading} />
-                        </tpst.PostContainer>
-                    ))}
-                </tpst.Posts>}
+                {isLoading ? <ClipLoader color={'#3c0c21'} size={150} className="loader" data-testid="loader" /> :
+                    <tpst.Posts>
+                        {trips.slice(0, visible).map((trip, index) => (
+                            <tpst.PostContainer key={index} featured={false}>
+                                <TripCard trip={trip} getUserTrips={getUserTrips} setShowForm={setShowForm} setIsLoading={setIsLoading} />
+                            </tpst.PostContainer>
+                        ))}
+                    </tpst.Posts>}
                 {visible < trips.length && (
                     <tpst.ButtonContainer>
                         <tpst.LoadMoreButton onClick={onLoadMoreClick}>Load More</tpst.LoadMoreButton>
