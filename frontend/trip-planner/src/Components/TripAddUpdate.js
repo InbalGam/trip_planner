@@ -91,12 +91,12 @@ function TripAdd(props) {
     return (
         <tst.Form onSubmit={submitTrip} data-testid="tripForm">
             <Select options={options} value={country} onChange={changeHandler} className="countrySelect" data-testid="selectCountry" inputId='selectCountry' name='selectCountry' placeholder="Select Country" tw="mb-4"/>
-            <AutoComplete apiKey={GOOGLE_API} value={city} placeholder={'Enter city here'} onChange={handleTextChange} onPlaceSelected={(place) => {setCity(place.formatted_address); setTripPhoto(place.photos[0].getUrl());}} options={{fields:['ALL']}} data-testid="city"/>
-            <div tw="mt-4">
+            <AutoComplete tw="w-full" apiKey={GOOGLE_API} value={city} placeholder={'Enter city here'} onChange={handleTextChange} onPlaceSelected={(place) => {setCity(place.formatted_address); setTripPhoto(place.photos[0].getUrl());}} options={{fields:['ALL']}} data-testid="city"/>
+            <div tw="mt-4 flex flex-col">
                 <label htmlFor='start_date' >Start date</label>
                 <DatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat='dd-MMM-yy' className="datePick" />
             </div>
-            <div tw="mt-4">
+            <div tw="mt-4 flex flex-col">
                 <label htmlFor='end_date'>End date</label>
                 <DatePicker selected={endDate} onChange={date => setEndDate(date)} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} dateFormat='dd-MMM-yy' className="datePick" />
             </div>

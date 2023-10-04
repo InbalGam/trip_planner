@@ -12,6 +12,12 @@ import styles from './Styles/TripScheduler.css';
 import AddIcon from '@mui/icons-material/Add';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
+import * as ast from './Styles/ActivityAddUpdateStyles';
+import tw from "twin.macro";
+import {css} from "styled-components/macro"; //eslint-disable-line
+import { ContentWithPaddingXl } from "./helpers/Misc";
+
+
 function TripScheduler() {
     const { tripId } = useParams();
     const [trip, setTrip] = useState({});
@@ -147,11 +153,14 @@ function TripScheduler() {
                         <DateNavigator />
                     </Scheduler>
                 </Paper>
-                <div className='addActivityContainer'>
-                    <button className='add_activity' onClick={showActivity} ><AddIcon className='addIcon' data-testid="addIcon" style={{fontSize: '32px'}}/></button>
+                <ContentWithPaddingXl>
+                    <ast.ButtonContainer>
+                        <ast.LoadMoreButton onClick={showActivity} data-testid="addIcon"><AddIcon data-testid="addIcon" /></ast.LoadMoreButton>
+                        {/* <button className='add_activity' onClick={showActivity} ><AddIcon className='addIcon' data-testid="addIcon" style={{fontSize: '32px'}}/></button> */}
+                    </ast.ButtonContainer>
                     {showForm === false ? '' : <ActivityAddUpdate onActivitySubmit={onActivitySubmit} />}
                     {insertFailed ? 'Problem adding activity' : ''}
-                </div>
+                </ContentWithPaddingXl>
             </div>
         </div>
     );

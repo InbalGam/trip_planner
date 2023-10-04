@@ -1,11 +1,16 @@
 import { useParams } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import { useState,  useEffect } from "react";
-import styles from './Styles/ActivityAddUpdate.css';
+//import styles from './Styles/ActivityAddUpdate.css';
 import Select from 'react-select';
 import SendIcon from '@mui/icons-material/Send';
 import AutoComplete from 'react-google-autocomplete';
 import {GOOGLE_API} from '../apiKey';
+
+import * as ast from './Styles/ActivityAddUpdateStyles';
+import tw from "twin.macro";
+import {css} from "styled-components/macro"; //eslint-disable-line
+import Alert from '@mui/material/Alert';
 
 
 function ActivityAddUpdate(props) {
@@ -95,32 +100,32 @@ function ActivityAddUpdate(props) {
     };
 
     return (
-        <form onSubmit={submitActivity} className='activityForm' data-testid="activityForm">
-            <div className='activityFormDiv1'>
-                <input id='activity_name' type='text' name='activity_name' value={activityName} placeholder={'Enter activity name here'} onChange={handleTextChange} data-testid="activityName"/>
-                <label htmlFor='selectType'>Select Activity Type</label>
+        <ast.Form onSubmit={submitActivity} data-testid="tripForm">
+            <ast.DividerTextContainer>
+                <ast.Input type="text" placeholder="Enter activity name here" value={activityName} onChange={handleTextChange} data-testid="activityName"/>
+                <label htmlFor='selectType' tw="mt-2">Select Activity Type</label>
                 <Select options={typeOptions} value={activityType} onChange={changeHandler} placeholder='select activity type' className="selectActivityType" inputId='selectType' name='selectType'/>
-                <AutoComplete apiKey={GOOGLE_API} value={address} placeholder={'Enter address here'} onChange={handleAddressChange} 
-                    onPlaceSelected={(place) => {setAddress(place.formatted_address); setAddressLAT(place.geometry.location.lat()); setAddressLNG(place.geometry.location.lng());}} options={{types: [], fields:['ALL']}} data-testid="activityAddress"/>
-                <input id='link' type='text' name='link' value={link} placeholder={'Enter link here'} onChange={handleLinkChange} data-testid="activityURL"/>
-            </div>
-            <div className='activityFormDiv2'>
-                <label htmlFor='activity_date'>Activity date</label>
+                <AutoComplete tw="mt-4" apiKey={GOOGLE_API} value={address} placeholder={'Enter address here'} onChange={handleAddressChange} 
+                    onPlaceSelected={(place) => {setAddress(place.formatted_address); setAddressLAT(place.geometry.location.lat()); setAddressLNG(place.geometry.location.lng());}} options={{types: [], fields:['ALL']}} data-testid="activityAddress" />
+                <ast.Input type="text" placeholder="Enter link here" value={link} onChange={handleLinkChange} data-testid="activityURL"/>
+            </ast.DividerTextContainer>
+            <ast.DividerTextContainer>
+                <label htmlFor='activity_date' tw="mt-2">Activity date</label>
                 <DatePicker selected={activityDate} onChange={date => setActivityDate(date)} dateFormat='dd-MMM-yy' />
-                <label htmlFor='start_time'>Activity start time</label>
+                <label htmlFor='start_time' tw="mt-2">Activity start time</label>
                 <input type="time" id="start_time" name="start_time" min="08:00" max="24:00" value={startValue} onChange={(e) => setStartValue(e.target.value)} />
-                <label htmlFor='end_time'>Activity end time</label>
+                <label htmlFor='end_time' tw="mt-2">Activity end time</label>
                 <input type="time" id="start_time" name="start_time" min="08:00" max="24:00" value={endValue} onChange={(e) => setEndValue(e.target.value)} />
-            </div>
-            <div className='activityFormDiv3'>
-                <label htmlFor='user_notes'>Notes</label>
-                <textarea id='user_notes' name="user_notes" rows="5" cols="33" value={userNotes} onChange={(e) => setUserNotes(e.target.value)}>Enter notes here</textarea>
-                <button type="submit" value="Submit" className="submitButton"><SendIcon data-testid="submit"/></button>
-                <div className="failed">
-                    {fieldsFilled ? 'All fields needs to be filled' : ''}
-                </div>
-            </div>
-        </form>
+            </ast.DividerTextContainer>
+            <ast.DividerTextContainer>
+                <label htmlFor='user_notes' tw="mt-2">Notes</label>
+                <ast.TextArea id="message-input" name="message" placeholder="E.g. Details about your event"/>
+                <ast.SubmitButton type="submit">
+                    <SendIcon className="icon" />
+                </ast.SubmitButton>
+                {fieldsFilled ? <Alert severity="warning">All fields needs to be filled</Alert> : ''}
+            </ast.DividerTextContainer>
+        </ast.Form>
     );
 };
 
