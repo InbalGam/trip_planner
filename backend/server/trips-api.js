@@ -70,7 +70,7 @@ tripsRouter.use('/trips/:trip_id/activities/:activity_id/comments/:comment_id', 
 // Get all trips-
 tripsRouter.get('/trips', async (req, res, next) => { 
     try {
-        const result = await pool.query('select t.* from trips t join trips_shared ts on t.id = ts.trip_id where ts.user_id = $1 order by t.start_date', [req.user.id]);
+        const result = await pool.query('select distinct t.* from trips t left join trips_shared ts on t.id = ts.trip_id where t.created_by = $1 or ts.user_id = $1 order by t.start_date', [req.user.id]);
         const newResult = result.rows.map(el => ({...el, isCreatedByMe: el.created_by === req.user.id ? 1 : 0}));
         res.status(200).json(newResult);
     } catch (e) {
