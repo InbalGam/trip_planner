@@ -21,7 +21,9 @@ const SubmitButton = styled.button`
 
 const TextArea = tw.textarea`h-24 sm:h-full resize-none rounded`;
 
-const ButtonContainer = tw.div`ml-8 mb-4 flex justify-center`;
+const ButtonContainer = tw.div`flex justify-center`;
 const LoadMoreButton = tw(PrimaryButton)`mt-16 mx-auto`;
+
+export const ContentWithPaddingXl= tw.div`max-w-screen-xl mx-auto py-4`;
 
 export {DividerTextContainer, DividerText, Form, Input, SubmitButton, TextArea, ButtonContainer, LoadMoreButton};
