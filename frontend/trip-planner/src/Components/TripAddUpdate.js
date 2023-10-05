@@ -101,10 +101,12 @@ function TripAdd(props) {
                 <DatePicker selected={endDate} onChange={date => setEndDate(date)} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} dateFormat='dd-MMM-yy' className="datePick" />
             </div>
             <Email email={emails} emails={emails} setEmails={setEmails} className='emails' />
+            <div tw="flex justify-center">
             <tst.SubmitButton type="submit">
                 <SendIcon className="icon" />
                 {/* <span className="text">{'Submit'}</span> */}
             </tst.SubmitButton>
+            </div>
             {fieldsFilled ? <Alert severity="warning">All fields needs to be filled</Alert> : ''}
         </tst.Form>
     );
