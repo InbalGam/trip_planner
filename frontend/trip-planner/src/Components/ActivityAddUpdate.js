@@ -104,7 +104,7 @@ function ActivityAddUpdate(props) {
             <ast.DividerTextContainer>
                 <ast.Input type="text" placeholder="Enter activity name here" value={activityName} onChange={handleTextChange} data-testid="activityName"/>
                 <label htmlFor='selectType' tw="mt-2">Activity Type</label>
-                <Select options={typeOptions} value={activityType} onChange={changeHandler} placeholder='select activity type' className="selectActivityType" inputId='selectType' name='selectType'/>
+                <Select options={typeOptions} value={activityType} onChange={changeHandler} placeholder='select activity type' className="selectActivityType" inputId='selectType' name='selectType' tw="z-99999"/>
                 <AutoComplete tw="mt-4" apiKey={GOOGLE_API} value={address} placeholder={'Enter address here'} onChange={handleAddressChange} 
                     onPlaceSelected={(place) => {setAddress(place.formatted_address); setAddressLAT(place.geometry.location.lat()); setAddressLNG(place.geometry.location.lng());}} options={{types: [], fields:['ALL']}} data-testid="activityAddress" />
                 <ast.Input type="text" placeholder="Enter link here" value={link} onChange={handleLinkChange} data-testid="activityURL"/>
