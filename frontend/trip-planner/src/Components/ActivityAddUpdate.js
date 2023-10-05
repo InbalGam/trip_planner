@@ -103,7 +103,7 @@ function ActivityAddUpdate(props) {
         <ast.Form onSubmit={submitActivity} data-testid="tripForm">
             <ast.DividerTextContainer>
                 <ast.Input type="text" placeholder="Enter activity name here" value={activityName} onChange={handleTextChange} data-testid="activityName"/>
-                <label htmlFor='selectType' tw="mt-2">Select Activity Type</label>
+                <label htmlFor='selectType' tw="mt-2">Activity Type</label>
                 <Select options={typeOptions} value={activityType} onChange={changeHandler} placeholder='select activity type' className="selectActivityType" inputId='selectType' name='selectType'/>
                 <AutoComplete tw="mt-4" apiKey={GOOGLE_API} value={address} placeholder={'Enter address here'} onChange={handleAddressChange} 
                     onPlaceSelected={(place) => {setAddress(place.formatted_address); setAddressLAT(place.geometry.location.lat()); setAddressLNG(place.geometry.location.lng());}} options={{types: [], fields:['ALL']}} data-testid="activityAddress" />
@@ -111,10 +111,10 @@ function ActivityAddUpdate(props) {
             </ast.DividerTextContainer>
             <ast.DividerTextContainer>
                 <label htmlFor='activity_date' tw="mt-2">Activity date</label>
-                <DatePicker selected={activityDate} onChange={date => setActivityDate(date)} dateFormat='dd-MMM-yy' />
-                <label htmlFor='start_time' tw="mt-2">Activity start time</label>
+                <DatePicker selected={activityDate} onChange={date => setActivityDate(date)} dateFormat='dd-MMM-yy' tw="w-full"/>
+                <label htmlFor='start_time' tw="mt-2">Start time</label>
                 <input type="time" id="start_time" name="start_time" min="08:00" max="24:00" value={startValue} onChange={(e) => setStartValue(e.target.value)} />
-                <label htmlFor='end_time' tw="mt-2">Activity end time</label>
+                <label htmlFor='end_time' tw="mt-2">End time</label>
                 <input type="time" id="start_time" name="start_time" min="08:00" max="24:00" value={endValue} onChange={(e) => setEndValue(e.target.value)} />
             </ast.DividerTextContainer>
             <ast.DividerTextContainer>
