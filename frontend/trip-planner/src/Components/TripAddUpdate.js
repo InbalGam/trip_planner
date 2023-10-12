@@ -91,14 +91,14 @@ function TripAdd(props) {
     return (
         <tst.Form onSubmit={submitTrip} data-testid="tripForm">
             <Select options={options} value={country} onChange={changeHandler} className="countrySelect" data-testid="selectCountry" inputId='selectCountry' name='selectCountry' placeholder="Select Country" tw="mb-4"/>
-            <AutoComplete tw="w-full" apiKey={GOOGLE_API} value={city} placeholder={'Enter city here'} onChange={handleTextChange} onPlaceSelected={(place) => {setCity(place.formatted_address); setTripPhoto(place.photos[0].getUrl());}} options={{fields:['ALL']}} data-testid="city"/>
+            <AutoComplete tw="w-full rounded pl-1" apiKey={GOOGLE_API} value={city} placeholder={'Enter city here'} onChange={handleTextChange} onPlaceSelected={(place) => {setCity(place.formatted_address); setTripPhoto(place.photos[0].getUrl());}} options={{fields:['ALL']}} data-testid="city"/>
             <div tw="mt-4 flex flex-col">
                 <label htmlFor='start_date' >Start date</label>
-                <DatePicker selected={startDate} onChange={date => setStartDate(date)} dateFormat='dd-MMM-yy' className="datePick" />
+                <DatePicker tw="rounded pl-1" selected={startDate} onChange={date => setStartDate(date)} dateFormat='dd-MMM-yy' className="datePick" />
             </div>
             <div tw="mt-4 flex flex-col">
                 <label htmlFor='end_date'>End date</label>
-                <DatePicker selected={endDate} onChange={date => setEndDate(date)} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} dateFormat='dd-MMM-yy' className="datePick" />
+                <DatePicker tw="rounded pl-1" selected={endDate} onChange={date => setEndDate(date)} selectsEnd startDate={startDate} endDate={endDate} minDate={startDate} dateFormat='dd-MMM-yy' className="datePick" />
             </div>
             <Email email={emails} emails={emails} setEmails={setEmails} className='emails' />
             <div tw="flex justify-center">
