@@ -105,21 +105,21 @@ function ActivityAddUpdate(props) {
                 <ast.Input type="text" placeholder="Enter activity name here" value={activityName} onChange={handleTextChange} data-testid="activityName"/>
                 <label htmlFor='selectType' tw="mt-2">Activity Type</label>
                 <Select options={typeOptions} value={activityType} onChange={changeHandler} placeholder='select activity type' className="selectActivityType" inputId='selectType' name='selectType' tw="z-99999"/>
-                <AutoComplete tw="mt-4" apiKey={GOOGLE_API} value={address} placeholder={'Enter address here'} onChange={handleAddressChange} 
+                <AutoComplete tw="mt-4 rounded pl-1" apiKey={GOOGLE_API} value={address} placeholder={'Enter address here'} onChange={handleAddressChange} 
                     onPlaceSelected={(place) => {setAddress(place.formatted_address); setAddressLAT(place.geometry.location.lat()); setAddressLNG(place.geometry.location.lng());}} options={{types: [], fields:['ALL']}} data-testid="activityAddress" />
                 <ast.Input type="text" placeholder="Enter link here" value={link} onChange={handleLinkChange} data-testid="activityURL"/>
             </ast.DividerTextContainer>
             <ast.DividerTextContainer>
                 <label htmlFor='activity_date' tw="mt-2">Activity date</label>
-                <DatePicker selected={activityDate} onChange={date => setActivityDate(date)} dateFormat='dd-MMM-yy' tw="w-full"/>
+                <DatePicker selected={activityDate} onChange={date => setActivityDate(date)} dateFormat='dd-MMM-yy' tw="w-full rounded pl-1"/>
                 <label htmlFor='start_time' tw="mt-2">Start time</label>
-                <input type="time" id="start_time" name="start_time" min="08:00" max="24:00" value={startValue} onChange={(e) => setStartValue(e.target.value)} />
+                <input tw="rounded pl-1" type="time" id="start_time" name="start_time" min="08:00" max="24:00" value={startValue} onChange={(e) => setStartValue(e.target.value)} />
                 <label htmlFor='end_time' tw="mt-2">End time</label>
-                <input type="time" id="start_time" name="start_time" min="08:00" max="24:00" value={endValue} onChange={(e) => setEndValue(e.target.value)} />
+                <input tw="rounded pl-1" type="time" id="start_time" name="start_time" min="08:00" max="24:00" value={endValue} onChange={(e) => setEndValue(e.target.value)} />
             </ast.DividerTextContainer>
             <ast.DividerTextContainer>
                 <label htmlFor='user_notes' tw="mt-2">Notes</label>
-                <ast.TextArea id="message-input" name="message" placeholder="E.g. Details about your event"/>
+                <ast.TextArea tw="pl-1" id="message-input" name="message" placeholder="E.g. Details about your activity"/>
                 <ast.SubmitButton type="submit">
                     <SendIcon className="icon" />
                 </ast.SubmitButton>
