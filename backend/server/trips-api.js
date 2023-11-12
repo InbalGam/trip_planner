@@ -19,7 +19,7 @@ tripsRouter.get('/trips/unsplash/search', async (req, res, next) => {
             perPage: 1
             //orientation: 'portrait',
         });
-        res.status(200).json(result.response.results[0].urls.thumb);
+        res.status(200).json(result.response.results[0].urls.regular);
     } catch (e) {
         res.status(500).json({msg: 'Server error'});
     }
