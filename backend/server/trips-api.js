@@ -4,6 +4,29 @@ const {pool} = require('./db');
 const {isValidDate, validateHhMm} = require('./utils');
 const format = require('pg-format');
 
+// Unsplash
+const {unsplashServerApi} = require('./unsplash-api');
+
+
+
+tripsRouter.get('/trips/unsplash/search', async (req, res, next) => { 
+    const {place} = req.body;
+
+    try {
+        const result = await unsplashServerApi.search.getPhotos({
+            query: place,
+            page: 1,
+            perPage: 1
+            //orientation: 'portrait',
+        });
+        res.status(200).json(result.response.results[0].urls.thumb);
+    } catch (e) {
+        res.status(500).json({msg: 'Server error'});
+    }
+});
+
+////////////
+
 
 // Middlewares
 tripsRouter.use((req, res, next) => {
