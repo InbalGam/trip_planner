@@ -210,7 +210,20 @@ async function deleteActivityComment(tripId, activityId, commentId) {
     return response;
 };
 
+// Get Unsplash photo
+async function getTripPhoto(place) {
+    const url = `${baseURL}/trips/unsplash/search`;
+    const response = await fetch(url, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(place)
+    });
+
+    return response;
+};
+
 
 export {register, login, logout, getTrips, insertTrip, getSpecificTrip, updateTrip, deleteSpecificTrip, 
     getActivities, insertTripActivity, updateTripActivity, deleteSpecificTripActivity, getSpecificTripActivity, 
-    getComments, insertActivityComment, updateActivityComment, deleteActivityComment};
+    getComments, insertActivityComment, updateActivityComment, deleteActivityComment, getTripPhoto};

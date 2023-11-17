@@ -4,12 +4,21 @@ const {pool} = require('./db');
 const {isValidDate, validateHhMm} = require('./utils');
 const format = require('pg-format');
 
+
+// Middlewares
+tripsRouter.use((req, res, next) => {
+    if (!req.user) {
+        return res.status(401).json({msg: 'You need to login first'});
+    }
+    next();
+});
+
 // Unsplash
 const {unsplashServerApi} = require('./unsplash-api');
 
 
 
-tripsRouter.get('/trips/unsplash/search', async (req, res, next) => { 
+tripsRouter.put('/trips/unsplash/search', async (req, res, next) => { 
     const {place} = req.body;
 
     try {
@@ -27,14 +36,6 @@ tripsRouter.get('/trips/unsplash/search', async (req, res, next) => {
 
 ////////////
 
-
-// Middlewares
-tripsRouter.use((req, res, next) => {
-    if (!req.user) {
-        return res.status(401).json({msg: 'You need to login first'});
-    }
-    next();
-});
 
 
 tripsRouter.use('/trips/:trip_id', async (req, res, next) => {

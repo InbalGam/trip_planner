@@ -7,7 +7,7 @@ import countryList from 'react-select-country-list';
 //import styles from './Styles/TripAddUpdate.css';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
-import {getSpecificTrip} from '../Api';
+import {getSpecificTrip, getTripPhoto} from '../Api';
 import AutoComplete from 'react-google-autocomplete';
 import {GOOGLE_API} from '../apiKey';
 import Alert from '@mui/material/Alert';
@@ -35,6 +35,17 @@ function TripAdd(props) {
 
     function handleTextChange(e) {
         setCity(e.target.value);
+    };
+
+    async function getPhotoForTrip() {
+        try {
+            const place = country.label + ', ' + city;
+            const tripImg = await getTripPhoto({place});
+            const jsonData = await tripImg.json();
+            setTripPhoto(jsonData);
+        } catch (e) {
+            navigate('/error');
+        }
     };
 
 
@@ -65,8 +76,12 @@ function TripAdd(props) {
         }
     }, []);
 
+    useEffect(() => {
+        getPhotoForTrip();
+    }, [city]);
 
-    function submitTrip(e) {
+
+    async function submitTrip(e) {
         e.preventDefault();
         if (!country.label || !city || !startDate || !endDate || !emails) {
             setFieldsFilled(true);
@@ -91,7 +106,8 @@ function TripAdd(props) {
     return (
         <tst.Form onSubmit={submitTrip} data-testid="tripForm">
             <Select options={options} value={country} onChange={changeHandler} className="countrySelect" data-testid="selectCountry" inputId='selectCountry' name='selectCountry' placeholder="Select Country" tw="mb-4"/>
-            <AutoComplete tw="w-full rounded pl-1" apiKey={GOOGLE_API} value={city} placeholder={'Enter city here'} onChange={handleTextChange} onPlaceSelected={(place) => {setCity(place.formatted_address); setTripPhoto(place.photos[0].getUrl());}} options={{fields:['ALL']}} data-testid="city"/>
+            {/* <AutoComplete tw="w-full rounded pl-1" apiKey={GOOGLE_API} value={city} placeholder={'Enter city here'} onChange={handleTextChange} onPlaceSelected={(place) => {setCity(place.formatted_address); getPhotoForTrip();}} options={{fields:['ALL']}} data-testid="city"/> */}
+            <input tw="w-full rounded pl-1" value={city} placeholder={'Enter city here'} onChange={handleTextChange}/>
             <div tw="mt-4 flex flex-col">
                 <label htmlFor='start_date' >Start date</label>
                 <DatePicker tw="rounded pl-1" selected={startDate} onChange={date => setStartDate(date)} dateFormat='dd-MMM-yy' className="datePick" />
