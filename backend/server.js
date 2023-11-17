@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const passport = require("passport");
 const session = require("express-session");
 const LocalStrategy = require("passport-local").Strategy;
+const GoogleStrategy = require('passport-google-oidc');
 const store = new session.MemoryStore();
 const {pool} = require('./server/db');
 const {comparePasswords} = require('./hash');
@@ -63,6 +64,36 @@ passport.use(
     }
   })
 );
+
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: '/oauth2/redirect/google'
+},
+  async function (issuer, profile, done) {
+    try {
+      const check = await pool.query('SELECT * FROM federated_credentials WHERE provider = $1 AND subject = $2', [issuer, profile.id]);
+      if (check.rows.length === 0) {
+        // The Google account has not logged in to this app before.
+        // Create a new user record and link it to the Google account.
+        const user = await pool.query('INSERT INTO users (username, nickname, password) VALUES ($1, $2, $3) returning *', [profile.emails[0].value, profile.displayName, null]);
+        await pool.query('INSERT INTO federated_credentials (user_id, provider, subject) VALUES ($1, $2, $3)', [user.rows[0].id, issuer, profile.id]);
+        return done(null, user.rows[0]);
+      } else {
+        // The Google account has previously logged in to the app.  Get the
+        // user record linked to the Google account and log the user in.
+        const result = await pool.query('select u.* from users u where u.id = $1', [check.rows[0].user_id]);
+        if (result.rows.length === 0) {
+          return done(null, false);
+        }
+        return done(null, result.rows[0]);
+      }
+    } 
+    catch(e) {
+      done(e);
+    }
+  }
+));
 
 passport.serializeUser((user, done) => {
   done(null, user.id);

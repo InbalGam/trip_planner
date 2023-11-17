@@ -52,6 +52,18 @@ authRouter.post("/login",
     }
 );
 
+// Login a user - using Google
+authRouter.get('/login/google', passport.authenticate('google', {
+    scope: ['email', 'profile']
+}));
+
+
+authRouter.get('/oauth2/redirect/google',
+  passport.authenticate('google', { failureRedirect: `${process.env.CORS_ORIGIN}/login`, failureMessage: true }),
+  (req, res) => {
+    res.redirect(`${process.env.CORS_ORIGIN}/trips`);
+});
+
 
 // Logout user
 authRouter.get('/logout', function(req, res, next){
