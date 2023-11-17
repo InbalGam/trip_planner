@@ -8,8 +8,8 @@ Those users can add events to the trip scheduler.
 
 ![Login page](./images/img1.png)
 
-**Main features - Backend**
-Users can choose how to sign up for the app.
+###Main features - Backend
+**Users can choose how to sign up for the app.**
 
 - Regular registration where they use a valid email and create their own password and username.
 - Google sign up where they use their google account to register.
