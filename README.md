@@ -1,4 +1,5 @@
 #The Trip Planner
+
 ###Developed by Inbal Gamliel
 This is a web app that enables it's users to plan out trips- whther they are a vaction or for work. 
 The user who creates the trip can also share it with other users who are registered to the app. 
@@ -7,6 +8,7 @@ Those users can add events to the trip scheduler.
 [The Trip Planner web app](https://trip-planner-n1g3.onrender.com/login).
 
 ![Login page](./images/img1.png)
+
 
 ###Main features - Backend
 **Users can choose how to sign up for the app**
@@ -30,6 +32,7 @@ Only the user who created the trip can edit / delete it.
 The user who created the trip can add emails and also remove emails while editing the trip.
 
 ![Add trip form](./images/img3.png)
+
 
 ###Main features - Frontend
 **Creating a trip**
