@@ -1,7 +1,7 @@
 # The Trip Planner
 
 ### Developed by Inbal Gamliel
-This is a web app that enables it's users to plan out trips- whther they are a vaction or for work. 
+This is a web app that enables it's users to plan out trips- whether they are for vaction or work. 
 The user who creates the trip can also share it with other users who are registered to the app. 
 Those users can add events to the trip scheduler.
 [Live preview of the web app](http://bit.ly/48fo60Z).
