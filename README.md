@@ -26,6 +26,7 @@ If the user signed up using Google, the next time he will log in, the existing u
 
 
 **Trip Sharing**
+
 Users can share trips with other registered users.
 Once a user creates a trip, there's an option to add emails of other users in order to share the trip with them.
 Users who are shared cannot edit / delete the trip. They can add activities and events to the trip scheduler.
@@ -39,6 +40,7 @@ The user who created the trip can add emails and also remove emails while editin
 ### Main features - Frontend
 
 **Creating a trip**
+
 On the main page, trips, there's an add button that allows users to create a new trip.
 Once the trip is created, using Unsplash's API the trip appears with a relevant image of the location.
 
@@ -50,6 +52,7 @@ The trips are shown using the trip card component.
 
 
 **Trip scheduler**
+
 This component represents the dates of the trip.
 After the creation of a trip, users can click on the trip card and they will see the scheduler. There they can add different activities to the trip.
 
